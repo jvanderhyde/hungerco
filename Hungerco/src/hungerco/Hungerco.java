@@ -1,19 +1,20 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
+//Main program
+//Created by Daisuke Mori, 16 January 2013
+//Modified by James Vanderhyde, 16 January 2013
+//  Formatted code and added comments.
+
 package hungerco;
 
 /**
  *
  * @author dai
  */
-public class Hungerco {
+public class Hungerco
+{
 
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String[] args) {
-        // TODO code application logic here
+    
+    public static void main(String[] args)
+    {
+
     }
 }
