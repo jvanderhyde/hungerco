@@ -6,8 +6,8 @@
     </head>
     <body>
         <?php
-        echo "hello world";
-        
+        // put your code here
+        echo "test project by daisuke";
         ?>
     </body>
 </html>
