@@ -6,8 +6,9 @@
     </head>
     <body>
         <?php
-        // put your code here
-        echo "test project by daisuke";
+        echo "test project by daisuke<br />";
         ?>
+        
+        <a href="http://bccs.ravens.bc/hungerco/mori1255/stlogin.php">Login Test</a>
     </body>
 </html>
