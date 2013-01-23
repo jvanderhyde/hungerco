@@ -9,6 +9,6 @@
         echo "test project by daisuke<br />";
         ?>
         
-        <a href="http://bccs.ravens.bc/hungerco/mori1255/stlogin.php">Login Test</a>
+        <a href="stlogin.php">Login Test</a>
     </body>
 </html>
