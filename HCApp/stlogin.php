@@ -6,16 +6,16 @@
     </head>
     <body>
         <h1>Student login</h1>
-        <h1>*Do not use real Password!!</h1>
+        <h1>*Do not use real Password!</h1>
         <form name="stlogin" action="stinfo.php" method="POST">
             <h4>Student ID</h4>
             <input type="text" size="40" name="studentID">
             <h4>Password</h4>
-            <input type="text" size="40" name="studentPass"><br/><br/>
+            <input type="password" size="40" name="studentPass"><br/><br/>
             <input type="submit" value="Login">
         </form>
         <br/>
-        <form name="createAccount" action="createAccount.php" method="POST">
+        <form name="createAccount" action="createaccount.php" method="POST">
             <input type="submit" value="Create an Account">
         </form>
         
