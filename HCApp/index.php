@@ -5,10 +5,14 @@
         <title></title>
     </head>
     <body>
-        <?php
-        echo "test project by daisuke<br />";
-        ?>
-        
-        <a href="stlogin.php">Login Test</a>
+        <form name="stlogin" action="stlogin.php" method="POST">
+            <input type="submit" value="Student Login">
+        </form>
+        <form name="stflogin" action="stflogin.php" method="POST">
+            <input type="submit" value="Staff Login">
+        </form>
+        <form name="contactus" action="contactus.php" method="POST">
+            <input type="submit" value="Contact Us">
+        </form>
     </body>
 </html>
