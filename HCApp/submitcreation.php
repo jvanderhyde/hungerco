@@ -6,16 +6,19 @@
     </head>
     <body>
         <?php
-        $name=$_POST['name'];
+        $fName=$_POST['fName'];
+        $minit=$_POST['minit'];
+        $lName=$_POST['lName'];
         $id=$_POST['id'];
         $phone=$_POST['phone'];
+        $email=$_POST['email'];
         $password1=$_POST['password1'];
         $password2=$_POST['password2'];
         $succeess=null;
         $idExist=null;//check by using SQL at Database with $id.
         
-        if(!$name||!$id||!$phone||!$password1||!$password2){
-            echo"<h1>Please fill all blank spaces.</h1>";
+        if(!$fName||!$lName||!$id||!$phone||!$email||!$password1||!$password2){
+            echo"<h1>Please fill all blank spaces except middle initial.</h1>";
         }
         elseif($idExist){
             echo"<h1>This student ID has already been registered.</h1>";
@@ -38,6 +41,36 @@
         else{
         ?>
         <form name="failcreation" action="createaccount.php" method="POST">
+            <input type="hidden" name="enteredNameF"
+                   <?php
+                   echo"value=$fName";
+                   ?>
+                   >
+            <input type="hidden" name="enteredNameM"
+                   <?php
+                   echo"value=$minit";
+                   ?>
+                   >
+            <input type="hidden" name="enteredNameL"
+                   <?php
+                   echo"value=$lName";
+                   ?>
+                   >
+            <input type="hidden" name="enteredId"
+                   <?php
+                   echo"value=$id";
+                   ?>
+                   >
+            <input type="hidden" name="enteredPhone"
+                   <?php
+                   echo"value=$phone";
+                   ?>
+                   >
+            <input type="hidden" name="enteredEmail"
+                   <?php
+                   echo"value=$email";
+                   ?>
+                   >
             <input type="submit" value="Back">
         </form>
         <?php
