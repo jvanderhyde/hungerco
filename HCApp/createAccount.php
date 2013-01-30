@@ -5,17 +5,83 @@
         <title>Create an Account</title>
     </head>
     <body>
+        <?php
+        $enteredNameF=$_POST['enteredNameF'];
+        $enteredNameM=$_POST['enteredNameM'];
+        $enteredNameL=$_POST['enteredNameL'];
+        $enteredPhone=$_POST['enteredPhone'];
+        $enteredId=$_POST['enteredId'];
+        $enteredEmail=$_POST['enteredEmail'];
+        ?>
         <h1>Create an Account</h1>
         <form name="createaccount" action="submitcreation.php" method="POST">
-            <h4>Name</h4>
-            <input type="text" size="40" name="name">
-            <h4>Student ID</h4>
-            <input type="text" size="40" name="id">
-            <h4>Phone</h4>
-            <input type="text" size="40" name="phone">
-            <h4>Password</h4>
-            <input type="password" size="40" name="password1">
-            <h4>Re-enter Password</h4>
+            <font size="4"><b>Name</b></font><br />
+            <table border="0">
+                <tr>
+                    <td>First name:</td>
+                    <td>
+                        <input type="text" size="20" name="fName"
+                               <?php
+                               if($enteredNameF){
+                                   echo"value=$enteredNameF";
+                               }
+                               ?>
+                               >
+                    </td>
+                </tr>
+                <tr>
+                    <td>Middle Initial:</td>
+                    <td>
+                        <input type="text" size="1" maxlength="1" name="minit"
+                               <?php
+                               if($enteredNameM){
+                                   echo"value=$enteredNameM";
+                               }
+                               ?>
+                               >
+                        (Optional)
+                    </td>
+                </tr>
+                <tr>
+                    <td>Last name:</td>
+                    <td>
+                        <input type="text" size="20" name="lName"
+                               <?php
+                               if($enteredNameL){
+                                   echo"value=$enteredNameL";
+                               }
+                               ?>
+                               >
+                    </td>
+                </tr>
+            </table><br />
+            <font size="4"><b>Student ID</b></font><br />
+            <input type="text" size="40" name="id"
+                   <?php
+                   if($enteredId){
+                       echo"value=$enteredId";
+                   }
+                   ?>
+                   ><br/><br/>
+            <font size="4"><b>Phone</b></font><br />
+            <input type="text" size="40" name="phone"
+                   <?php
+                   if($enteredPhone){
+                       echo"value=$enteredPhone";
+                   }
+                   ?>
+                   ><br/><br/>
+            <font size="4"><b>E-mail address</b></font><br />
+            <input type="text" size="40" name="email"
+                   <?php
+                   if($enteredEmail){
+                       echo"value=$enteredEmail";
+                   }
+                   ?>
+                   ><br/><br/>
+            <font size="4"><b>Password</b></font><br />
+            <input type="password" size="40" name="password1"><br/><br/>
+            <font size="4"><b>Re-enter Password</b></font><br />
             <input type="password" size="40" name="password2">
             <br/><br/>
             <input type="submit" value="Create">
