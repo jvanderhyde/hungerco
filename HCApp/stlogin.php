@@ -16,6 +16,12 @@
         </form>
         <br/>
         <form name="createAccount" action="createaccount.php" method="POST">
+            <input type="hidden" value="0" name="enteredNameF">
+            <input type="hidden" value="0" name="enteredNameM">
+            <input type="hidden" value="0" name="enteredNameL">
+            <input type="hidden" value="0" name="enteredId">
+            <input type="hidden" value="0" name="enteredPhone">
+            <input type="hidden" value="0" name="enteredEmail">
             <input type="submit" value="Create an Account">
         </form>
         
