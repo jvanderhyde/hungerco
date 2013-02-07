@@ -14,11 +14,12 @@
         $enteredEmail=$_POST['enteredEmail'];
         ?>
         <h1>Create an Account</h1>
+        <font size="4"><b>*Indicates required field</b></font><br />
         <form name="createaccount" action="submitcreation.php" method="POST">
             <font size="4"><b>Name</b></font><br />
             <table border="0">
                 <tr>
-                    <td>First name:</td>
+                    <td>First name*:</td>
                     <td>
                         <input type="text" size="20" name="fName"
                                <?php
@@ -39,11 +40,10 @@
                                }
                                ?>
                                >
-                        (Optional)
                     </td>
                 </tr>
                 <tr>
-                    <td>Last name:</td>
+                    <td>Last name*:</td>
                     <td>
                         <input type="text" size="20" name="lName"
                                <?php
@@ -55,7 +55,7 @@
                     </td>
                 </tr>
             </table><br />
-            <font size="4"><b>Student ID</b></font><br />
+            <font size="4"><b>Student ID*</b></font><br />
             <input type="text" size="40" name="id"
                    <?php
                    if($enteredId){
@@ -79,9 +79,9 @@
                    }
                    ?>
                    ><br/><br/>
-            <font size="4"><b>Password</b></font><br />
+            <font size="4"><b>Password*</b></font><br />
             <input type="password" size="40" name="password1"><br/><br/>
-            <font size="4"><b>Re-enter Password</b></font><br />
+            <font size="4"><b>Re-enter Password*</b></font><br />
             <input type="password" size="40" name="password2">
             <br/><br/>
             <input type="submit" value="Create">
@@ -89,6 +89,7 @@
         <form name="cancel" action="stlogin.php" method="POST">
             <input type="submit" value="Cancel">
         </form>
+        
         
         
     </body>
