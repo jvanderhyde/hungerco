@@ -8,10 +8,10 @@
         <h1>Student Information</h1>
         <?php
         $id=$_POST['studentID'];
-        $passward=$_POST['studentPass'];
+        $password=$_POST['studentPass'];
         ?>
         <?php
-        echo "<h4>ID</h4><b>$id</b><br /><h4>Passward</h4><b>$passward</b><br />";
+        echo "<h4>ID</h4><b>$id</b><br /><h4>Password</h4><b>$password</b><br />";
         ?>
         
         
