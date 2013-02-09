@@ -2,21 +2,16 @@
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Student login</title>
+        <title>Staff login</title>
     </head>
     <body>
         <h1>Staff login</h1>
-        <h1>*Do not use real Password!</h1>
-        <form name="stlogin" action="stinfo.php" method="POST">
+        <form name="stlogin" action="verify_staff_login.php" method="POST">
             <h4>Username</h4>
-            <input type="text" size="40" name="studentID">
+            <input type="text" size="40" name="staffName">
             <h4>Password</h4>
-            <input type="password" size="40" name="studentPass"><br/><br/>
+            <input type="password" size="40" name="staffPass"><br/><br/>
             <input type="submit" value="Login">
-        </form>
-        <br/>
-        <form name="createAccount" action="createaccount.php" method="POST">
-            <input type="submit" value="Create an Account">
         </form>
 
 
