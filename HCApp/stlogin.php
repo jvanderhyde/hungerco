@@ -8,13 +8,12 @@
         <h1>Student login</h1>
         <h1>*Do not use real Password!</h1>
         <form name="stlogin" action="stinfo.php" method="POST">
-            <h4>Student ID</h4>
-            <input type="text" size="40" name="studentID">
-            <h4>Password</h4>
-            <input type="password" size="40" name="studentPass"><br/><br/>
+            <font size="4"><b>Student ID</b></font><br />
+            <input type="text" size="40" name="studentID"><br />
+            <font size="4"><b>Password</b></font><br />
+            <input type="password" size="40" name="studentPass"><br/>
             <input type="submit" value="Login">
         </form>
-        <br/>
         <form name="createAccount" action="createaccount.php" method="POST">
             <input type="hidden" value="0" name="enteredNameF">
             <input type="hidden" value="0" name="enteredNameM">
@@ -23,6 +22,9 @@
             <input type="hidden" value="0" name="enteredPhone">
             <input type="hidden" value="0" name="enteredEmail">
             <input type="submit" value="Create an Account">
+        </form>
+        <form name="cancel" action="index.php" method="POST">
+            <input type="submit" value="Cancel">
         </form>
         
         
