@@ -11,7 +11,8 @@
             
         //Class and functions
         class StudentAccountCreation{
-            private $fName,$minit,$lName,$id,$phone,$email,$password1,$password2,$message;
+            private $fName,$minit,$lName,$id,$phone,$email,$password1,
+                    $password2,$message,$usernameD,$passwordD,$database;
             function __construct(){
                 $this->fName=$_POST['fName'];
                 $this->minit=$_POST['minit'];
@@ -21,26 +22,41 @@
                 $this->email=$_POST['email'];
                 $this->password1=$_POST['password1'];
                 $this->password2=$_POST['password2'];
+                $this->usernameD="hungerco";
+                $this->passwordD="intensiveness";
+                $this->database="HUNGERCO";
+                mysql_connect('localhost:3306',$this->usernameD,$this->passwordD);
+                @mysql_select_db($this->database) or die( "Unable to select database");
             }
             
             function protectInjection(){
-                $this->fName=$_POST['fName'];
-                $this->minit=$_POST['minit'];
-                $this->lName=$_POST['lName'];
-                $this->id=$_POST['id'];
-                $this->phone=$_POST['phone'];
-                $this->email=$_POST['email'];
-                $this->password1=$_POST['password1'];
-                $this->password2=$_POST['password2'];
+                $this->fName=stripslashes($this->fName);
+                $this->minit=stripslashes($this->minit);
+                $this->lName=stripslashes($this->lName);
+                $this->id=stripslashes($this->id);
+                $this->phone=stripslashes($this->phone);
+                $this->email=stripslashes($this->email);
+                $this->password1=stripslashes($this->password1);
+                $this->password2=stripslashes($this->password2);
+                $this->fName=mysql_real_escape_string($this->fName);
+                $this->minit=mysql_real_escape_string($this->minit);
+                $this->lName=mysql_real_escape_string($this->lName);
+                $this->id=mysql_real_escape_string($this->id);
+                $this->phone=mysql_real_escape_string($this->phone);
+                $this->email=mysql_real_escape_string($this->email);
+                $this->password1=mysql_real_escape_string($this->password1);
+                $this->password2=mysql_real_escape_string($this->password2);
             }
             
             function createOrBack(){
+                $this->protectInjection();
                 if($this->checkValidity()){
                     $this->makeAccount();
                 }
                 else{
                     $this->backToEnter();
                 }
+                mysql_close();
             }
             
             function checkValidity(){
@@ -62,15 +78,10 @@
             }
             
             function idExistInDatabase(){
-                $username="hungerco";
-                $password="intensiveness";
-                $database="HUNGERCO";
-                mysql_connect('localhost:3306',$username,$password);
-                @mysql_select_db($database) or die( "Unable to select database");
                 $query="SELECT * FROM students WHERE Id=$this->id";
                 $result=mysql_query($query);
                 $num=mysql_numrows($result);
-                mysql_close();
+                
                 if($num==1){
                     return true;
                 }
@@ -79,22 +90,30 @@
                 }
             }
             function makeAccount(){
-                if(!$this->minit){
-                    $this->minit = 'null';
+                $minit2="";
+                $phone2="";
+                $email2="";
+                if($this->minit){
+                    $minit2 = $this->minit;
                 }
-                if(!$this->phone){
-                    $this->phone = 'null';
+                else{
+                    $minit2 = 'null';
                 }
-                if(!$this->email){
-                    $this->email = 'null';
+                if($this->phone){
+                    $phone2 = $this->phone;
                 }
-                $username="hungerco";
-                $password="intensiveness";
-                $database="HUNGERCO";
-                mysql_connect('localhost:3306',$username,$password);
-                @mysql_select_db($database) or die( "Unable to select database");
+                else{
+                    $phone2 = 'null';
+                }
+                if($this->email){
+                    $email2 = $this->email;
+                }
+                else{
+                    $email2 = 'null';
+                }
+                
                 $query="INSERT INTO students VALUES ('$this->fName',
-                    $this->minit,'$this->lName','$this->id','$this->password1',0,$this->phone,$this->email)";
+                    $minit2,'$this->lName','$this->id','$this->password1',0,$phone2,$email2)";
                 if(!mysql_query($query)){
                     $this->message = "<h1>Creation error!</h1>";
                     $this->backToEnter();
@@ -105,10 +124,9 @@
                              <input type=\"submit\" value=\"Next\">
                          </form>";
                 }
-                mysql_close();
             }
             
-            function backToEnter(){//nullかどうかのifも
+            function backToEnter(){
                 echo $this->message;
                 echo"<form name=\"failcreation\" action=\"createaccount.php\" method=\"POST\">
                         <input type=\"hidden\" name=\"enteredNameF\" value=$this->fName>
