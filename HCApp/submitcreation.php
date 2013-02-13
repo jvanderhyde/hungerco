@@ -23,6 +23,17 @@
                 $this->password2=$_POST['password2'];
             }
             
+            function protectInjection(){
+                $this->fName=$_POST['fName'];
+                $this->minit=$_POST['minit'];
+                $this->lName=$_POST['lName'];
+                $this->id=$_POST['id'];
+                $this->phone=$_POST['phone'];
+                $this->email=$_POST['email'];
+                $this->password1=$_POST['password1'];
+                $this->password2=$_POST['password2'];
+            }
+            
             function createOrBack(){
                 if($this->checkValidity()){
                     $this->makeAccount();
@@ -97,7 +108,7 @@
                 mysql_close();
             }
             
-            function backToEnter(){
+            function backToEnter(){//nullかどうかのifも
                 echo $this->message;
                 echo"<form name=\"failcreation\" action=\"createaccount.php\" method=\"POST\">
                         <input type=\"hidden\" name=\"enteredNameF\" value=$this->fName>
