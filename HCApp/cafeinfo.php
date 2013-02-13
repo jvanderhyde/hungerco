@@ -1,5 +1,14 @@
+<html>
+<head> 
+<title></title> 
+</head> 
+<body> 
+    
 <?php
     session_start();
+    if(!session_is_registered("Cafeteria")){
+    header("location:stflogin.php");
+    }
     $username="hungerco";
     $password="intensiveness";
     $database="hungerco";
@@ -11,5 +20,11 @@
     $result=mysql_query($query);
     $numskip=mysql_result($result,0,"count(id)");
     print("Current number of skippers is: $numskip");
-
 ?>
+
+    <form name="logout" action="logout.php" method="POST">
+        <input type="submit" value="Logout">
+    </form>
+    
+</body>
+</html>
