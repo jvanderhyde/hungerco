@@ -6,30 +6,21 @@
     </head>
     <body>
         <?php
-        $enteredId=$_POST['enteredId'];
+        $enteredId="";
+        if(isset($_POST['enteredId'])){
+            $enteredId=$_POST['enteredId'];
+        }
         ?>
         <h1>Student login</h1>
         <h1>*Do not use real Password!</h1>
         <form name="stlogin" action="verify_student_login.php" method="POST">
             <font size="4"><b>Student ID</b></font><br />
-            <input type="text" size="40" name="studentID"
-                   <?php
-                   if($enteredId){
-                       echo"value=$enteredId";
-                   }
-                   ?>
-                   ><br />
+            <input type="text" size="40" name="studentID"value=<?php echo $enteredId;?>><br />
             <font size="4"><b>Password</b></font><br />
             <input type="password" size="40" name="studentPass"><br/>
             <input type="submit" value="Login">
         </form>
         <form name="createAccount" action="createaccount.php" method="POST">
-            <input type="hidden" value="0" name="enteredNameF">
-            <input type="hidden" value="0" name="enteredNameM">
-            <input type="hidden" value="0" name="enteredNameL">
-            <input type="hidden" value="0" name="enteredId">
-            <input type="hidden" value="0" name="enteredPhone">
-            <input type="hidden" value="0" name="enteredEmail">
             <input type="submit" value="Create an Account">
         </form>
         <form name="cancel" action="index.php" method="POST">

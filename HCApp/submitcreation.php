@@ -26,7 +26,7 @@
                 $this->passwordD="intensiveness";
                 $this->database="HUNGERCO";
                 mysql_connect('localhost:3306',$this->usernameD,$this->passwordD);
-                @mysql_select_db($this->database) or die( "Unable to select database");
+                mysql_select_db($this->database) or die( "Unable to select database");
             }
             
             function protectInjection(){
@@ -94,24 +94,23 @@
                 $phone2="";
                 $email2="";
                 if($this->minit){
-                    $minit2 = $this->minit;
+                    $minit2 = "\"$this->minit\"";
                 }
                 else{
                     $minit2 = 'null';
                 }
                 if($this->phone){
-                    $phone2 = $this->phone;
+                    $phone2 = "\"$this->phone\"";
                 }
                 else{
                     $phone2 = 'null';
                 }
                 if($this->email){
-                    $email2 = $this->email;
+                    $email2 = "\"$this->email\"";
                 }
                 else{
                     $email2 = 'null';
                 }
-                
                 $query="INSERT INTO students VALUES ('$this->fName',
                     $minit2,'$this->lName','$this->id','$this->password1',0,$phone2,$email2)";
                 if(!mysql_query($query)){
