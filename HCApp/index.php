@@ -6,7 +6,6 @@
     </head>
     <body>
         <form name="stlogin" action="stlogin.php" method="POST">
-            <input type="hidden" value="0" name="enteredId">
             <input type="submit" value="Student Login">
         </form>
         <form name="stflogin" action="stflogin.php" method="POST">

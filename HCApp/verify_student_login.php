@@ -28,8 +28,10 @@ $count=mysql_num_rows($result);
 // If result matched $username and $password, table row must be 1 row
 if($count==1){
     // Register $username, $password and redirect to file "login_success.php"
-    session_register($cleanuserid);
-    session_register($cleanpassword);
+    session_register("studentid");
+    session_register("studentpassword");
+    $_SESSION["studentid"]=$cleanuserid;
+    $_SESSION["studentpassword"]=$cleanpassword;
     header("location:stinfo.php");
 }
 else {
