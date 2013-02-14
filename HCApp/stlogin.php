@@ -5,11 +5,20 @@
         <title>Student login</title>
     </head>
     <body>
+        <?php
+        $enteredId=$_POST['enteredId'];
+        ?>
         <h1>Student login</h1>
         <h1>*Do not use real Password!</h1>
-        <form name="stlogin" action="stinfo.php" method="POST">
+        <form name="stlogin" action="verify_student_login.php" method="POST">
             <font size="4"><b>Student ID</b></font><br />
-            <input type="text" size="40" name="studentID"><br />
+            <input type="text" size="40" name="studentID"
+                   <?php
+                   if($enteredId){
+                       echo"value=$enteredId";
+                   }
+                   ?>
+                   ><br />
             <font size="4"><b>Password</b></font><br />
             <input type="password" size="40" name="studentPass"><br/>
             <input type="submit" value="Login">
