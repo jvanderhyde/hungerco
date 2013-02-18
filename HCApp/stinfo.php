@@ -14,7 +14,8 @@
         <h1>Student Information</h1>
         <?php
         $partskipper = new StudentInformation();
-        $partskipper->updateOrNot();
+        $partskipper->startUp();
+        
         if($partskipper->isSkipper()){
             ?>
             <form name="removeSkipper" action="stinfo.php" method="POST">
@@ -41,9 +42,12 @@
         
         <?php
         class StudentInformation{
-            private $id,$host,$dbusername,$dbpassword,$db_name,$tbl_name;
+            private $fname,$lname,$skipper,$id,$host,$dbusername,$dbpassword,$db_name,$tbl_name;
             
             function __construct(){
+                $this->fname="";
+                $this->lname="";
+                $this->skipper="";
                 $this->id=$_SESSION["studentid"];
                 $this->host="localhost:3306"; // Host name
                 $this->dbusername="hungerco"; // Mysql username
@@ -58,12 +62,26 @@
                 mysql_select_db("$this->db_name")or die("cannot select DB");
             }
             
-            function updateSkipperValue(){
+            function startUp(){
                 $this->getConnectionWithDatabase();
+                $this->updateOrNot();
+                $this->getInformation();
+                mysql_close();
+                $this->showInformation();
+            }
+            
+            function getInformation(){
+                $sql="SELECT * FROM $this->tbl_name WHERE Id='$this->id'";
+                $result=mysql_query($sql);
+                $this->fname=mysql_result($result,0,"Fname");
+                $this->lname=mysql_result($result,0,"Lname");
+                $this->skipper=mysql_result($result,0,"IsSkipper");
+            }
+            
+            function updateSkipperValue(){
                 $updateskipper=$_POST['updateSkipper'];
                 $sqlup="UPDATE $this->tbl_name SET IsSkipper=$updateskipper WHERE Id='$this->id'";
                 mysql_query($sqlup);
-                mysql_close();
             }
             
             function updateOrNot(){
@@ -73,17 +91,16 @@
             }
             
             function isSkipper(){
-                $this->getConnectionWithDatabase();
-                $sql="SELECT * FROM $this->tbl_name WHERE Id='$this->id'";
-                $result=mysql_query($sql);
-                if(mysql_result($result,0,"IsSkipper")==1){
-                    mysql_close();
+                if($this->skipper==1){
                     return true;
                 }
                 else{
-                    mysql_close();
                     return false;
                 }
+            }
+            
+            function showInformation(){
+                echo"<font size=\"4\"><b>$this->fname $this->lname ($this->id)</b></font>";
             }
             
         }
