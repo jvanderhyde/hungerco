@@ -95,27 +95,9 @@ if(!isset($_POST['id'])){
                 }
             }
             function makeAccount(){
-                $minit2="";
-                $phone2="";
-                $email2="";
-                if($this->minit){
-                    $minit2 = "\"$this->minit\"";
-                }
-                else{
-                    $minit2 = 'null';
-                }
-                if($this->phone){
-                    $phone2 = "\"$this->phone\"";
-                }
-                else{
-                    $phone2 = 'null';
-                }
-                if($this->email){
-                    $email2 = "\"$this->email\"";
-                }
-                else{
-                    $email2 = 'null';
-                }
+                $minit2 = empty($this->minit)?'null':"\"$this->minit\"";
+                $phone2 = empty($this->phone)?'null':"\"$this->phone\"";
+                $email2 = empty($this->email)?'null':"\"$this->email\"";
                 $query="INSERT INTO students VALUES ('$this->fName',
                     $minit2,'$this->lName','$this->id','$this->password1',0,$phone2,$email2)";
                 if(!mysql_query($query)){
