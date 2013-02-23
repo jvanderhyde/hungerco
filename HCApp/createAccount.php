@@ -6,30 +6,12 @@
     </head>
     <body>
         <?php
-        $enteredNameF="";
-        $enteredNameM="";
-        $enteredNameL="";
-        $enteredPhone="";
-        $enteredId="";
-        $enteredEmail="";
-        if(isset($_POST['enteredNameF'])){
-            $enteredNameF=$_POST['enteredNameF'];
-        }
-        if(isset($_POST['enteredNameM'])){
-            $enteredNameM=$_POST['enteredNameM'];
-        }
-        if(isset($_POST['enteredNameL'])){
-            $enteredNameL=$_POST['enteredNameL'];
-        }
-        if(isset($_POST['enteredPhone'])){
-            $enteredPhone=$_POST['enteredPhone'];
-        }
-        if(isset($_POST['enteredId'])){
-            $enteredId=$_POST['enteredId'];
-        }
-        if(isset($_POST['enteredEmail'])){
-            $enteredEmail=$_POST['enteredEmail'];
-        }
+        $enteredNameF=isset($_POST['enteredNameF'])?$_POST['enteredNameF']:"";
+        $enteredNameM=isset($_POST['enteredNameM'])?$_POST['enteredNameM']:"";
+        $enteredNameL=isset($_POST['enteredNameL'])?$_POST['enteredNameL']:"";
+        $enteredPhone=isset($_POST['enteredPhone'])?$_POST['enteredPhone']:"";
+        $enteredId=isset($_POST['enteredId'])?$_POST['enteredId']:"";
+        $enteredEmail=isset($_POST['enteredEmail'])?$_POST['enteredEmail']:"";
         ?>
         <h1>Create an Account</h1>
         <font size="4"><b>*Indicates required field</b></font><br />
