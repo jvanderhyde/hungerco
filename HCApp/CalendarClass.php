@@ -50,6 +50,9 @@ class CalendarClass {
 
     // リンク設定用
     var $_link;
+    
+    // for Volunteer Opportunity
+    var $_volopp;
 
    /**
     * コンストラクタ(PHP5対応)
@@ -153,16 +156,19 @@ class CalendarClass {
                     // 指定月の前月
                     $dd = $beforelast + $day;
                     $data = $this->_getData($year, $month-1, $dd);
+                    $volopp = $this->_getVolopp($year, $month-1, $dd);
                     $bgcolor = $this->bgcolor_other;
                 } elseif($day > $thislast) {
                     // 指定月の後月
                     $dd = $day - $thislast;
                     $data = $this->_getData($year, $month+1, $dd);
+                    $volopp = $this->_getVolopp($year, $month+1, $dd);
                     $bgcolor = $this->bgcolor_other;
                 } else {
                     // 指定月
                     $dd = $day;
                     $data = $this->_getData($year, $month, $dd);
+                    $volopp = $this->_getVolopp($year, $month, $dd);
                     $link = $this->_getLink($year, $month, $dd);
                     if($link != "") {
                         $dd = "<a href=\"{$link}\">{$dd}</a>";
@@ -180,6 +186,7 @@ class CalendarClass {
                 if($disp_flg != 1 && ($day < 1 || $day > $thislast)) {
                     $dd = "&nbsp;";
                     $data = "";
+                    $volopp="";
                 }
 
                 $html .= "        <td {$this->style_body} bgcolor=\"{$bgcolor}\">\n";
@@ -194,6 +201,10 @@ class CalendarClass {
 
                 if($data != "") {
                     $html .= "            {$data}\n";
+                }
+                
+                if($volopp != "") {
+                    $html .= "            {$volopp}\n";
                 }
                 $html .= "        </td>\n";
             }
@@ -422,5 +433,41 @@ class CalendarClass {
         return $ret;
     }
     
+    function setVolunteerOpportunity($joinedopp, $resource, $link){
+        $numRes=mysql_numrows($resource);
+            for($i=0; $i<$numRes; $i++){
+                $date=mysql_result($resource,$i,"Date");
+                $oppname=mysql_result($resource,$i,"Oppname");
+                $oppnum=mysql_result($resource,$i,"Oppnum");
+                $this->setOpportunityDay($date, $oppname, $oppnum, $link, in_array($oppnum, $joinedopp));
+            }
+    }
+    
+    function setOpportunityDay($date, $oppname, $oppnum, $link, $registered){
+        $year=date('Y',strtotime($date));
+        $month=date('m',strtotime($date));
+        if($registered||strtotime(date('Y-m-d'))>strtotime($date)){
+            $opp="$oppname<br/><br/>";
+        }
+        else{
+            $opp="<a href=\"#\" onclick=\"document.opp$oppnum.submit();return false;\" > $oppname</a>
+                    <form name=\"opp$oppnum\" action=$link method=\"POST\">
+                        <input type=\"hidden\" name=\"year\" value=$year>
+                        <input type=\"hidden\" name=\"month\" value=$month>
+                        <input type=\"hidden\" name=\"oppnum\" value=$oppnum>
+                    </form>";
+        }
+        $id=date('Ymd',strtotime($date));
+        $this->_volopp[$id]=isset($this->_volopp[$id])?$this->_volopp[$id].$opp:$opp;
+    }
+    
+    function _getVolopp($year, $month, $day)
+    {
+        $id = sprintf("%04d%02d%02d", $year, $month, $day);
+        if(isset($this->_volopp[$id])) {
+            return $this->_volopp[$id];
+        }
+        return;
+    }
 }
 ?>
