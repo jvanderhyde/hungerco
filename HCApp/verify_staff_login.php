@@ -33,6 +33,10 @@ session_register($cleanusername);
 session_register($cleanpassword);
 if(mysql_result($result,0,"type")=="Cafe")
     header("location:cafeinfo.php");
+if(mysql_result($result,0,"type")=="It")
+    header("location:itinfo.php");
+else
+    header("location:stflogin.php");
 }
 else {
 echo "Wrong Username or Password";
