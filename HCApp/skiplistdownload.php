@@ -9,10 +9,7 @@
 
     header("Content-Disposition: attachment; filename=\"$filename\"");
     header("Content-Type: application/vnd.ms-excel");
-    echo implode("\t", array( 1=>"First Name",
-                            2=>"Middle Initial",
-                            3=>"Last Name",
-                            4=>"Student Id",)) . "\r\n";
+    echo implode("\t", array( "First Name", "Middle Initial", "Last Name", "Student Id",)) . "\r\n";
 
     $username="hungerco";
     $password="intensiveness";

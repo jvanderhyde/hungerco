@@ -31,12 +31,21 @@ if($count==1){
 // Register $username, $password and redirect to file "login_success.php"
 session_register($cleanusername);
 session_register($cleanpassword);
-if(mysql_result($result,0,"type")=="Cafe")
-    header("location:cafeinfo.php");
-if(mysql_result($result,0,"type")=="It")
-    header("location:itinfo.php");
-else
-    header("location:stflogin.php");
+$mysql_result = mysql_result($result,0,"type");
+switch($mysql_result)
+{
+    case "Cafe":
+        header("location:cafeinfo.php");
+        break;
+    case "It":
+        header("location:itinfo.php");
+        break;
+    case "Officer":
+        header("location:officerhome.php");
+        break;
+    default:
+        header("location:stflogin.php");
+}
 }
 else {
 echo "Wrong Username or Password";
