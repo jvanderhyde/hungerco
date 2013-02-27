@@ -21,7 +21,7 @@ class CalendarClass {
     var $style_weekname = 'style="text-align:center; width:120px; border:1px solid #cccccc"';
 
     /** @var string $style_table カレンダー日付枠のスタイル */
-    var $style_body = 'style="text-align:right; vertical-align:top; height:90px; border:1px solid #cccccc;"';
+    var $style_body = 'style="text-align:right; vertical-align:top; height:100px; border:1px solid #cccccc;"';
 
     /** @var string $style_table カレンダー日付ブロックのスタイル */
     var $style_day = 'style="margin:0px; padding:0px; text-align:right"';
@@ -51,8 +51,11 @@ class CalendarClass {
     // リンク設定用
     var $_link;
     
-    // for Volunteer Opportunity
+    // for Volunteer Opportunity text
     var $_volopp;
+    
+    // for Volunteer Opportunity link form
+    var $_volopplink;
 
    /**
     * コンストラクタ(PHP5対応)
@@ -446,18 +449,23 @@ class CalendarClass {
     function setOpportunityDay($date, $oppname, $oppnum, $link, $registered){
         $year=date('Y',strtotime($date));
         $month=date('m',strtotime($date));
-        if($registered||strtotime(date('Y-m-d'))>strtotime($date)){
-            $opp="$oppname<br/><br/>";
+        $id=date('Ymd',strtotime($date));
+        if(strtotime(date('Y-m-d'))>strtotime($date)){
+            $opp="$oppname<br/>";
+        }
+        else if($registered){
+            $opp="<img border=\"0\" src=\"../images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
+                    $oppname<br/>";
         }
         else{
-            $opp="<a href=\"#\" onclick=\"document.opp$oppnum.submit();return false;\" > $oppname</a>
-                    <form name=\"opp$oppnum\" action=$link method=\"POST\">
+            $opp="<a href=\"#\" onclick=\"document.opp$oppnum.submit();return false;\" > $oppname</a><br/>";
+            $form="<form name=\"opp$oppnum\" action=$link method=\"POST\">
                         <input type=\"hidden\" name=\"year\" value=$year>
                         <input type=\"hidden\" name=\"month\" value=$month>
                         <input type=\"hidden\" name=\"oppnum\" value=$oppnum>
                     </form>";
+            $this->_voloppform[$id]=isset($this->_voloppform[$id])?$this->_voloppform[$id].$form:$form;
         }
-        $id=date('Ymd',strtotime($date));
         $this->_volopp[$id]=isset($this->_volopp[$id])?$this->_volopp[$id].$opp:$opp;
     }
     
@@ -465,7 +473,8 @@ class CalendarClass {
     {
         $id = sprintf("%04d%02d%02d", $year, $month, $day);
         if(isset($this->_volopp[$id])) {
-            return $this->_volopp[$id];
+            $text=$this->_volopp[$id];
+            return isset($this->_voloppform[$id])?$text.$this->_voloppform[$id]:$text;
         }
         return;
     }

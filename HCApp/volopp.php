@@ -27,7 +27,7 @@
         require_once("CalendarClass.php");
         $obj_cdr = &  new CalendarClass();
         if(isset($resource)){
-            $obj_cdr->setVolunteerOpportunity($joinedopp, $resource,"./volopp.php");
+            $obj_cdr->setVolunteerOpportunity($joinedopp, $resource,"./volopp_info.php");
         }
         echo $obj_cdr->getCalendar($year, $month);
         ?>
