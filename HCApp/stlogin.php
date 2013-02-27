@@ -10,10 +10,7 @@ session_destroy();
     </head>
     <body>
         <?php
-        $enteredId="";
-        if(isset($_POST['enteredId'])){
-            $enteredId=$_POST['enteredId'];
-        }
+        $enteredId=isset($_POST['enteredId'])?$_POST['enteredId']:"";
         ?>
         <h1>Student login</h1>
         <h1>*Do not use real Password!</h1>
