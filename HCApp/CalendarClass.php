@@ -450,12 +450,12 @@ class CalendarClass {
         $year=date('Y',strtotime($date));
         $month=date('m',strtotime($date));
         $id=date('Ymd',strtotime($date));
-        if(strtotime(date('Y-m-d'))>strtotime($date)){
-            $opp="$oppname<br/>";
-        }
-        else if($registered){
+        if($registered){
             $opp="<img border=\"0\" src=\"../images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
                     $oppname<br/>";
+        }
+        else if(strtotime(date('Y-m-d'))>strtotime($date)){
+            $opp="$oppname<br/>";
         }
         else{
             $opp="<a href=\"#\" onclick=\"document.opp$oppnum.submit();return false;\" > $oppname</a><br/>";
