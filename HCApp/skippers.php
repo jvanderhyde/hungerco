@@ -26,6 +26,10 @@
         <input type="submit" value="Download Skipper List">
     </form>
     
+    <form name="home" action="officerhome.php" method="POST">
+        <input type="submit" value="Back to Home Page">
+    </form>
+    
     <form name="logout" action="logout.php" method="POST">
         <input type="submit" value="Logout">
     </form>
