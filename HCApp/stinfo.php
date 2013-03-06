@@ -79,8 +79,10 @@
                 $this->fname=mysql_result($result,0,"Fname");
                 $this->lname=mysql_result($result,0,"Lname");
                 $this->skipper=mysql_result($result,0,"IsSkipper");
+                $ymd=date('Ymd');
                 $sql2="SELECT * FROM vol_opps WHERE Oppnum IN(
-                    SELECT Voppnum FROM volunteers WHERE Volid='$this->id')
+                        SELECT Voppnum FROM volunteers WHERE Volid='$this->id')
+                        AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
                         ORDER BY Date";
                 $this->resultVol=mysql_query($sql2);
             }
