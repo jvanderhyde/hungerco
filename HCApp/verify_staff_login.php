@@ -29,8 +29,8 @@ $count=mysql_num_rows($result);
 if($count==1){
 
 // Register $username, $password and redirect to file "login_success.php"
-session_register($cleanusername);
-session_register($cleanpassword);
+session_start();
+$_SESSION['user']=$cleanusername;
 $mysql_result = mysql_result($result,0,"type");
 switch($mysql_result)
 {
