@@ -6,7 +6,7 @@
     
 <?php
     session_start();
-    if(!session_is_registered("IT")){
+    if($_SESSION['count']!="It"){
     header("location:stflogin.php");
     }
     $username="hungerco";
