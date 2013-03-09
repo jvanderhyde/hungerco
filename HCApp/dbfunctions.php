@@ -46,13 +46,32 @@ function makeAccount($formInfo)
     }
 }
 
-function existsInDatabase($table,$attr,$value)
+function existsInDatabase1($table,$attr,$value)
 {
     $link = connectToDB();
     $query=
         "SELECT * 
         FROM $table 
         WHERE $attr=$value";
+    $result=mysqli_query($link, $query);
+    $num=mysqli_numrows($result);
+
+    if($num==1){
+        return true;
+    }
+    else{
+        return false;
+    }
+}
+
+function existsInDatabase2($table,$attr1,$value1,$attr2,$value2)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT * 
+        FROM $table 
+        WHERE $attr1=$value1 
+          AND $attr2=$value2";
     $result=mysqli_query($link, $query);
     $num=mysqli_numrows($result);
 

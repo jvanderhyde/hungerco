@@ -1,9 +1,9 @@
+<!DOCTYPE HTML>
 <?php
- session_start();
- if(!session_is_registered("studentid")){
-     header("location:stlogin.php");
- }
- else if(!isset($_POST['oppnum'])){
+include 'functions.php';
+include 'dbfunctions.php';
+verifyuser("Student");
+if(!isset($_POST['oppnum'])){
      header("location:stinfo.php");
  }
  ?>

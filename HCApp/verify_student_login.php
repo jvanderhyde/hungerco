@@ -1,3 +1,4 @@
+<!DOCTYPE HTML>
 <?php
 
 $host="localhost:3306"; // Host name

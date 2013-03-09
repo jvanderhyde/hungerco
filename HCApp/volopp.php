@@ -1,12 +1,13 @@
+<!DOCTYPE HTML>
 <?php
- session_start();
- if(!session_is_registered("studentid")){
-     header("location:stlogin.php");
- }
- else if(!isset($_POST['year'])){
+include 'functions.php';
+include 'dbfunctions.php';
+verifyuser("Student");
+if(!isset($_POST['year']))
+{
      header("location:stinfo.php");
- }
- ?>
+}
+?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
