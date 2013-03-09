@@ -8,47 +8,23 @@
         <?php
             include 'functions.php';
             include 'dbfunctions.php';
-            $formInfo['fName'] = assignPostData('fName');
-            $formInfo['minit'] = assignPostData('minit');
-            $formInfo['lName'] = assignPostData('lName');
-            $formInfo['phone'] = assignPostData('phone');
-            $formInfo['id']    = assignPostData('id');
-            $formInfo['email'] = assignPostData('email');
-            $formInfo['pass1'] = assignPostData('pass1');
-            $formInfo['pass2'] = assignPostData('pass2');
             
+            //Stores information from a previous post (if any) to 
+            //associative array $formInfo
+            $formInfo = getPostInfo();
+            
+            //Cleans all submitted information
             foreach($formInfo as $value)
-            {
                 $value = protectInjection($value);
-            }
             
+            //If the previous action was submit, creates an account
             if($_POST['action']=="Submit")
-            {
-                $formvalid = chkCrtAcctVldty($formInfo);
-                if(!$formvalid['flag'])
-                {
-                    echo $formvalid['message'];
-                }
-                else
-                {
-                    $acctMade = makeAccount($formInfo);
-                    if(!$acctMade['flag'])
-                    {
-                        echo $acctMade['message'];
-                    }
-                    else
-                    {
-                        session_start();
-                        $_SESSION['user']="Student";
-                        header("location:stinfo.php");
-                    }
-                }
-                
-            }
+                submitCreate($formInfo);
+            
+            //If the previous action was cancel, goes back to student login page
             else if($_POST['action']=="Cancel")
-            {
                 header("location:stlogin.php");
-            }
+            
         ?>
         
         <h1>Create an Account</h1>
@@ -104,6 +80,59 @@
 </html>
 
 <?php
+    function getPostInfo()
+    {
+        $formInfo['fName'] = assignPostData('fName');
+        $formInfo['minit'] = assignPostData('minit');
+        $formInfo['lName'] = assignPostData('lName');
+        $formInfo['phone'] = assignPostData('phone');
+        $formInfo['id']    = assignPostData('id');
+        $formInfo['email'] = assignPostData('email');
+        $formInfo['pass1'] = assignPostData('pass1');
+        $formInfo['pass2'] = assignPostData('pass2');
+        
+        return $formInfo;
+    }
 
-
+    function submitCreate($formInfo)
+    {
+        //Ensures information entered properly
+        $formValid = chkCrtAcctVldty($formInfo);
+        
+        if(chkErr($formValid))
+        {
+            //Creates account and verifies creation was successful
+            $acctMade = makeAccount($formInfo);
+            if(chkErr($acctMade))
+                regSess("Student","stinfo.php");
+        }
+    }
+    
+    function chkCrtAcctVldty($formInfo)
+    {
+        if(!$formInfo['fName']||!$formInfo['lName']||!$formInfo['id']
+                ||!$formInfo['pass1']||!$formInfo['pass2'])
+        {
+            $isvalid['message'] = "Please fill all blank spaces required";
+            $isvalid['flag'] = false;
+            return $isvalid;
+        }
+        elseif(existsInDatabase("students","Id",$formInfo['id']))
+        {
+            $this->message = "This student ID has already been registered.";
+            $isvalid['flag'] = false;
+            return $isvalid;
+        }
+        elseif(strcmp($formInfo['pass1'],$formInfo['pass2']!=0))
+        {
+            $isvalid['message'] = "Your passwords do not equal.";
+            $isvalid['flag'] = false;
+            return $isvalid;
+        }
+        else
+        {
+            $isvalid['flag'] = true;
+            return $isvalid;
+        }
+    }  
 ?>
