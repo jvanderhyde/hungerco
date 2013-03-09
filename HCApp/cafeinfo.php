@@ -6,6 +6,7 @@
     <body> 
         <?php 
             include 'functions.php';
+            include 'dbfunctions.php';
             verifyuser("Cafeteria");
 
             $numskip = getNumSkip();

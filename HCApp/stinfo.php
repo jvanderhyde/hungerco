@@ -1,9 +1,8 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<!DOCTYPE HTML>
 <?php
- session_start();
- if(!session_is_registered("studentid")){
-     header("location:stlogin.php");
- }
+    include 'functions.php';
+    include 'dbfunctions.php';
+    verifyuser("Student");
  ?>
 <html>
     <head>
