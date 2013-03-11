@@ -19,5 +19,8 @@
             <br/><br/>
             <input type="submit" value="Submit">
         </form>
+        <form name="cancel" action="index.php" method="POST">
+            <input type="submit" value="Cancel">
+        </form>
     </body>
 </html>
