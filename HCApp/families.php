@@ -5,11 +5,9 @@
 <body> 
 
 <?php
-    session_start();
-    if(!session_is_registered("Officer")){
-    header("location:stflogin.php");
-    }
-    echo "families"
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    verifyuser(array("Officer"));
 ?>
 
     <form name="home" action="officerhome.php" method="POST">

@@ -5,9 +5,9 @@
     </head> 
     <body> 
         <?php 
-            include 'functions.php';
-            include 'dbfunctions.php';
-            verifyuser("Cafeteria");
+            include_once 'functions.php';
+            include_once 'dbfunctions.php';
+            verifyuser(array("Cafeteria"));
 
             $numskip = getNumSkip();
         ?>

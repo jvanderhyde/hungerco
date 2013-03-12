@@ -1,8 +1,8 @@
-<?php
-    session_start();
-    if(!session_is_registered("IT")){
-    header("location:stflogin.php");
-    }
+<!DOCTYPE HTML>
+<?php 
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    verifyuser(array("Officer","IT"));
 
     // filename for download
     $filename = "skipper_list_" . date('Ymd') . ".xls";

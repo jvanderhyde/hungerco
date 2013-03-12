@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<?php 
+<?php
     session_start();
     if(isset($_SESSION['user']))
         unset($_SESSION['user']);
@@ -12,8 +12,8 @@
     </head>
     <body>
         <?php
-            include 'functions.php';
-            include 'dbfunctions.php';
+            include_once 'functions.php';
+            include_once 'dbfunctions.php';
             
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
@@ -23,24 +23,31 @@
             foreach($formInfo as $value)
                 $value = protectInjection($value);
             
-            //If the previous action was submit, verify login
-            if($_POST['action']=="Login")
-                verifyLogin($formInfo);
-            
-            //If the previous action was cancel, goes back to index page
-            else if($_POST['action']=="Cancel")
-                header("location:index.php");
+            if(isset($_POST['button']))
+            {
+                //If the previous action was submit, verify login
+                if($_POST['button']=="Login")
+                    $message = verifyLogin($formInfo);
+
+                //If the previous action was cancel, goes back to index page
+                else if($_POST['button']=="Cancel")
+                    header("location:index.php");
+            }
+                 
         ?>
         <h1>Student login</h1>
+        <p id="message">
+        <?php if(isset($message)) echo $message; ?>
+        </p>
         <form id="form" name="stlogin" action="stlogin.php" method="POST">
             Student ID<br />
                 <input type="text" size="40" name="studentID" value=
                     <?php echo $formInfo['id'];?>
-                required><br />
+                ><br />
             Password<br />
                 <input type="password" size="40" name="studentPass"><br/>
-            <input type="submit" value="Login">            
-            <input type="submit" value="Cancel">
+            <input type="submit" name="button" value="Login">            
+            <input type="submit" name="button" value="Cancel">
         </form>
         <br/><br/>
         <form name="createAccount" action="createaccount.php" method="POST">
@@ -61,13 +68,15 @@
     
     function verifyLogin($formInfo)
     {
-        if(existsInDatabase2("student","Id",$formInfo['id'],"Studpass",$formInfo['pass']))
+        if(existsInDatabase2("students","Id",$formInfo['id'],"Studpass","'".$formInfo['pass']."'"))
         {
-            regSess("Student", "stinfo.php");
+            session_start();
+            $_SESSION['studentid']=$formInfo['id'];
+            regUser("Student", "stinfo.php");
         }
         else
         {
-            $message = "Incorrect Username/Password Combination";
+            return $message = "Incorrect Username/Password Combination";
         }
     }
 ?>
