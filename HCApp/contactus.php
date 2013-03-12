@@ -13,8 +13,7 @@
             Phone<br />
                 <input type="text" size="40" name="phone"><br/>
             Message<br />
-                <textarea name='descrip' rows='15' cols='40'>
-                Type message here.
+                <textarea name='descrip' rows='15' cols='40'>Type message here.
                 </textarea>
             <br/><br/>
             <input type="submit" value="Submit">
