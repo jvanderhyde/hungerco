@@ -9,9 +9,9 @@
         $message = 'Name：' . $_POST['name'] . "\nAddress：" . $_POST['address']
                 . "\nPhone：" . $_POST['phone'] . "\nDescription：" . $_POST['descrip'];
         
-        //We need new mail address for H.C.Officer to handle this mail form part.
+        //We need mail sending program.
         
-        if (mail("H.C.Officer@mail", "contact mail",$message, "From: H.C.Officer@mail")) {
+        if (mail("hungercoalition@benedictine.edu", "contact mail",$message, "From: hungercoalition@benedictine.edu")) {
             echo'Thank you for submit';
         }
         else {
