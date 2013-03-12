@@ -1,8 +1,8 @@
-<!DOCTYPE HTML>
+<!DOCTYPE HTML> 
 <?php
-    include 'functions.php';
-    include 'dbfunctions.php';
-    verifyuser("Student");
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    verifyuser(array("Student"));
  ?>
 <html>
     <head>
@@ -18,7 +18,7 @@
         if($stinfo->isSkipper()){
             ?>
             <form name="removeSkipper" action="stinfo.php" method="POST">
-                    <font size="4">You are a skipper.</font>
+                    <font size="4">You are a skipper.</font><br />
                     <input type="hidden" name="updateSkipper" value="0">
                     <input type="submit" value="Remove skipper">
             </form>
@@ -27,7 +27,7 @@
         else{
             ?>
             <form name="becomeSkipper" action="stinfo.php" method="POST">
-                    <font size="4">You are not a skipper.</font>
+                    <font size="4">You are not a skipper.</font><br />
                     <input type="hidden" name="updateSkipper" value="1">
                     <input type="submit" value="Become skipper">
             </form>

@@ -1,8 +1,8 @@
 <!DOCTYPE HTML>
 <?php
-include 'functions.php';
-include 'dbfunctions.php';
-verifyuser("Student");
+include_once 'functions.php';
+include_once 'dbfunctions.php';
+verifyuser(array("Student"));
 if(!isset($_POST['oppnum'])){
      header("location:stinfo.php");
  }

@@ -1,26 +1,18 @@
+<!DOCTYPE HTML>
 <html>
-<head> 
-<title></title> 
-</head> 
-<body> 
-    
-<?php
-    session_start();
-    if(!session_is_registered("Officer")){
-    header("location:stflogin.php");
-    }
-    $username="hungerco";
-    $password="intensiveness";
-    $database="hungerco";
-    mysql_connect('localhost',$username,$password);
-    @mysql_select_db($database) or die( "Unable to select database");
-    $query="SELECT COUNT(Id)
-    FROM students
-    WHERE isskipper = 1";
-    $result=mysql_query($query);
-    $numskip=mysql_result($result,0,"count(id)");
-    print("Current number of skippers is: $numskip");
-?>
+    <head> 
+        <title>"Cafeteria Hunger Coalition Information</title> 
+    </head> 
+    <body> 
+        <?php 
+            include_once 'functions.php';
+            include_once 'dbfunctions.php';
+            verifyuser(array("Officer"));
+
+            $numskip = getNumSkip();
+        ?>
+
+        <h1>The current number of skippers is <?php echo $numskip ?></h1>
 
     <form name="download" action="skiplistdownload.php" method="POST">
         <input type="submit" value="Download Skipper List">

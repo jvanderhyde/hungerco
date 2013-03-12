@@ -2,3 +2,5 @@ Handle error from DB inaccessible
 Make connectToDB function private
 Better error message for account creation
 Add message for not logged in transfer to index
+Decide html version and meta data
+Previous message on login

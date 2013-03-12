@@ -3,11 +3,12 @@
     <head>
         <title>Create an Account</title>
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
         <?php
-            include 'functions.php';
-            include 'dbfunctions.php';
+            include_once 'functions.php';
+            include_once 'dbfunctions.php';
             
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
@@ -104,7 +105,7 @@
             //Creates account and verifies creation was successful
             $acctMade = makeAccount($formInfo);
             if(chkErr($acctMade))
-                regSess("Student","stinfo.php");
+                regUser("Student","stinfo.php");
         }
     }
     

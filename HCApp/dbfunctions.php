@@ -1,15 +1,15 @@
 <!DOCTYPE HTML>
 <?php 
 
-include "functions.php";
+include_once "functions.php";
 
 function connectToDB()
 {
     $username="hungerco";
     $password="intensiveness";
     $database="hungerco";
-    $link = mysqli_connect('localhost',$username,$password);
-    @mysqli_select_db($link, $database) or die( "Unable to select database");
+    $link = mysql_connect('localhost',$username,$password);
+    @mysql_select_db($database, $link) or die( "Unable to select database");
     return $link;
 }
 
@@ -20,12 +20,13 @@ function getNumSkip()
         "SELECT COUNT(Id)
         FROM students
         WHERE isskipper = 1";
-    $result=mysqli_query($link, $query);
-    return mysqli_result($result,0,"count(id)");
+    $result=mysql_query($query, $link);
+    return mysql_result($result,0,"count(id)");
 }
 
 function makeAccount($formInfo)
 {
+    $link = connectToDB();
     $query=
         "INSERT 
         INTO students 
@@ -33,7 +34,7 @@ function makeAccount($formInfo)
         {$formInfo['id']},{$formInfo['pass1']},0,
         {$formInfo['phone']},{$formInfo['email']})";
         
-    if(!mysqli_query($query))
+    if(!mysql_query($query, $link))
     {
         $isMade['message'] = "Could not create account!";
         $isMade['flag'] = false;
@@ -53,9 +54,10 @@ function existsInDatabase1($table,$attr,$value)
         "SELECT * 
         FROM $table 
         WHERE $attr=$value";
-    $result=mysqli_query($link, $query);
-    $num=mysqli_numrows($result);
-
+    
+    $result=mysql_query($query, $link);
+    $num=mysql_num_rows($result);
+    
     if($num==1){
         return true;
     }
@@ -72,8 +74,8 @@ function existsInDatabase2($table,$attr1,$value1,$attr2,$value2)
         FROM $table 
         WHERE $attr1=$value1 
           AND $attr2=$value2";
-    $result=mysqli_query($link, $query);
-    $num=mysqli_numrows($result);
+    $result=mysql_query($query, $link);
+    $num=mysql_num_rows($result);
 
     if($num==1){
         return true;
@@ -85,8 +87,9 @@ function existsInDatabase2($table,$attr1,$value1,$attr2,$value2)
 
 function protectInjection($input)
 {
+    $link = connectToDB();
     $stripinput=stripslashes($input);
-    $cleaninput=mysqli_real_escape_string($stripinput);
+    $cleaninput=mysql_real_escape_string($stripinput, $link);
     return $cleaninput;
 }
 

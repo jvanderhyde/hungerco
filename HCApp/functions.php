@@ -1,18 +1,18 @@
 <!DOCTYPE HTML>
 <?php
 
-include "dbfunctions.php";
+include_once "dbfunctions.php";
 
 function verifyuser($expected)
 {    
     session_start();
-    if($_SESSION['user']!=$expected)
+    if(!in_array($_SESSION['user'],$expected))
     {
         header("location:index.php");
     }
 }
 
-function regSess($user,$page)
+function regUser($user,$page)
 {               
     session_start();
     $_SESSION['user']=$user;
