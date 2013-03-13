@@ -18,13 +18,18 @@
             foreach($formInfo as $value)
                 $value = protectInjection($value);
             
-            //If the previous action was submit, creates an account
-            if(isset($_POST['action'])&&$_POST['action']=="Submit")
-                submitCreate($formInfo);
+            if(isset($_POST['button']))
+            {
+                //If the previous action was submit, creates an account
+                if($_POST['action']=="Submit")
+                    submitCreate($formInfo);
+
+                //If the previous action was cancel, goes back to student login page
+                if($_POST['action']=="Cancel")
+                    header("location:stlogin.php");
+            }
             
-            //If the previous action was cancel, goes back to student login page
-            else if(isset($_POST['action'])&&$_POST['action']=="Cancel")
-                header("location:stlogin.php");
+            
             
         ?>
         
@@ -73,8 +78,8 @@
                 <input type="password" size="40" name="pass2" required>
             <br/><br/>
             *Required Field
-            <input type="submit" value="Submit" name="action">
-            <input type="submit" value="Cancel" name="action">
+            <input type="submit" name="button" value="Submit" >
+            <input type="submit" name="button" value="Cancel" >
         </form>
         
     </body>

@@ -3,19 +3,24 @@
     include_once 'functions.php';
     include_once 'dbfunctions.php';
     verifyuser(array("Student"));
+    $id =$_SESSION["studentid"];
  ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
         <title>Student Information</title>
     </head>
     <body>
         <h1>Student Information</h1>
+        <!--<p id="Name"> <?php echo getStudName($id); ?> </p>-->
+  
         <?php
+        
         $stinfo = new StudentInformation();
         $stinfo->startUp();
         
-        if($stinfo->isSkipper()){
+        if(isSkipper($id)){
             ?>
             <form name="removeSkipper" action="stinfo.php" method="POST">
                     <font size="4">You are a skipper.</font><br />
@@ -132,9 +137,6 @@
                 }
             }
         }
-        ?>
-        
-        
-        
+        ?>   
     </body>
 </html>

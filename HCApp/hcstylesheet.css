@@ -24,4 +24,10 @@ root
     color:red;
 } 
 
+#name
+{
+    text-align:left;
+    font-weight:bold;
+}
+
 

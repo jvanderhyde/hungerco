@@ -6,10 +6,10 @@
 <body> 
     
 <?php
-    session_start();
-    if($_SESSION['count']!="It"){
-    header("location:stflogin.php");
-    }
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    verifyuser(array("It"));
+    
     $username="hungerco";
     $password="intensiveness";
     $database="hungerco";
