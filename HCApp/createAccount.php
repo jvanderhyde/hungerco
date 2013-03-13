@@ -21,11 +21,11 @@
             if(isset($_POST['button']))
             {
                 //If the previous action was submit, creates an account
-                if($_POST['action']=="Submit")
+                if($_POST['button']=="Submit")
                     submitCreate($formInfo);
 
                 //If the previous action was cancel, goes back to student login page
-                if($_POST['action']=="Cancel")
+                if($_POST['button']=="Cancel")
                     header("location:stlogin.php");
             }
             
@@ -43,7 +43,7 @@
                         else
                             echo "First*"
                     ?> 
-                required>
+                >
                 <input type="text" size="1" maxlength="1" name="minit" 
                 value=
                     <?php if(isset($_POST['minit']))
@@ -59,11 +59,11 @@
                         else
                             echo "Last*";
                     ?>
-                required><br /><br />
+                ><br /><br />
             Student ID*<br />
                 <input type="text" size="40" name="id" value=
                     <?php echo $formInfo['id'];?> 
-                required><br/><br/>
+                ><br/><br/>
             Phone<br />
                 <input type="text" size="40" name="phone" value=
                     <?php echo $formInfo['phone'];?>
@@ -73,11 +73,11 @@
                     <?php echo $formInfo['email'];?>
                 ><br/><br/>
             Password*<br />
-                <input type="password" size="40" name="pass1" required><br/><br/>
+                <input type="password" size="40" name="pass1" ><br/><br/>
             Re-enter Password*<br />
-                <input type="password" size="40" name="pass2" required>
+                <input type="password" size="40" name="pass2" >
             <br/><br/>
-            *Required Field
+            <p id="note"> *Required Field </p>
             <input type="submit" name="button" value="Submit" >
             <input type="submit" name="button" value="Cancel" >
         </form>
@@ -110,7 +110,12 @@
             //Creates account and verifies creation was successful
             $acctMade = makeAccount($formInfo);
             if(chkErr($acctMade))
+            {
+                logout();
+                session_start();
+                $_SESSION['studentid']=$formInfo['id'];
                 regUser("Student","stinfo.php");
+            }
         }
     }
     

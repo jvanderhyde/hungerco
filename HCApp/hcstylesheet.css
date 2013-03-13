@@ -24,6 +24,13 @@ root
     color:red;
 } 
 
+#note
+{
+    text-align:left;
+    font-weight:normal;
+    font-size:75%;
+}
+
 #name
 {
     text-align:left;
