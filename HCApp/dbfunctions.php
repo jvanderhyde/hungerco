@@ -13,6 +13,28 @@ function connectToDB()
     return $link;
 }
 
+function getStudName($id)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT fname, lname
+        FROM students
+        WHERE id = $id";
+    $result=mysql_query($query, $link);
+    return mysql_result($result,0,"fname")." ".mysql_result($result,0,"lname");
+}
+
+function isSkipper($id)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT isSkipper
+        FROM students
+        WHERE id = $id";
+    $result=mysql_query($query, $link);
+    return mysql_result($result,0,"isskipper");
+}
+
 function getNumSkip()
 {
     $link = connectToDB();
@@ -22,6 +44,16 @@ function getNumSkip()
         WHERE isskipper = 1";
     $result=mysql_query($query, $link);
     return mysql_result($result,0,"count(id)");
+}
+
+function getSkippers()
+{
+    $link = connectToDB();
+    $query=
+        "SELECT fname,minit,lname,id
+        FROM students
+        WHERE isskipper=1";
+    return mysql_query($query, $link);
 }
 
 function makeAccount($formInfo)
