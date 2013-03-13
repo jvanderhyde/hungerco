@@ -27,13 +27,14 @@ function getNumSkip()
 function makeAccount($formInfo)
 {
     $link = connectToDB();
+    $minit = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
+    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
+    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
     $query=
         "INSERT 
         INTO students 
-        VALUES ({$formInfo['fName']}, {$formInfo['minit']},{$formInfo['Name']},
-        {$formInfo['id']},{$formInfo['pass1']},0,
-        {$formInfo['phone']},{$formInfo['email']})";
-        
+        VALUES ('{$formInfo['fName']}', $minit,'{$formInfo['lName']}',
+        '{$formInfo['id']}','{$formInfo['pass1']}',0,$phone,$email)";
     if(!mysql_query($query, $link))
     {
         $isMade['message'] = "Could not create account!";
