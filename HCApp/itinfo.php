@@ -5,24 +5,33 @@
 </head> 
 <body> 
     
-<?php
-    include_once 'functions.php';
-    include_once 'dbfunctions.php';
-    verifyuser(array("It"));
-    
-    $username="hungerco";
-    $password="intensiveness";
-    $database="hungerco";
-    mysql_connect('localhost',$username,$password);
-    @mysql_select_db($database) or die( "Unable to select database");
-    $query="SELECT COUNT(Id)
-    FROM students
-    WHERE isskipper = 1";
-    $result=mysql_query($query);
-    $numskip=mysql_result($result,0,"count(id)");
-    print("Current number of skippers is: $numskip");
-?>
+    <?php
+        include_once 'functions.php';
+        include_once 'dbfunctions.php';
+        verifyuser(array("It"));
 
+        $numskip = getNumSkip();
+        $skippers = getSkippers();
+    ?>
+
+    <h1>The current number of skippers is <?php echo $numskip ?></h1>
+    
+    <table border="1">
+    <tr>
+    <th>Name</th>
+    <th>Student ID</th>
+    </tr>
+    <?php 
+    foreach ($skippers as $student) 
+    {
+        echo "<tr>";
+        echo "<td>".$student['fname']." ".$student['lname']."</td>";
+        echo "<td>".$student['id']."</td>";
+        echo "</tr>";
+    }
+    ?>
+    </table>
+    
     <form name="download" action="skiplistdownload.php" method="POST">
         <input type="submit" value="Download Skipper List">
     </form>
