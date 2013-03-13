@@ -19,11 +19,11 @@
                 $value = protectInjection($value);
             
             //If the previous action was submit, creates an account
-            if($_POST['action']=="Submit")
+            if(isset($_POST['action'])&&$_POST['action']=="Submit")
                 submitCreate($formInfo);
             
             //If the previous action was cancel, goes back to student login page
-            else if($_POST['action']=="Cancel")
+            else if(isset($_POST['action'])&&$_POST['action']=="Cancel")
                 header("location:stlogin.php");
             
         ?>
@@ -36,7 +36,7 @@
                     <?php if(isset($_POST['fName']))
                             echo $formInfo['fName'];
                         else
-                            echo "First"
+                            echo "First*"
                     ?> 
                 required>
                 <input type="text" size="1" maxlength="1" name="minit" 
@@ -52,20 +52,20 @@
                     <?php if(isset($_POST['lName']))
                             echo $formInfo['lName'];
                         else
-                            echo "Last";
+                            echo "Last*";
                     ?>
-                required>
+                required><br /><br />
             Student ID*<br />
                 <input type="text" size="40" name="id" value=
-                    <?php echo $formInfo['minit'];?> 
+                    <?php echo $formInfo['id'];?> 
                 required><br/><br/>
             Phone<br />
                 <input type="text" size="40" name="phone" value=
-                    <?php echo $formInfo['minit'];?>
+                    <?php echo $formInfo['phone'];?>
                 ><br/><br/>
             E-mail address<br />
                 <input type="text" size="40" name="email" value=
-                    <?php echo $formInfo['minit'];?>
+                    <?php echo $formInfo['email'];?>
                 ><br/><br/>
             Password*<br />
                 <input type="password" size="40" name="pass1" required><br/><br/>
@@ -73,8 +73,8 @@
                 <input type="password" size="40" name="pass2" required>
             <br/><br/>
             *Required Field
-            <input type="submit" value="Submit">
-            <input type="submit" value="Cancel">
+            <input type="submit" value="Submit" name="action">
+            <input type="submit" value="Cancel" name="action">
         </form>
         
     </body>
@@ -118,13 +118,19 @@
             $isvalid['flag'] = false;
             return $isvalid;
         }
-        elseif(existsInDatabase("students","Id",$formInfo['id']))
+        elseif(strlen($formInfo['id'])!=6)
         {
-            $this->message = "This student ID has already been registered.";
+            $isvalid['message'] = "Please fill 6 numbers for student ID";
             $isvalid['flag'] = false;
             return $isvalid;
         }
-        elseif(strcmp($formInfo['pass1'],$formInfo['pass2']!=0))
+        elseif(existsInDatabase1("students","Id",$formInfo['id']))
+        {
+            $isvalid['message'] = "This student ID has already been registered.";
+            $isvalid['flag'] = false;
+            return $isvalid;
+        }
+        elseif(strcmp($formInfo['pass1'],$formInfo['pass2'])!=0)
         {
             $isvalid['message'] = "Your passwords do not equal.";
             $isvalid['flag'] = false;
