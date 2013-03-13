@@ -3,6 +3,12 @@
 
 include_once "dbfunctions.php";
 
+function logout()
+{
+    session_start();
+    session_destroy();
+}
+
 function verifyuser($expected)
 {    
     session_start();
