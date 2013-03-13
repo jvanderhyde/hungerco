@@ -35,6 +35,24 @@ function isSkipper($id)
     return mysql_result($result,0,"isskipper");
 }
 
+function getSkippers()
+{
+    $link = connectToDB();
+    $query=
+        "SELECT fname, lname, id
+        FROM students
+        WHERE isskipper = 1";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+
+    for($i=0;$i<$n;$i++)
+    {
+        $students[$i] = mysql_fetch_assoc($result);
+    }    
+    
+    return $students;
+}
+
 function getNumSkip()
 {
     $link = connectToDB();
@@ -44,16 +62,6 @@ function getNumSkip()
         WHERE isskipper = 1";
     $result=mysql_query($query, $link);
     return mysql_result($result,0,"count(id)");
-}
-
-function getSkippers()
-{
-    $link = connectToDB();
-    $query=
-        "SELECT fname,minit,lname,id
-        FROM students
-        WHERE isskipper=1";
-    return mysql_query($query, $link);
 }
 
 function makeAccount($formInfo)
