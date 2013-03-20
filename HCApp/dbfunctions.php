@@ -178,6 +178,10 @@ function protectInjection($input)
     return $cleaninput;
 }
 
+function getVolunteerOppotunityInformation($oppnum){
+    $sql="SELECT * FROM vol_opps WHERE Oppnum=$oppnum";
+    return mysql_query($sql);
+}
 
 ?>
 
