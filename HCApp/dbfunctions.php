@@ -53,6 +53,50 @@ function getSkippers()
     return $students;
 }
 
+function getVolOpps()
+{
+    $link = connectToDB();
+    $query=
+        "SELECT date, oppname, oppnum
+        FROM vol_opps
+        WHERE date >= CURRENT_DATE
+        ORDER BY date";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+
+    for($i=0;$i<$n;$i++)
+    { 
+        $volOpps[$i] = mysql_fetch_assoc($result);
+    }    
+    
+    return $volOpps;
+}
+
+function getVolunteers($oppnum)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT fname, lname
+        FROM students, volunteers
+        WHERE voppnum='$oppnum' AND volid=id
+        ORDER BY lname";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+
+    for($i=0;$i<$n;$i++)
+    { 
+        $vols[$i] = mysql_fetch_assoc($result);
+    }    
+    if(isset($vols))
+    {
+        $areVols['flag']=1;
+        $areVols['vols']=$vols;
+    }
+    else
+        $areVols['flag']=0;
+    return $areVols;
+}
+
 function getNumSkip()
 {
     $link = connectToDB();
