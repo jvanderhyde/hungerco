@@ -1,0 +1,40 @@
+/* 
+    Document   : hcstylesheet
+    Created on : Mar 7, 2013, 1:46:47 PM
+    Author     : Amanda and Daisuke
+    Description:
+        To format the Hunger Coalition Website uniformly and effectively
+*/
+
+root 
+{ 
+    display: block;
+}
+
+#form
+{
+    text-align:left;
+    font-weight:bold;
+} 
+
+#message
+{
+    text-align:left;
+    font-weight:bold;
+    color:red;
+} 
+
+#note
+{
+    text-align:left;
+    font-weight:normal;
+    font-size:75%;
+}
+
+#name
+{
+    text-align:left;
+    font-weight:bold;
+}
+
+
