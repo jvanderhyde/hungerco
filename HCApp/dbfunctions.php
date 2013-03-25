@@ -132,6 +132,84 @@ function makeAccount($formInfo)
     }
 }
 
+function makeFamily($formInfo)
+{
+    $link = connectToDB();
+    $numLunch = empty($formInfo['numLunch'])?'null':$formInfo['numLunch'];
+    $famPhone = empty($formInfo['famPhone'])?'null':"'{$formInfo['famPhone']}'";
+    $notes = empty($formInfo['notes'])?'null':"'{$formInfo['notes']}'";
+    $query=
+        "INSERT 
+        INTO families 
+        VALUES ('{$formInfo['famName']}', $numLunch,'{$formInfo['address']}',
+        '{$formInfo['city']}',$famPhone,$notes)";
+    if(!mysql_query($query, $link))
+    {
+        $isMade['message'] = "Could not create account!";
+        $isMade['flag'] = false;
+        return $isMade;
+    }
+    else
+    {
+        $isMade['flag'] = true;
+        return $isMade;
+    }
+}
+
+function getFamilies()
+{
+    $link = connectToDB();
+    $query=
+        "SELECT *
+        FROM families";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+
+    for($i=0;$i<$n;$i++)
+    {
+        $families[$i] = mysql_fetch_assoc($result);
+    }    
+    
+    return $families;
+}
+
+function getFamilyInfo($address,$city)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT *
+        FROM families
+        WHERE Address='$address' AND City='$city'";
+    $result = mysql_query($query, $link);
+    return mysql_fetch_assoc($result);
+}
+
+function modifyFamily($formInfo,$origInfo)
+{
+    $link = connectToDB();
+    $numLunch = empty($formInfo['numLunch'])?'null':$formInfo['numLunch'];
+    $famPhone = empty($formInfo['famPhone'])?'null':"'{$formInfo['famPhone']}'";
+    $notes = empty($formInfo['notes'])?'null':"'{$formInfo['notes']}'";
+    $query=
+        "UPDATE families 
+        SET Famname='{$formInfo['famName']}', NumLunch=$numLunch, Address='{$formInfo['address']}',
+            City='{$formInfo['city']}', Famphone=$famPhone, Notes=$notes
+        WHERE Address='{$origInfo['Address']}' AND City='{$origInfo['City']}'";
+        
+    $result = mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    if(!$result)
+    {
+        $isMade['message'] = "Could not modify account!";
+        $isMade['flag'] = false;
+        return $isMade;
+    }
+    else
+    {
+        $isMade['flag'] = true;
+        return $isMade;
+    }
+}
+
 function existsInDatabase1($table,$attr,$value)
 {
     $link = connectToDB();
