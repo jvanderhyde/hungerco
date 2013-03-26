@@ -45,7 +45,7 @@
             <input type="hidden" name="month" value=<?php echo date("m");?>>
             <input type="submit" value="Volunteer Opportunities">
         </form>
-        <form name="logout" action="stlogin.php" method="POST">
+        <form name="logout" action="logout.php" method="POST">
             <input type="submit" value="Logout">
         </form>
         
