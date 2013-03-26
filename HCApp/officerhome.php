@@ -11,6 +11,9 @@
     verifyuser(array("Officer"));
 ?>
 
+    <form name="stacounts" action="stacounts.php" method="POST">
+        <input type="submit" value="Student Accounts">
+    </form>
     <form name="skippers" action="skippers.php" method="POST">
         <input type="submit" value="View Skippers">
     </form>
@@ -25,6 +28,10 @@
     
     <form name="routes" action="routes.php" method="POST">
         <input type="submit" value="View Routes">
+    </form>
+    
+    <form name="logout" action="logout.php" method="POST">
+            <input type="submit" value="Logout">
     </form>
     
 </body>
