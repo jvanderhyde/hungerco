@@ -37,18 +37,19 @@
         <form id="form" name="stlogin" action="stlogin.php" method="POST">
             Student ID<br />
                 <input type="text" size="40" name="studentID" value=
-                    <?php echo $formInfo['id'];?>
+                    "<?php echo $formInfo['id'];?>"
                 ><br />
             Password<br />
                 <input type="password" size="40" name="studentPass"><br/>
             <input type="submit" name="button" value="Login">            
             <input type="submit" name="button" value="Cancel">
         </form>
+        <!--
         <br/><br/>
         <form name="createAccount" action="createaccount.php" method="POST">
             <input type="submit" value="Create an Account">
         </form>        
-        
+        -->
     </body>
 </html>
 

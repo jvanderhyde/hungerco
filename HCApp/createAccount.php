@@ -9,6 +9,7 @@
         <?php
             include_once 'functions.php';
             include_once 'dbfunctions.php';
+            verifyuser(array("Officer"));
             
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
@@ -26,7 +27,7 @@
 
                 //If the previous action was cancel, goes back to student login page
                 if($_POST['button']=="Cancel")
-                    header("location:stlogin.php");
+                    header("location:staccounts.php");
             }
             
             
@@ -111,10 +112,13 @@
             $acctMade = makeAccount($formInfo);
             if(chkErr($acctMade))
             {
-                logout();
+                
+                //logout();
                 session_start();
-                $_SESSION['studentid']=$formInfo['id'];
-                regUser("Student","stinfo.php");
+                $_SESSION['stid']=$formInfo['id'];
+                //regUser("Student","stinfo.php");
+                header("location:st_account_info.php");
+                
             }
         }
     }
