@@ -35,6 +35,37 @@ function isSkipper($id)
     return mysql_result($result,0,"isskipper");
 }
 
+function changeSkipperValue($id,$value)
+{
+    $link = connectToDB();
+    $query=
+        "UPDATE students
+        SET IsSkipper = $value
+        WHERE id = $id";
+    mysql_query($query, $link);
+}
+
+function getStudentInfo($id)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT *
+        FROM students
+        WHERE id = $id";
+    $result=mysql_query($query, $link);
+    
+    $info['fName'] = mysql_result($result,0,"Fname");
+    $info['minit'] = mysql_result($result,0,"Minit");
+    $info['lName'] = mysql_result($result,0,"Lname");
+    $info['phone'] = mysql_result($result,0,"Studphone");
+    $info['id']    = mysql_result($result,0,"Id");
+    $info['email'] = mysql_result($result,0,"StudEmail");
+    $info['pass']  = mysql_result($result,0,"Studpass");
+    $info['isSkipper'] = mysql_result($result,0,"IsSkipper");
+
+    return $info;
+}
+
 function getSkippers()
 {
     $link = connectToDB();
@@ -70,6 +101,37 @@ function getVolOpps()
     }    
     
     return $volOpps;
+}
+
+function getPersonalVolOpps($id)
+{
+    $link = connectToDB();
+    $ymd=date('Ymd');
+    $query="SELECT * FROM vol_opps WHERE Oppnum IN(
+            SELECT Voppnum FROM volunteers WHERE Volid='$id')
+            AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
+            ORDER BY Date";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+    if($n==0)
+    {
+        return false;
+    }
+    else
+    {
+        for($i=0;$i<$n;$i++)
+        { 
+            $volOpps[$i] = mysql_fetch_assoc($result);
+        }    
+
+        return $volOpps;
+    }
+}
+
+function removeVolunteerValue($id,$oppnum)
+{
+    $query="DELETE FROM volunteers WHERE Volid='$id' AND Voppnum=$oppnum";
+    mysql_query($query);
 }
 
 function getVolunteers($oppnum)
