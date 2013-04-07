@@ -128,10 +128,43 @@ function getPersonalVolOpps($id)
     }
 }
 
+function getUnregisteredVolOpps($id)
+{
+    $link = connectToDB();
+    $ymd=date('Ymd');
+    $query="SELECT * FROM vol_opps WHERE Oppnum NOT IN(
+            SELECT Voppnum FROM volunteers WHERE Volid='$id')
+            AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
+            ORDER BY Date";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+    if($n==0)
+    {
+        return false;
+    }
+    else
+    {
+        for($i=0;$i<$n;$i++)
+        { 
+            $volOpps[$i] = mysql_fetch_assoc($result);
+        }    
+
+        return $volOpps;
+    }
+}
+
 function removeVolunteerValue($id,$oppnum)
 {
+    $link = connectToDB();
     $query="DELETE FROM volunteers WHERE Volid='$id' AND Voppnum=$oppnum";
-    mysql_query($query);
+    mysql_query($query, $link);
+}
+
+function addVolunteerValue($id,$oppnum)
+{
+    $link = connectToDB();
+    $query="INSERT INTO volunteers VALUES ('$id', $oppnum)";
+    mysql_query($query, $link);
 }
 
 function getVolunteers($oppnum)
@@ -184,6 +217,34 @@ function makeAccount($formInfo)
     if(!mysql_query($query, $link))
     {
         $isMade['message'] = "Could not create account!";
+        $isMade['flag'] = false;
+        return $isMade;
+    }
+    else
+    {
+        $isMade['flag'] = true;
+        return $isMade;
+    }
+}
+
+function modifyAccount($formInfo,$origID)
+{
+    $link = connectToDB();
+    $middle = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
+    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
+    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
+    
+    
+    $query=
+        "UPDATE students
+        SET Fname='{$formInfo['fName']}', Minit=$middle, Lname='{$formInfo['lName']}',
+            Studphone=$phone, StudEmail=$email, Studpass='{$formInfo['pass']}'
+        WHERE Id='{$origID}'";
+       
+    $result = mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    if(!$result)
+    {
+        $isMade['message'] = "Could not modify account!";
         $isMade['flag'] = false;
         return $isMade;
     }
