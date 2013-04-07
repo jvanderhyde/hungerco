@@ -38,7 +38,7 @@
         <br />
         <form name="createAccount" action="createaccount.php" method="POST">
             <input type="submit" value="Create an Account">
-        </form>
+        </form><br />
         <form name="home" action="officerhome.php" method="POST">
             <input type="submit" value="Back to Home Page">
         </form>
