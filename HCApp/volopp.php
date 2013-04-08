@@ -1,22 +1,22 @@
 <!DOCTYPE HTML>
 <?php
-include_once 'functions.php';
-include_once 'dbfunctions.php';
-verifyuser(array("Student"));
-if(!isset($_POST['year']))
-{
-     header("location:stinfo.php");
-}
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    include_once 'displayfunctions.php';
+    require_once("CalendarClass.php");
+    verifyuser(array("Student"));
 ?>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title></title>
+        <title>Volunteer Opportunities</title>
+        <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body>
         <?php
-        $year=isset($_POST['year'])?$_POST['year']:"";
-        $month=isset($_POST['month'])?$_POST['month']:"";
+        $year=isset($_POST['year'])?$_POST['year']:date("Y");
+        $month=isset($_POST['month'])?$_POST['month']:date("m");
         makeLinks($year, $month);
         
         getConnectionWithDatabase();
@@ -25,7 +25,7 @@ if(!isset($_POST['year']))
         $joinedopp=getJoinedOpportunityNumber();
         mysql_close();
         
-        require_once("CalendarClass.php");
+        
         $obj_cdr = &  new CalendarClass();
         if(isset($resource)){
             $obj_cdr->setVolunteerOpportunity($joinedopp, $resource,"./volopp_info.php");

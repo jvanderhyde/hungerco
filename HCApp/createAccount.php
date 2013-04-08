@@ -1,4 +1,9 @@
 <!DOCTYPE HTML>
+<?php
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    include_once 'displayfunctions.php';
+?>
 <html>
     <head>
         <title>Create an Account</title>
@@ -6,10 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <?php
-            include_once 'functions.php';
-            include_once 'dbfunctions.php';
-            
+        <div id="page-container">
+        <?php         
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
             $formInfo = getPostInfo();
@@ -28,9 +31,7 @@
                 if($_POST['button']=="Cancel")
                     header("location:stlogin.php");
             }
-            
-            
-            
+                   
         ?>
         
         <h1>Create an Account</h1>
@@ -82,6 +83,7 @@
             <input type="submit" name="button" value="Cancel" >
         </form>
         
+        </div>
     </body>
 </html>
 
