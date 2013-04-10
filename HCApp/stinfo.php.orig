@@ -15,28 +15,11 @@
     </head>
     <body>
         <?php
-        
-        if(isset($_POST['button']))
-        {
-            //If the previous action was remove skipper
-            if($_POST['button']=="Remove from list")
-                changeSkipperValue($id,0);
-
-            //If the previous action was become skipper
-            else if($_POST['button']=="Add to list")
-                changeSkipperValue($id,1);
-        }
-        
-        if(isset($_POST['unvolunteer']))
-        {
-            removeVolunteerValue($id,$_POST['unvolunteer']);
-        }
+                    $stinfo = new StudentInformation();
+                    $stinfo->startUp();
         ?>
-            
         <div id="page-container">
-            <div id="header">
-                <?php studmenu("Welcome <?php echo getStudName($id); ?>"); ?>
-            </div>
+            <?php studmenu("Welcome <?php echo getStudName($id); ?>"); ?>
             <div id="content">      
                 <?php
                     if(isSkipper($id))
@@ -50,10 +33,11 @@
                         <input type="hidden" name="year" value=<?php echo date("Y");?>>
                         <input type="hidden" name="month" value=<?php echo date("m");?>>
                         <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
+                    </form>
                     Can't do Skip-a-Meal?
                     <form name="removeSkipper" action="stinfo.php" method="POST">
-                        <input type="submit" name="button" value="Remove from list">
+                        <input type="hidden" name="updateSkipper" value="0">
+                        <input type="submit" value="Remove from list">
                     </form>
                 </p>
                 <?php
@@ -61,28 +45,28 @@
                     else
                     {
                 ?>
-                <p>
+                    <p>
                     You are currently not on Skip-a-Meal.<br/><br/>
                     Want to help?
                     <form name="volopp" action="volopp.php" method="POST">
                         <input type="hidden" name="year" value=<?php echo date("Y");?>>
                         <input type="hidden" name="month" value=<?php echo date("m");?>>
                         <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
+                    </form>
                     Want to sign up for Skip-a-Meal?
                     <form name="becomeSkipper" action="stinfo.php" method="POST">
                         <input type="hidden" name="updateSkipper" value="1">
-                        <input type="submit" name="button" value="Add to list">
+                        <input type="submit" value="Add to list">
                     </form>
                 </p>
                 <?php   
                     }
                 ?>
+                <div id="sidebar"> 
+                    <?php $stinfo->showVolunteerInformation(); ?>
+                </div>
+                <div id="footer">Footer</div> 
             </div>
-            <div id="sidebar"> 
-                <?php showVolunteerInformation($id); ?>
-            </div>
-            <div id="footer">Footer</div> 
         </div>
     </body>
 </html>
@@ -157,38 +141,22 @@ class StudentInformation{
     function showSkipperInformation(){
         echo"<font size=\"4\"><b>$this->fname $this->lname ($this->id)</b></font>";
     }
-}
 
-function showVolunteerInformation($id)
-{        
-    $volopps = getPersonalVolOpps($id);
-    if($volopps)
+    function showVolunteerInformation()
     {
-        echo "<table border='1'>
-            <tr>
-                <th>Date</th>
-                <th>Name</th>
-                <th></th>
-            </tr>";
-        foreach ($volopps as $volopp) 
+        $result=$this->resultVol;
+        $numVol=mysql_numrows($result);
+        for($i=0; $i<$numVol; $i++)
         {
-            $date = $volopp['Date'];
-            $name = $volopp['Oppname'];
-            $num = $volopp['Oppnum'];
-            echo "<tr>
-                    <td>$date</td>
-                    <td>$name</td>
-                    <td>
-                        <form name='unvolunteer' action='stinfo.php' method='POST'>
-                            <input type='hidden' name='unvolunteer' value=$num>
-                            <input type='submit' value='Unvolunteer'>
-                        </form>
-                    </td>
-                </tr>";
+            $date=mysql_result($result,$i,"Date");
+            $oppname=mysql_result($result,$i,"Oppname");
+            $oppnum=mysql_result($result,$i,"Oppnum");
+            echo '<form name="volunteers" action="stinfo.php" method="POST">
+                <font size="4"><?php echo "$date $oppname";?></font>
+                <input type="hidden" name="unvolunteer" value=<?php echo $oppnum;?>>
+                <input type="submit" value="Unvolunteer">
+                </form>';
         }
-        echo "</table><br/>";
-
-        echo "</table><br/>";
     }
 }
 ?>   

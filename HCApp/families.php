@@ -10,7 +10,7 @@
 
         $families = getFamilies();
     ?>
-    <h1>The current families</h1>
+    <h1>The Current Families</h1>
 
     <form name="add" action="create_family.php" method="POST">
         <input type="submit" value="Add Family">

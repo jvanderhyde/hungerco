@@ -6,7 +6,7 @@
 ?>
 <html>
     <head>
-        <title>Create an Account</title>
+        <title>Modify an Account</title>
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
@@ -15,6 +15,14 @@
             include_once 'functions.php';
             include_once 'dbfunctions.php';
             verifyuser(array("Officer"));
+            if(isset($_SESSION["stid"]))
+            {
+                $id = $_SESSION["stid"];
+            }
+            else
+            {
+                header("location:staccounts.php");
+            }
             
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
@@ -27,25 +35,28 @@
             if(isset($_POST['button']))
             {
                 //If the previous action was submit, creates an account
-                if($_POST['button']=="Submit")
-                    submitCreate($formInfo);
+                if($_POST['button']=="Modify")
+                    submitModify($formInfo);
 
                 //If the previous action was cancel, goes back to student login page
                 if($_POST['button']=="Cancel")
-                    header("location:staccounts.php");
+                    header("location:st_account_info.php");
             }
-                   
+            
+            $stinfo = getStudentInfo($id);
+            
+            
         ?>
         
-        <h1>Create an Account</h1>
-        <form id="form" name="createaccount" action="createAccount.php" method="POST">
-            Name<br />
+        <h1>Modify the Account of ID:<?php echo $id; ?></h1>
+        <form id="form" name="modifyaccount" action="modify_staccount.php" method="POST">
+            Name(First*, Middle, Last*)<br />
                 <input type="text" size="20" name="fName" 
                 value=
                     <?php if(isset($_POST['fName']))
                             echo $formInfo['fName'];
                         else
-                            echo "First*"
+                            echo $stinfo['fName'];
                     ?> 
                 >
                 <input type="text" size="1" maxlength="1" name="minit" 
@@ -53,7 +64,7 @@
                     <?php if(isset($_POST['minit']))
                             echo $formInfo['minit'];
                         else
-                            echo "M";
+                            echo isset($stinfo['minit'])?$stinfo['minit']:"";
                     ?>
                 >
                 <input type="text" size="20" name="lName" 
@@ -61,28 +72,36 @@
                     <?php if(isset($_POST['lName']))
                             echo $formInfo['lName'];
                         else
-                            echo "Last*";
+                            echo $stinfo['lName'];
                     ?>
                 ><br /><br />
-            Student ID*<br />
-                <input type="text" size="40" name="id" value=
-                    <?php echo $formInfo['id'];?> 
-                ><br/><br/>
+            
             Phone<br />
                 <input type="text" size="40" name="phone" value=
-                    <?php echo $formInfo['phone'];?>
+                    <?php if(isset($_POST['phone']))
+                            echo $formInfo['phone'];
+                        else
+                            echo isset($stinfo['phone'])?$stinfo['phone']:"";
+                    ?>
                 ><br/><br/>
             E-mail address<br />
                 <input type="text" size="40" name="email" value=
-                    <?php echo $formInfo['email'];?>
+                    <?php if(isset($_POST['email']))
+                            echo $formInfo['email'];
+                        else
+                            echo isset($stinfo['email'])?$stinfo['email']:"";
+                    ?>
                 ><br/><br/>
             Password*<br />
-                <input type="password" size="40" name="pass1" ><br/><br/>
-            Re-enter Password*<br />
-                <input type="password" size="40" name="pass2" >
-            <br/><br/>
+                <input type="text" size="40" name="pass" value=
+                    <?php if(isset($_POST['pass']))
+                            echo $formInfo['pass'];
+                        else
+                            echo $stinfo['pass'];
+                    ?>
+                ><br/><br/>
             <p id="note"> *Required Field </p>
-            <input type="submit" name="button" value="Submit" >
+            <input type="submit" name="button" value="Modify" >
             <input type="submit" name="button" value="Cancel" >
         </form>
         
@@ -97,15 +116,13 @@
         $formInfo['minit'] = assignPostData('minit');
         $formInfo['lName'] = assignPostData('lName');
         $formInfo['phone'] = assignPostData('phone');
-        $formInfo['id']    = assignPostData('id');
         $formInfo['email'] = assignPostData('email');
-        $formInfo['pass1'] = assignPostData('pass1');
-        $formInfo['pass2'] = assignPostData('pass2');
+        $formInfo['pass'] = assignPostData('pass');
         
         return $formInfo;
     }
 
-    function submitCreate($formInfo)
+    function submitModify($formInfo)
     {
         //Ensures information entered properly
         $formValid = chkCrtAcctVldty($formInfo);
@@ -113,44 +130,19 @@
         if(chkErr($formValid))
         {
             //Creates account and verifies creation was successful
-            $acctMade = makeAccount($formInfo);
+            $acctMade = modifyAccount($formInfo,$_SESSION['stid']);
             if(chkErr($acctMade))
             {
-                
-                //logout();
-                session_start();
-                $_SESSION['stid']=$formInfo['id'];
-                //regUser("Student","stinfo.php");
                 header("location:st_account_info.php");
-                
             }
         }
     }
     
     function chkCrtAcctVldty($formInfo)
     {
-        if(!$formInfo['fName']||!$formInfo['lName']||!$formInfo['id']
-                ||!$formInfo['pass1']||!$formInfo['pass2'])
+        if(!$formInfo['fName']||!$formInfo['lName']||!$formInfo['pass'])
         {
             $isvalid['message'] = "Please fill all blank spaces required";
-            $isvalid['flag'] = false;
-            return $isvalid;
-        }
-        elseif(strlen($formInfo['id'])!=6)
-        {
-            $isvalid['message'] = "Please fill 6 numbers for student ID";
-            $isvalid['flag'] = false;
-            return $isvalid;
-        }
-        elseif(existsInDatabase1("students","Id",$formInfo['id']))
-        {
-            $isvalid['message'] = "This student ID has already been registered.";
-            $isvalid['flag'] = false;
-            return $isvalid;
-        }
-        elseif(strcmp($formInfo['pass1'],$formInfo['pass2'])!=0)
-        {
-            $isvalid['message'] = "Your passwords do not equal.";
             $isvalid['flag'] = false;
             return $isvalid;
         }
