@@ -11,7 +11,7 @@
     verifyuser(array("Officer"));
 ?>
 
-    <form name="stacounts" action="stacounts.php" method="POST">
+    <form name="staccounts" action="staccounts.php" method="POST">
         <input type="submit" value="Student Accounts">
     </form>
     <form name="skippers" action="skippers.php" method="POST">

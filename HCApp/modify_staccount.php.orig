@@ -11,11 +11,8 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     </head>
     <body>
-        <?php
-            include_once 'functions.php';
-            include_once 'dbfunctions.php';
-            verifyuser(array("Officer"));
-            
+        <div id="page-container">
+        <?php         
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
             $formInfo = getPostInfo();
@@ -32,7 +29,7 @@
 
                 //If the previous action was cancel, goes back to student login page
                 if($_POST['button']=="Cancel")
-                    header("location:staccounts.php");
+                    header("location:stlogin.php");
             }
                    
         ?>
@@ -116,13 +113,10 @@
             $acctMade = makeAccount($formInfo);
             if(chkErr($acctMade))
             {
-                
-                //logout();
+                logout();
                 session_start();
-                $_SESSION['stid']=$formInfo['id'];
-                //regUser("Student","stinfo.php");
-                header("location:st_account_info.php");
-                
+                $_SESSION['studentid']=$formInfo['id'];
+                regUser("Student","stinfo.php");
             }
         }
     }
