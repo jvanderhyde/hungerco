@@ -103,14 +103,37 @@ function getVolOpps()
     return $volOpps;
 }
 
-function getPersonalVolOpps($id)
+function getMonthlyVolOpps($year, $month)
 {
     $link = connectToDB();
-    $ymd=date('Ymd');
+    $ym=sprintf("%04d%02d", $year, $month);
+    $query="SELECT * FROM vol_opps WHERE DATE_FORMAT(Date,'%Y%m')=$ym";
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+    if($n==0)
+    {
+        return false;
+    }
+    else
+    {
+        for($i=0;$i<$n;$i++)
+        { 
+            $volOpps[$i] = mysql_fetch_assoc($result);
+        }    
+
+        return $volOpps;
+    }
+}
+
+function getMonthlyRegisteredVolOpps($id, $year, $month)
+{
+    $link = connectToDB();
+    $ym=sprintf("%04d%02d", $year, $month);
     $query="SELECT * FROM vol_opps WHERE Oppnum IN(
             SELECT Voppnum FROM volunteers WHERE Volid='$id')
-            AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
+            AND DATE_FORMAT(Date,'%Y%m')=$ym
             ORDER BY Date";
+    
     $result=mysql_query($query, $link);
     $n=mysql_num_rows($result);
     if($n==0)
@@ -128,14 +151,23 @@ function getPersonalVolOpps($id)
     }
 }
 
-function getUnregisteredVolOpps($id)
+function getPersonalVolOpps($id, $onlyfuture)
 {
     $link = connectToDB();
     $ymd=date('Ymd');
-    $query="SELECT * FROM vol_opps WHERE Oppnum NOT IN(
-            SELECT Voppnum FROM volunteers WHERE Volid='$id')
-            AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
-            ORDER BY Date";
+    if($onlyfuture)
+    {
+        $query="SELECT * FROM vol_opps WHERE Oppnum IN(
+                SELECT Voppnum FROM volunteers WHERE Volid='$id')
+                AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
+                ORDER BY Date";
+    }
+    else
+    {
+        $query="SELECT * FROM vol_opps WHERE Oppnum IN(
+                SELECT Voppnum FROM volunteers WHERE Volid='$id')
+                ORDER BY Date";
+    }
     $result=mysql_query($query, $link);
     $n=mysql_num_rows($result);
     if($n==0)
@@ -152,6 +184,59 @@ function getUnregisteredVolOpps($id)
         return $volOpps;
     }
 }
+
+function getUnregisteredVolOpps($id,$onlyfuture)
+{
+    $link = connectToDB();
+    $ymd=date('Ymd');
+    if($onlyfuture)
+    {
+        $query="SELECT * FROM vol_opps WHERE Oppnum NOT IN(
+                SELECT Voppnum FROM volunteers WHERE Volid='$id')
+                AND DATE_FORMAT(Date,'%Y%m%d')>=$ymd
+                ORDER BY Date";
+    }
+    else
+    {
+        $query="SELECT * FROM vol_opps WHERE Oppnum NOT IN(
+                SELECT Voppnum FROM volunteers WHERE Volid='$id')
+                ORDER BY Date";
+    }
+    $result=mysql_query($query, $link);
+    $n=mysql_num_rows($result);
+    if($n==0)
+    {
+        return false;
+    }
+    else
+    {
+        for($i=0;$i<$n;$i++)
+        { 
+            $volOpps[$i] = mysql_fetch_assoc($result);
+        }    
+
+        return $volOpps;
+    }
+}
+
+function selectFutureVolOpps($volopps)
+{
+    $volopparray=array();
+    $today=date("Y-m-s");
+    foreach ($volopps as $volopp)
+    {
+        if($volopp['Date']>=$today)
+            array_push($volopparray,$volopp);
+    }
+    return $volopparray;
+}
+
+function getVolunteerOppotunityInformation($oppnum)
+{
+    $sql="SELECT * FROM vol_opps WHERE Oppnum=$oppnum";
+    return mysql_query($sql);
+}
+
 
 function removeVolunteerValue($id,$oppnum)
 {
@@ -379,10 +464,7 @@ function protectInjection($input)
     return $cleaninput;
 }
 
-function getVolunteerOppotunityInformation($oppnum){
-    $sql="SELECT * FROM vol_opps WHERE Oppnum=$oppnum";
-    return mysql_query($sql);
-}
+
 
 ?>
 

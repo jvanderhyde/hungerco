@@ -92,7 +92,7 @@
         </form><br />
         
         <?php
-        $volopps = getPersonalVolOpps($id);
+        $volopps = getPersonalVolOpps($id,true);
         if($volopps)
         {
         ?>
@@ -125,7 +125,7 @@
         <?php
         }
         
-        $unregisteredvolopps = getUnregisteredVolOpps($id);
+        $unregisteredvolopps = getUnregisteredVolOpps($id,true);
         if($unregisteredvolopps)
         {
         ?>

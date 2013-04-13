@@ -49,7 +49,11 @@
 <?php
     function verifyView($formid)
     {
-        if(existsInDatabase1("students","Id",$formid))
+        if(!$formid)
+        {
+           return $message = "Please fill Student ID";
+        }
+        elseif(existsInDatabase1("students","Id",$formid))
         {
             session_start();
             $_SESSION["stid"] = $formid;
