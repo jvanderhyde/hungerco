@@ -55,7 +55,7 @@ class CalendarClass {
     var $_volopp;
     
     // for Volunteer Opportunity link form
-    var $_volopplink;
+    var $_voloppform;
 
    /**
     * コンストラクタ(PHP5対応)
@@ -436,28 +436,46 @@ class CalendarClass {
         return $ret;
     }
     
-    function setVolunteerOpportunity($joinedopp, $resource, $link){
-        $numRes=mysql_numrows($resource);
-            for($i=0; $i<$numRes; $i++){
-                $date=mysql_result($resource,$i,"Date");
-                $oppname=mysql_result($resource,$i,"Oppname");
-                $oppnum=mysql_result($resource,$i,"Oppnum");
-                $this->setOpportunityDay($date, $oppname, $oppnum, $link, in_array($oppnum, $joinedopp));
-            }
+    function setAdminVolunteerOpportunity($allopps, $link)
+    {
+        foreach ($allopps as $volopp)
+        {
+            $date=$volopp['Date'];
+            $oppname=$volopp['Oppname'];
+            $oppnum=$volopp['Oppnum'];
+            $this->setOpportunityDay($date, $oppname, $oppnum, $link,
+                    false, true);
+        }
     }
     
-    function setOpportunityDay($date, $oppname, $oppnum, $link, $registered){
+    function setPersonalVolunteerOpportunity($joinedopps, $allopps, $link)
+    {
+        $numjoinedopps=array();
+        if($joinedopps)
+        {
+            foreach ($joinedopps as $joinopp)
+            {
+                array_push($numjoinedopps,$joinopp['Oppnum']);
+            }
+        }
+        
+        foreach ($allopps as $volopp)
+        {
+            $date=$volopp['Date'];
+            $oppname=$volopp['Oppname'];
+            $oppnum=$volopp['Oppnum'];
+            $this->setOpportunityDay($date, $oppname, $oppnum, $link,
+                    in_array($oppnum,$numjoinedopps), false);
+        }
+    }
+    
+    function setOpportunityDay($date, $oppname, $oppnum, $link, $registered, $admin)
+    {
         $year=date('Y',strtotime($date));
         $month=date('m',strtotime($date));
         $id=date('Ymd',strtotime($date));
-        if($registered){
-            $opp="<img border=\"0\" src=\"../images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
-                    $oppname<br/>";
-        }
-        else if(strtotime(date('Y-m-d'))>strtotime($date)){
-            $opp="$oppname<br/>";
-        }
-        else{
+        if($admin || (!$registered && strtotime(date('Y-m-d')) <= strtotime($date)))
+        {
             $opp="<a href=\"#\" onclick=\"document.opp$oppnum.submit();return false;\" > $oppname</a><br/>";
             $form="<form name=\"opp$oppnum\" action=$link method=\"POST\">
                         <input type=\"hidden\" name=\"year\" value=$year>
@@ -465,6 +483,15 @@ class CalendarClass {
                         <input type=\"hidden\" name=\"oppnum\" value=$oppnum>
                     </form>";
             $this->_voloppform[$id]=isset($this->_voloppform[$id])?$this->_voloppform[$id].$form:$form;
+        }
+        else if($registered)
+        {
+            $opp="<img border=\"0\" src=\"../images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
+                    $oppname<br/>";
+        }
+        else
+        {
+            $opp="$oppname<br/>";
         }
         $this->_volopp[$id]=isset($this->_volopp[$id])?$this->_volopp[$id].$opp:$opp;
     }
