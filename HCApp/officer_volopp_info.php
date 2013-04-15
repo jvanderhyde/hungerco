@@ -2,11 +2,19 @@
 <?php
 include_once 'functions.php';
 include_once 'dbfunctions.php';
-verifyuser(array("Student"));
-if(!isset($_POST['oppnum'])){
-     header("location:stinfo.php");
+verifyuser(array("Officer"));
+if(isset($_SESSION['oppnum']))
+{
+    $oppnum=$_SESSION['oppnum'];
 }
-$oppnum=$_POST['oppnum'];
+else if(isset($_POST['oppnum']))
+{
+    $oppnum=$_POST['oppnum'];
+}
+else
+{
+    header("location:index.php");
+}
 $volopp=getVolunteerOppotunityInformation($oppnum);
 
 $date=$volopp["Date"];
@@ -21,22 +29,23 @@ $description=isset($volopp["Description"])?$volopp["Description"]:"No data";
         <title><?php echo $oppname;?></title>
     </head>
     <body>
-        <?php
-        
-        ?>
         <h1><?php echo $oppname;?></h1>
         <font size="4"><?php echo $date;?></font><br/>
         <font size="4"><?php echo $description;?></font><br/><br/>
-        <form name="join" action="volopp.php" method="POST">
-            <input type="hidden" name="year" value=<?php echo $year;?>>
-            <input type="hidden" name="month" value=<?php echo $month;?>>
+        <form name="modify" action="modify_volopp.php" method="POST">
             <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
-            <input type="submit" value="Join">
+            <input type="submit" value="Modify">
         </form>
-        <form name="cancel" action="volopp.php" method="POST">
+        <form name="delete" action="officer_volopps.php" method="POST">
+            <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
             <input type="hidden" name="year" value=<?php echo $year;?>>
             <input type="hidden" name="month" value=<?php echo $month;?>>
-            <input type="submit" value="Cancel">
+            <input type="submit" name="button" value="Delete">
+        </form>
+        <form name="back" action="officer_volopps.php" method="POST">
+            <input type="hidden" name="year" value=<?php echo $year;?>>
+            <input type="hidden" name="month" value=<?php echo $month;?>>
+            <input type="submit" value="Back">
         </form>
         
     </body>

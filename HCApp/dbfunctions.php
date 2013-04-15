@@ -233,10 +233,36 @@ function selectFutureVolOpps($volopps)
 
 function getVolunteerOppotunityInformation($oppnum)
 {
-    $sql="SELECT * FROM vol_opps WHERE Oppnum=$oppnum";
-    return mysql_query($sql);
+    $link = connectToDB();
+    $query="SELECT * FROM vol_opps WHERE Oppnum=$oppnum";
+    $result = mysql_query($query, $link);
+    return mysql_fetch_assoc($result);
 }
 
+function modifyVolunteerOpportunity($formInfo,$oppnum)
+{
+    $link = connectToDB();
+    $name = empty($formInfo['oppname'])?'null':"'{$formInfo['oppname']}'";
+    $description = empty($formInfo['description'])?'null':"'{$formInfo['description']}'";
+    $query=
+        "UPDATE vol_opps 
+        SET Oppname=$name, Description=$description
+        WHERE Oppnum=$oppnum";
+        
+    mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+}
+
+function makeVolunteerOpportunity($formInfo,$date)
+{
+    $link = connectToDB();
+    $name = empty($formInfo['oppname'])?'null':"'{$formInfo['oppname']}'";
+    $description = empty($formInfo['description'])?'null':"'{$formInfo['description']}'";
+    $query=
+        "INSERT 
+        INTO vol_opps(DATE,Oppname,Description)
+        VALUES ('$date',$name,$description)";
+    mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+}
 
 function removeVolunteerValue($id,$oppnum)
 {
