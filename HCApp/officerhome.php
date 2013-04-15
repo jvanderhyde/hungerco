@@ -14,6 +14,9 @@
     <form name="staccounts" action="staccounts.php" method="POST">
         <input type="submit" value="Student Accounts">
     </form>
+    <form name="volopps" action="officer_volopps.php" method="POST">
+        <input type="submit" value="Volunteer Opportunities">
+    </form>
     <form name="skippers" action="skippers.php" method="POST">
         <input type="submit" value="View Skippers">
     </form>

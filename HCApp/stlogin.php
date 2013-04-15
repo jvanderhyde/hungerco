@@ -63,7 +63,7 @@
     
     function verifyLogin($formInfo)
     {
-        if(existsInDatabase2("students","Id",$formInfo['id'],"Studpass","'".$formInfo['pass']."'"))
+        if(is_numeric($formInfo['id']) && existsInDatabase2("students","Id",$formInfo['id'],"Studpass","'".$formInfo['pass']."'"))
         {
             session_start();
             $_SESSION['studentid']=$formInfo['id'];

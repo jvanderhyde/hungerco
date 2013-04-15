@@ -12,13 +12,13 @@ class CalendarClass {
 
     // 全般的な書式の設定
     /** @var string $style_table カレンダー本体のスタイル */
-    var $style_table = 'style="width:840px; border-collapse:collapse; border:1px solid #cccccc; font-size:90%"';
+    var $style_table = 'style="width:1050px; border-collapse:collapse; border:1px solid #cccccc; font-size:90%"';
 
     /** @var string $style_table カレンダータイトルのスタイル */
     var $style_title = 'style="text-align:center; background-color:#333333; color:#ffffff"';
 
     /** @var string $style_table カレンダー曜日名のスタイル */
-    var $style_weekname = 'style="text-align:center; width:120px; border:1px solid #cccccc"';
+    var $style_weekname = 'style="text-align:center; width:150px; border:1px solid #cccccc"';
 
     /** @var string $style_table カレンダー日付枠のスタイル */
     var $style_body = 'style="text-align:right; vertical-align:top; height:100px; border:1px solid #cccccc;"';
@@ -50,6 +50,9 @@ class CalendarClass {
 
     // リンク設定用
     var $_link;
+    
+    // creation by officer
+    var $officer_mode=false;
     
     // for Volunteer Opportunity text
     var $_volopp;
@@ -174,7 +177,7 @@ class CalendarClass {
                     $volopp = $this->_getVolopp($year, $month, $dd);
                     $link = $this->_getLink($year, $month, $dd);
                     if($link != "") {
-                        $dd = "<a href=\"{$link}\">{$dd}</a>";
+                        $dd = $link;
                     }
 
                     
@@ -267,6 +270,7 @@ class CalendarClass {
     }
 
     /**
+     * Officer mode
      * 指定日付よりリンクを取得する
      *
      * @param int $year
@@ -277,8 +281,13 @@ class CalendarClass {
     function _getLink($year, $month, $day)
     {
         $id = sprintf("%04d%02d%02d", $year, $month, $day);
-        if(isset($this->_link[$id])) {
-            return $this->_link[$id];
+        if($this->officer_mode) {
+            $date=sprintf("%04d-%02d-%02d", $year, $month, $day);
+            $opp="<a href=\"#\" onclick=\"document.opp$id.submit();return false;\" >$day</a><br/>";
+            $form="<form name=\"opp$id\" action=$this->_link method=\"POST\">
+                        <input type=\"hidden\" name=\"date\" value=\"$date\">
+                    </form>";
+            return $opp.$form;
         }
         return;
     }
@@ -441,8 +450,8 @@ class CalendarClass {
         foreach ($allopps as $volopp)
         {
             $date=$volopp['Date'];
-            $oppname=$volopp['Oppname'];
             $oppnum=$volopp['Oppnum'];
+            $oppname=isset($volopp["Oppname"])?$volopp["Oppname"]:"Nameless($oppnum)";
             $this->setOpportunityDay($date, $oppname, $oppnum, $link,
                     false, true);
         }
@@ -462,8 +471,8 @@ class CalendarClass {
         foreach ($allopps as $volopp)
         {
             $date=$volopp['Date'];
-            $oppname=$volopp['Oppname'];
             $oppnum=$volopp['Oppnum'];
+            $oppname=isset($volopp["Oppname"])?$volopp["Oppname"]:"Nameless($oppnum)";
             $this->setOpportunityDay($date, $oppname, $oppnum, $link,
                     in_array($oppnum,$numjoinedopps), false);
         }
@@ -504,6 +513,12 @@ class CalendarClass {
             return isset($this->_voloppform[$id])?$text.$this->_voloppform[$id]:$text;
         }
         return;
+    }
+    
+    function setAllLinks($link)
+    {
+        $this->officer_mode=true;
+        $this->_link=$link;
     }
 }
 ?>
