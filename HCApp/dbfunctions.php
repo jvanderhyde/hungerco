@@ -13,6 +13,8 @@ function connectToDB()
     return $link;
 }
 
+//Student
+
 function getStudName($id)
 {
     $link = connectToDB();
@@ -83,6 +85,71 @@ function getSkippers()
     
     return $students;
 }
+
+function getNumSkip()
+{
+    $link = connectToDB();
+    $query=
+        "SELECT COUNT(Id)
+        FROM students
+        WHERE isskipper = 1";
+    $result=mysql_query($query, $link);
+    return mysql_result($result,0,"count(id)");
+}
+
+function makeAccount($formInfo)
+{
+    $link = connectToDB();
+    $minit = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
+    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
+    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
+    $query=
+        "INSERT 
+        INTO students 
+        VALUES ('{$formInfo['fName']}', $minit,'{$formInfo['lName']}',
+        '{$formInfo['id']}','{$formInfo['pass1']}',0,$phone,$email)";
+    if(!mysql_query($query, $link))
+    {
+        $isMade['message'] = "Could not create account!";
+        $isMade['flag'] = false;
+        return $isMade;
+    }
+    else
+    {
+        $isMade['flag'] = true;
+        return $isMade;
+    }
+}
+
+function modifyAccount($formInfo,$origID)
+{
+    $link = connectToDB();
+    $middle = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
+    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
+    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
+    
+    
+    $query=
+        "UPDATE students
+        SET Fname='{$formInfo['fName']}', Minit=$middle, Lname='{$formInfo['lName']}',
+            Studphone=$phone, StudEmail=$email, Studpass='{$formInfo['pass']}'
+        WHERE Id='{$origID}'";
+       
+    $result = mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    if(!$result)
+    {
+        $isMade['message'] = "Could not modify account!";
+        $isMade['flag'] = false;
+        return $isMade;
+    }
+    else
+    {
+        $isMade['flag'] = true;
+        return $isMade;
+    }
+}
+
+//Volunteer Opportunities
 
 function getVolOpps()
 {
@@ -264,6 +331,8 @@ function makeVolunteerOpportunity($formInfo,$date)
     mysql_query($query,$link) or die('Query failed: ' . mysql_error());
 }
 
+//Volunteers
+
 function removeVolunteerValue($id,$oppnum)
 {
     $link = connectToDB();
@@ -303,68 +372,9 @@ function getVolunteers($oppnum)
     return $areVols;
 }
 
-function getNumSkip()
-{
-    $link = connectToDB();
-    $query=
-        "SELECT COUNT(Id)
-        FROM students
-        WHERE isskipper = 1";
-    $result=mysql_query($query, $link);
-    return mysql_result($result,0,"count(id)");
-}
 
-function makeAccount($formInfo)
-{
-    $link = connectToDB();
-    $minit = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
-    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
-    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
-    $query=
-        "INSERT 
-        INTO students 
-        VALUES ('{$formInfo['fName']}', $minit,'{$formInfo['lName']}',
-        '{$formInfo['id']}','{$formInfo['pass1']}',0,$phone,$email)";
-    if(!mysql_query($query, $link))
-    {
-        $isMade['message'] = "Could not create account!";
-        $isMade['flag'] = false;
-        return $isMade;
-    }
-    else
-    {
-        $isMade['flag'] = true;
-        return $isMade;
-    }
-}
 
-function modifyAccount($formInfo,$origID)
-{
-    $link = connectToDB();
-    $middle = empty($formInfo['minit'])?'null':"'{$formInfo['minit']}'";
-    $phone = empty($formInfo['phone'])?'null':"'{$formInfo['phone']}'";
-    $email = empty($formInfo['email'])?'null':"'{$formInfo['email']}'";
-    
-    
-    $query=
-        "UPDATE students
-        SET Fname='{$formInfo['fName']}', Minit=$middle, Lname='{$formInfo['lName']}',
-            Studphone=$phone, StudEmail=$email, Studpass='{$formInfo['pass']}'
-        WHERE Id='{$origID}'";
-       
-    $result = mysql_query($query,$link) or die('Query failed: ' . mysql_error());
-    if(!$result)
-    {
-        $isMade['message'] = "Could not modify account!";
-        $isMade['flag'] = false;
-        return $isMade;
-    }
-    else
-    {
-        $isMade['flag'] = true;
-        return $isMade;
-    }
-}
+//Family
 
 function makeFamily($formInfo)
 {
@@ -390,14 +400,35 @@ function makeFamily($formInfo)
     }
 }
 
-function getFamilies()
+function getFamilies($route)
 {
     $link = connectToDB();
-    $query=
-        "SELECT *
-        FROM families";
+    $query='';
+    if($route=='Unsigned')
+    {
+        $query="SELECT *
+            FROM families AS F
+            WHERE NOT EXISTS 
+                ( SELECT *
+                FROM routes AS R
+                WHERE F.Address=R.Famaddress AND F.City=R.Famcity)
+            ORDER BY F.Famname,F.City,F.Address";
+    }
+    else
+    {
+        $query="SELECT *
+            FROM families
+            WHERE (Address,City) IN
+                ( SELECT Famaddress,Famcity
+                FROM routes
+                WHERE ROUTE='$route')
+            ORDER BY Famname,City,Address";
+    }
+    
     $result=mysql_query($query, $link);
     $n=mysql_num_rows($result);
+    if($n==0)
+        return false;
 
     for($i=0;$i<$n;$i++)
     {
@@ -407,18 +438,18 @@ function getFamilies()
     return $families;
 }
 
-function getFamilyInfo($address,$city)
+function getFamilyInfo($addresscity)
 {
     $link = connectToDB();
     $query=
         "SELECT *
         FROM families
-        WHERE Address='$address' AND City='$city'";
+        WHERE CONCAT_WS(',',Address,City)='$addresscity'";
     $result = mysql_query($query, $link);
     return mysql_fetch_assoc($result);
 }
 
-function modifyFamily($formInfo,$origInfo)
+function modifyFamily($formInfo,$origInfo)//
 {
     $link = connectToDB();
     $numLunch = empty($formInfo['numLunch'])?'null':$formInfo['numLunch'];
@@ -442,6 +473,130 @@ function modifyFamily($formInfo,$origInfo)
         $isMade['flag'] = true;
         return $isMade;
     }
+}
+
+function deleteFamily($addresscity)
+{
+    $link = connectToDB();
+    $n=getStop($addresscity);
+    $query=
+        "DELETE FROM families 
+        WHERE CONCAT_WS(',',Address,City)='$addresscity'";
+    mysql_query($query, $link);
+    if($n)
+        negativeUpdateStops($n);
+}
+
+
+//Route
+
+function createRoute($addresscity,$newroute)
+{
+    $link = connectToDB();
+    $family=getFamilyInfo($addresscity);
+    $query='';
+    if(isEmptyRoute($newroute))
+    {
+        $query=
+            "INSERT 
+            INTO routes 
+            VALUES ('{$family['Address']}','{$family['City']}','$newroute',1)";
+    }
+    else
+    {
+        $max=getMaxStop($newroute);
+        $query=
+            "INSERT 
+            INTO routes 
+            VALUES ('{$family['Address']}','{$family['City']}','$newroute',
+                1 + $max)";
+    }
+    mysql_query($query, $link);
+}
+
+function deleteRoute($addresscity)
+{
+    $link = connectToDB();
+    $n=getStop($addresscity);
+    $query=
+        "DELETE FROM routes 
+        WHERE CONCAT_WS(',',Famaddress,Famcity)='$addresscity'";
+    mysql_query($query, $link);
+    negativeUpdateStops($n);
+}
+
+function changeRoute($addresscity,$oldroute,$newroute)
+{
+    $link = connectToDB();
+    $n=getStop($addresscity);
+    $query='';
+    if(isEmptyRoute($newroute))
+    {
+        $query=
+            "UPDATE routes
+            SET ROUTE='$newroute',
+                STOP=1
+            WHERE ROUTE='$oldroute' AND STOP=$n";
+    }
+    else
+    {
+        $max=getMaxStop($newroute);
+        $query=
+            "UPDATE routes
+            SET ROUTE='$newroute',
+                STOP=1+$max
+            WHERE ROUTE='$oldroute' AND STOP=$n";
+    }
+    mysql_query($query, $link);
+    negativeUpdateStops($n);
+}
+
+function negativeUpdateStops($numstop)
+{
+    $link = connectToDB();
+    $query=
+        "UPDATE routes
+        SET STOP=STOP-1
+        WHERE STOP>$numstop";
+    mysql_query($query, $link);
+}
+
+function getStop($addresscity)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT STOP
+        FROM routes 
+        WHERE CONCAT_WS(',',Famaddress,Famcity)='$addresscity'";
+    $result=mysql_query($query, $link);
+    $num=mysql_num_rows($result);
+    if($num==0)
+        return false;
+    else
+        return mysql_result($result,0,"STOP");
+}
+
+function getMaxStop($route)
+{
+    $link = connectToDB();
+    $queryt="SELECT MAX(STOP) FROM routes WHERE ROUTE='$route'";
+    $result=mysql_query($queryt, $link);
+    return mysql_result($result,0,"MAX(STOP)");    
+}
+
+function isEmptyRoute($route)
+{
+    $link = connectToDB();
+    $query=
+        "SELECT *
+        FROM routes
+        WHERE ROUTE='$route'";
+    $result=mysql_query($query, $link);
+    $num=mysql_num_rows($result);
+    if($num==0)
+        return true;
+    else
+        return false;
 }
 
 function existsInDatabase1($table,$attr,$value)

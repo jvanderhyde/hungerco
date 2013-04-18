@@ -3,8 +3,33 @@
 include_once 'functions.php';
 include_once 'dbfunctions.php';
 verifyuser(array("Officer"));
-if(!isset($_POST['origAddress']))
+if(!isset($_POST['addresscity']))
     header("location:families.php");
+if(isset($_POST['button']))
+{
+    if($_POST['button']=="Change Route")
+    {
+        $addresscity=$_POST['addresscity'];
+        $newroute=$_POST['newroute'];
+        $oldroute=$_POST['oldroute'];
+        if($newroute==$oldroute)
+            header("location:families.php");
+        elseif($oldroute=="Unsigned")
+            createRoute($addresscity,$newroute);
+        elseif($newroute=="Unsigned")
+            deleteRoute($addresscity);
+        else
+            changeRoute($addresscity,$oldroute,$newroute);
+        header("location:families.php");
+    }
+    elseif($_POST['button']=="Delete")
+    {
+        $addresscity=$_POST['addresscity'];
+        deleteFamily($addresscity);
+        header("location:families.php");
+    }
+        
+}
 ?>
 <html>
     <head>
@@ -13,6 +38,11 @@ if(!isset($_POST['origAddress']))
     </head>
     <body>
         <?php
+        
+        
+        
+        
+        
         //Stores information from a previous post (if any) to 
         //associative array $formInfo
         $formInfo = getPostInfo();
@@ -22,7 +52,7 @@ if(!isset($_POST['origAddress']))
             $value = protectInjection($value);
         
         //Get original information
-        $origInfo = getFamilyInfo($_POST['origAddress'],$_POST['origCity']);
+        $origInfo = getFamilyInfo($_POST['addresscity']);
 
         
         if(isset($_POST['button']))
@@ -41,39 +71,20 @@ if(!isset($_POST['origAddress']))
         
         <h1>Modify A Family</h1>
         <form id="form" name="modifyfamily" action="modify_family.php" method="POST">
-            Name*<br />
-                <?php echo $origInfo['Famname'];?>
-                <input type="text" size="40" name="famName" value=
-                       "<?php echo isset($_POST['button'])?$formInfo['famName']:$origInfo['Famname'];?>"
-                    ><br /><br />
-            Number of lunches<br />
-                <?php echo $origInfo['NumLunch'];?>
-                <input type="number" size="40" name="numLunch" value=
-                    <?php echo isset($_POST['button'])?$formInfo['numLunch']:$origInfo['NumLunch'];?>
-                ><br/><br/>
-            Address*<br />
-                <?php echo $origInfo['Address'];?>
-                <input type="text" size="40" name="address" value=
-                       "<?php echo isset($_POST['button'])?$formInfo['address']:$origInfo['Address'];?>"
-                    ><br/><br/>
-            City*<br />
-                <?php echo $origInfo['City'];?>
-                <input type="text" size="40" name="city" value=
-                       "<?php echo isset($_POST['button'])?$formInfo['city']:$origInfo['City'];?>"
-                       ><br/><br/>
-            Phone Number<br />
-                <?php echo $origInfo['Famphone'];?>
-                <input type="text" size="40" name="famPhone" value=
-                       "<?php echo isset($_POST['button'])?$formInfo['famPhone']:$origInfo['Famphone'];?>"
-                       ><br/><br/>
-            Notes<br />
-                <?php echo $origInfo['Notes'];?>
-                <input type="text" size="40" name="notes" value=
-                       "<?php echo isset($_POST['button'])?$formInfo['notes']:$origInfo['Notes'];?>"
-                       ><br/><br/>
+            Name* "<?php echo $origInfo['Famname'];?>"<br />
+                <input type="text" size="40" name="famName" value="<?php echo isset($_POST['button'])?$formInfo['famName']:$origInfo['Famname'];?>"<br /><br />
+            Number of lunches "<?php echo $origInfo['NumLunch'];?>"<br />
+                <input type="number" size="40" name="numLunch" value=<?php echo isset($_POST['button'])?$formInfo['numLunch']:$origInfo['NumLunch'];?>><br/><br/>
+            Address* "<?php echo $origInfo['Address'];?>"<br />
+                <input type="text" size="40" name="address" value="<?php echo isset($_POST['button'])?$formInfo['address']:$origInfo['Address'];?>"><br/><br/>
+            City* "<?php echo $origInfo['City'];?>"<br />
+                <input type="text" size="40" name="city" value="<?php echo isset($_POST['button'])?$formInfo['city']:$origInfo['City'];?>"><br/><br/>
+            Phone Number "<?php echo $origInfo['Famphone'];?>"<br />
+                <input type="text" size="40" name="famPhone" value="<?php echo isset($_POST['button'])?$formInfo['famPhone']:$origInfo['Famphone'];?>"><br/><br/>
+            Notes "<?php echo $origInfo['Notes'];?>"<br />
+                <input type="text" size="40" name="notes" value="<?php echo isset($_POST['button'])?$formInfo['notes']:$origInfo['Notes'];?>"><br/><br/>
             <p id="note"> *Required Field </p>
-            <input type="hidden" name="origAddress" value="<?php echo $_POST['origAddress'];?>">
-            <input type="hidden" name="origCity" value="<?php echo $_POST['origCity'];?>">
+            <input type="hidden" name="addresscity" value="<?php echo $_POST['addresscity'];?>">
             <input type="submit" name="button" value="Submit" >
             <input type="submit" name="button" value="Cancel" >
         </form>
