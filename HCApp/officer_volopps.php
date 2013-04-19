@@ -7,6 +7,10 @@
         {
             unset($_SESSION["oppnum"]);
         }
+        if(isset($_SESSION["delete"]))
+        {
+            unset($_SESSION["delete"]);
+        }
 ?>
 <html>
     <head>
@@ -19,6 +23,11 @@
         
         
         <?php
+        if(isset($_POST['button']) && $_POST['button']=='Delete')
+        {
+            deleteVolunteerOpportunity($_POST['button']);
+        }
+        
         if(isset($_POST['year']))
         {
             $year=$_POST['year'];

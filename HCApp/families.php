@@ -1,13 +1,23 @@
+<?php
+    include_once 'functions.php';
+    include_once 'dbfunctions.php';
+    verifyuser(array("Officer"));
+    
+    if(isset($_POST['button']) && $_POST['button']=='Delete')
+    {
+        $addresscity=$_POST['addresscity'];
+        deleteFamily($addresscity);
+    }
+    if(isset($_SESSION["delete"]))
+    {
+        unset($_SESSION["delete"]);
+    }
+?>
 <html>
     <head> 
         <title>Families Information</title> 
     </head> 
     <body>
-        <?php
-            include_once 'functions.php';
-            include_once 'dbfunctions.php';
-            verifyuser(array("Officer"));
-        ?>
         <h1>The Current Families</h1>
 
         <?php
