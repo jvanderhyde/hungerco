@@ -15,6 +15,18 @@ else
 {
     header("location:index.php");
 }
+
+if(isset($_POST['button']) && $_POST['button']=='Delete')
+{
+    $del_info['type']='volopp';
+    $del_info['oppnum']=$oppnum;
+    $_SESSION['delete']=$del_info;
+    header("location:confirm_delete.php");
+}
+if(isset($_SESSION["delete"]))
+{
+    unset($_SESSION["delete"]);
+}
 $volopp=getVolunteerOppotunityInformation($oppnum);
 
 $date=$volopp["Date"];
@@ -36,10 +48,8 @@ $description=isset($volopp["Description"])?$volopp["Description"]:"No data";
             <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
             <input type="submit" value="Modify">
         </form>
-        <form name="delete" action="officer_volopps.php" method="POST">
+        <form name="delete" action="officer_volopp_info.php" method="POST">
             <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
-            <input type="hidden" name="year" value=<?php echo $year;?>>
-            <input type="hidden" name="month" value=<?php echo $month;?>>
             <input type="submit" name="button" value="Delete">
         </form>
         <form name="back" action="officer_volopps.php" method="POST">

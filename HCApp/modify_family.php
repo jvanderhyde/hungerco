@@ -24,9 +24,10 @@ if(isset($_POST['button']))
     }
     elseif($_POST['button']=="Delete")
     {
-        $addresscity=$_POST['addresscity'];
-        deleteFamily($addresscity);
-        header("location:families.php");
+        $del_info['type']='family';
+        $del_info['addresscity']=$_POST['addresscity'];
+        $_SESSION['delete']=$del_info;
+        header("location:confirm_delete.php");
     }
         
 }

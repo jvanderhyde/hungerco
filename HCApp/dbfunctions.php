@@ -149,6 +149,14 @@ function modifyAccount($formInfo,$origID)
     }
 }
 
+function deleteStaccount($id)
+{
+    $link = connectToDB();
+    $query="DELETE FROM students WHERE Id='$id'";
+    mysql_query($query, $link);
+}
+
+
 //Volunteer Opportunities
 
 function getVolOpps()
@@ -330,6 +338,15 @@ function makeVolunteerOpportunity($formInfo,$date)
         VALUES ('$date',$name,$description)";
     mysql_query($query,$link) or die('Query failed: ' . mysql_error());
 }
+
+function deleteVolunteerOpportunity($oppnum)
+{
+    $link = connectToDB();
+    $query="DELETE FROM vol_opps WHERE Oppnum=$oppnum";
+    mysql_query($query, $link);
+}
+
+
 
 //Volunteers
 

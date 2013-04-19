@@ -6,6 +6,14 @@
         {
             unset($_SESSION["stid"]);
         }
+        if(isset($_SESSION["delete"]))
+        {
+            unset($_SESSION["delete"]);
+        }
+        if(isset($_POST['button']) && $_POST['button']=='Delete')
+        {
+            deleteStaccount($_POST['delete_id']);
+        }
 ?>
 <html>
     <head> 
@@ -22,7 +30,7 @@
             
             
             //If the previous action was submit, verify view
-            if(isset($_POST['button']))
+            if(isset($_POST['button']) && $_POST['button']=='View')
                 $message = verifyView($formid);
         ?>
         <p id="message">

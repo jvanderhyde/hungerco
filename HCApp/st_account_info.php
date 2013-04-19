@@ -10,6 +10,10 @@
     {
         header("location:staccounts.php");
     }
+    if(isset($_SESSION["delete"]))
+    {
+        unset($_SESSION["delete"]);
+    }
     
     if(isset($_POST['button']))
     {
@@ -18,8 +22,15 @@
             changeSkipperValue($id,0);
 
         //If the previous action was become skipper
-        else if($_POST['button']=="Become skipper")
+        elseif($_POST['button']=="Become skipper")
             changeSkipperValue($id,1);
+        elseif($_POST['button']=="Delete")
+        {
+            $del_info['type']='staccount';
+            $del_info['id']=$id;
+            $_SESSION['delete']=$del_info;
+            header("location:confirm_delete.php");
+        }
     }
     
     if(isset($_POST['unvolunteer']))
@@ -147,6 +158,9 @@
         <?php
         }
         ?>
+        <form name="delete" action="st_account_info.php" method="POST">
+            <input type="submit" name="button" value="Delete">
+        </form><br />
         
         
         <form name="home" action="staccounts.php" method="POST">
