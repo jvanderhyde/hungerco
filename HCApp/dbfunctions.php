@@ -438,6 +438,27 @@ function getFamilies($route)
     return $families;
 }
 
+function getFamiliesWithStop($route)
+{
+    $link = connectToDB();
+    $query="SELECT *
+            FROM families 
+            INNER JOIN routes ON Address=Famaddress AND City=Famcity
+            WHERE  ROUTE='$route'
+            ORDER BY STOP";
+    $result=mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    $n=mysql_num_rows($result);
+    if($n==0)
+        return false;
+
+    for($i=0;$i<$n;$i++)
+    {
+        $families[$i] = mysql_fetch_assoc($result);
+    }    
+    
+    return $families;
+}
+
 function getFamilyInfo($addresscity)
 {
     $link = connectToDB();
@@ -478,13 +499,13 @@ function modifyFamily($formInfo,$origInfo)//
 function deleteFamily($addresscity)
 {
     $link = connectToDB();
-    $n=getStop($addresscity);
+    $routestop=getRouteStop($addresscity);
     $query=
         "DELETE FROM families 
         WHERE CONCAT_WS(',',Address,City)='$addresscity'";
     mysql_query($query, $link);
-    if($n)
-        negativeUpdateStops($n);
+    if($routestop)
+        negativeUpdateStops($routestop['ROUTE'],$routestop['STOP']);
 }
 
 
@@ -517,18 +538,18 @@ function createRoute($addresscity,$newroute)
 function deleteRoute($addresscity)
 {
     $link = connectToDB();
-    $n=getStop($addresscity);
+    $routestop=getRouteStop($addresscity);
     $query=
         "DELETE FROM routes 
         WHERE CONCAT_WS(',',Famaddress,Famcity)='$addresscity'";
     mysql_query($query, $link);
-    negativeUpdateStops($n);
+    negativeUpdateStops($routestop['ROUTE'],$routestop['STOP']);
 }
 
 function changeRoute($addresscity,$oldroute,$newroute)
 {
     $link = connectToDB();
-    $n=getStop($addresscity);
+    $routestop=getRouteStop($addresscity);
     $query='';
     if(isEmptyRoute($newroute))
     {
@@ -536,7 +557,7 @@ function changeRoute($addresscity,$oldroute,$newroute)
             "UPDATE routes
             SET ROUTE='$newroute',
                 STOP=1
-            WHERE ROUTE='$oldroute' AND STOP=$n";
+            WHERE ROUTE='$oldroute' AND STOP={$routestop['STOP']}";
     }
     else
     {
@@ -545,27 +566,27 @@ function changeRoute($addresscity,$oldroute,$newroute)
             "UPDATE routes
             SET ROUTE='$newroute',
                 STOP=1+$max
-            WHERE ROUTE='$oldroute' AND STOP=$n";
+            WHERE ROUTE='$oldroute' AND STOP={$routestop['STOP']}";
     }
     mysql_query($query, $link);
-    negativeUpdateStops($n);
+    negativeUpdateStops($routestop['ROUTE'],$routestop['STOP']);
 }
 
-function negativeUpdateStops($numstop)
+function negativeUpdateStops($route,$numstop)
 {
     $link = connectToDB();
     $query=
         "UPDATE routes
         SET STOP=STOP-1
-        WHERE STOP>$numstop";
+        WHERE ROUTE='$route' AND STOP>$numstop";
     mysql_query($query, $link);
 }
 
-function getStop($addresscity)
+function getRouteStop($addresscity)
 {
     $link = connectToDB();
     $query=
-        "SELECT STOP
+        "SELECT ROUTE,STOP
         FROM routes 
         WHERE CONCAT_WS(',',Famaddress,Famcity)='$addresscity'";
     $result=mysql_query($query, $link);
@@ -573,7 +594,7 @@ function getStop($addresscity)
     if($num==0)
         return false;
     else
-        return mysql_result($result,0,"STOP");
+        return mysql_fetch_assoc($result);
 }
 
 function getMaxStop($route)
@@ -598,6 +619,57 @@ function isEmptyRoute($route)
     else
         return false;
 }
+
+function upList($route,$stop)
+{
+    if($stop==0)
+        return;
+    
+    $link = connectToDB();
+    $query1=
+        "UPDATE routes
+        SET STOP=0
+        WHERE ROUTE='$route' AND STOP=$stop";
+    mysql_query($query1, $link);
+    
+    $query2=
+        "UPDATE routes
+        SET STOP=$stop
+        WHERE ROUTE='$route' AND STOP=$stop-1";
+    mysql_query($query2, $link);
+    
+    $query3=
+        "UPDATE routes
+        SET STOP=$stop-1
+        WHERE ROUTE='$route' AND STOP=0";
+    mysql_query($query3, $link);
+}
+
+function downList($route,$stop)
+{
+    if($stop==getMaxStop($route))
+        return;
+    
+    $link = connectToDB();
+    $query1=
+        "UPDATE routes
+        SET STOP=0
+        WHERE ROUTE='$route' AND STOP=$stop";
+    mysql_query($query1, $link) or die('Query failed: ' . mysql_error());
+    
+    $query2=
+        "UPDATE routes
+        SET STOP=$stop
+        WHERE ROUTE='$route' AND STOP=$stop+1";
+    mysql_query($query2, $link) or die('Query failed: ' . mysql_error());
+    
+    $query3=
+        "UPDATE routes
+        SET STOP=$stop+1
+        WHERE ROUTE='$route' AND STOP=0";
+    mysql_query($query3, $link) or die('Query failed: ' . mysql_error());
+}
+
 
 function existsInDatabase1($table,$attr,$value)
 {
