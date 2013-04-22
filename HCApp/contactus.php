@@ -12,13 +12,12 @@
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     
-    <body>
+    <body id="contact">
         <div id="page-container">
-        <?php mainmenu(); ?>
-            <div id="header">Header</div>
-            <div id="content">
-                <h1>Contact Us</h1>
-                <form id="form" name="contactus" action="submitcontact.php" method="POST">
+            <?php mainmenu(); ?>
+            <div id="content" >
+                <h1 class="indentcontent">Contact Us</h1>
+                <form class="indentcontent" id="form" name="contactus" action="submitcontact.php" method="POST">
                     Name<br />
                         <input type="text" size="40" name="name"><br/>
                     Email Address<br />
@@ -33,7 +32,7 @@
                 </form>
             </div>
             <div id="sidebar">Sidebar</div>
-            <div id="footer">Footer</div>     
+            <?php footer(); ?>   
         </div>
     </body>
 </html>
