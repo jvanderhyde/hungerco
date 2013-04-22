@@ -1,0 +1,216 @@
+/* 
+    Document   : hcstylesheet
+    Created on : Mar 7, 2013, 1:46:47 PM
+    Author     : Amanda and Daisuke
+    Description:
+        To format the Hunger Coalition Website uniformly and effectively
+*/
+
+root 
+{ 
+    display: block;
+}
+
+html, body 
+{
+    margin: 0;
+    padding: 0;
+}
+
+h1
+{
+    margin: 0;
+    padding: 0;
+    text-transform: uppercase;
+    vertical-align: text-bottom;
+}
+
+#page-container
+{
+    width: 95%;
+    margin: auto;
+    background: white;
+}
+header
+{
+    background-color:white;
+/*    height:235px;*/
+}
+
+header img
+{
+    margin:0;
+    padding: 20px 20px 20px 20px;
+}
+
+nav
+{
+    margin:0;
+    padding:0;
+    background-color:rgb(14,125,241);
+    height:35px;
+}
+nav li
+{
+    float:left;
+    width:120px;
+    height:35px;
+    background-color:rgb(14,125,241);
+    text-align:center;
+    border-left:1px black solid;
+    border-right:1px black solid;
+    line-height:35px;
+}
+nav ul, li, a
+{
+    list-style-type:none;
+    padding-left:0em;
+    color:#ffffff;
+    text-decoration:none;
+    display:block;
+}
+nav ul li a:hover
+{
+    background-color:rgb(21,71,138);
+}
+
+body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol .nav-vol
+{
+    background-color:rgb(21,71,138);
+    display:block;
+}
+
+
+/* Generated via www.cssmenubuilder.com */
+
+.menu{float:right; clear: both; padding:0; margin-top: auto;margin-bottom:auto; height:30px; width:235px; display:block; background:url('topMenuImages.png') repeat-x;}
+.menu li{padding:0; margin:0; list-style:none; display:inline;}
+.menu li a{float:right; padding-left:15px; display:block; color:rgb(255,255,255); text-decoration:none; font:12px Verdana, Arial, Helvetica, sans-serif; cursor:pointer; background:url('topMenuImages.png') 0px -30px no-repeat;}
+.menu li a span{line-height:30px; float:right; display:block; padding-right:15px; background:url('topMenuImages.png') 100% -30px no-repeat;}
+.menu li a:hover{background-position:0px -60px; color:rgb(255,255,255);}
+.menu li a:hover span{background-position:100% -60px;}
+.menu li a.active, .menu li a.active:hover{line-height:30px; font:12px Verdana, Arial, Helvetica, sans-serif; background:url('topMenuImages.png') 0px -90px no-repeat; color:rgb(255,255,255);}
+.menu li a.active span, .menu li a.active:hover span{background:url('topMenuImages.png') 100% -90px no-repeat;}
+
+
+/* Generated via www.cssmenubuilder.com */
+
+.menu2{float:right; margin:0; padding:0; width:150px; list-style:none;background:rgb(255,255,255);}
+.menu2 li{padding:0; margin:0 0 1px 0; height:40px; display:block; }
+.menu2 li a{text-align:right;height:40px; padding:0px 25px; font:16px Verdana, Arial, Helvetica, sans-serif; color:rgb(255,255,255); display:block; background:url('verMenuImages.png') 0px 0px no-repeat; text-decoration:none;}
+.menu2 li a:hover{background:url('verMenuImages.png') 0px -40px no-repeat; color:rgb(255,255,255);}
+.menu2 li a.active, .menu li a.active:hover{background:url('verMenuImages.png') 0px -80px no-repeat; color:rgb(255,255,255);}
+.menu2 li a span{line-height:40px;}
+#content
+{
+    float:left;
+    width: 70%;
+}
+
+#content a
+{
+    color:rgb(21,71,138);
+}
+
+#subnav
+{
+    padding: 0px 0px 0px 335px;
+    font-size:1.25em;
+}
+
+#subnav a
+{
+    float:left;
+    padding: 0px 5px 0px 5px;
+}
+
+#sidebar
+{
+    float: right;
+    width: 30%;
+    background-color: rgb(168,200,242);
+}
+#sidebar li
+{
+    height:50px;
+    width:120px;
+    background-color:rgb(14,125,241);
+    text-align:center;
+    line-height:50px;
+    margin:10px 5px 10px 5px;
+    position:relative;
+    left:100px;
+}
+#sidebar ul, li, a
+{
+    list-style-type:none;
+    padding-left:0em;
+    color:#ffffff;
+    text-decoration:none;
+    display:block;
+}
+#sidebar ul li a:hover
+{
+    background-color:rgb(21,71,138);
+}
+
+#footer
+{
+    clear: both;
+    background: rgb(217,235,253);
+    color:white;
+    height: 25px;
+}
+
+#login
+{
+    padding: 40px 50px 40px 50px;
+}
+
+.indentcontent
+{
+    padding: 10px 0px 10px 50px;
+}
+
+.clearbackground
+{
+    background-color: white;
+}
+
+#welcome
+{
+    float:right;
+    margin: 0;
+    padding: 110px 50px 0px 0px;
+    text-transform: uppercase;
+    font-size: 2.5em;
+    vertical-align: text-bottom;
+}
+
+#form
+{
+    text-align:left;
+    font-weight:bold;
+} 
+
+#message
+{
+    text-align:left;
+    font-weight:bold;
+    color:red;
+} 
+
+#note
+{
+    text-align:left;
+    font-weight:normal;
+    font-size:75%;
+}
+
+#name
+{
+    text-align:left;
+    font-weight:bold;
+}
+
+
