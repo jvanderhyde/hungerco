@@ -37,5 +37,9 @@
             <input type="submit" value="Logout">
     </form>
     
+    <form name="test" action="test.php" method="POST">
+        <input type="submit" value="test">
+    </form>
+    
 </body>
 </html>

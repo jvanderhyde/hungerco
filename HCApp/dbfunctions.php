@@ -487,7 +487,7 @@ function getFamilyInfo($addresscity)
     return mysql_fetch_assoc($result);
 }
 
-function modifyFamily($formInfo,$origInfo)//
+function modifyFamily($formInfo,$origInfo)
 {
     $link = connectToDB();
     $numLunch = empty($formInfo['numLunch'])?'null':$formInfo['numLunch'];
@@ -686,6 +686,32 @@ function downList($route,$stop)
         WHERE ROUTE='$route' AND STOP=0";
     mysql_query($query3, $link) or die('Query failed: ' . mysql_error());
 }
+
+function getRouteAddresses($route)
+{
+    $link = connectToDB();
+    $query="SELECT *
+            FROM families 
+            INNER JOIN routes ON Address=Famaddress AND City=Famcity
+            WHERE  ROUTE='$route'
+            ORDER BY STOP";
+    $result=mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    $n=mysql_num_rows($result);
+    if($n==0)
+        return false;
+
+    for($i=0;$i<$n;$i++)
+    {
+        $address=mysql_result($result,$i,"Address");
+        $city=mysql_result($result,$i,"City");
+        $addresscity=$address.', '.$city;
+        $list[$i] = $addresscity;
+    }    
+    
+    return $list;
+}
+
+
 
 
 function existsInDatabase1($table,$attr,$value)

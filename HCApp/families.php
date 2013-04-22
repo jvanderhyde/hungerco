@@ -118,7 +118,7 @@ function familiesTable($route)
         <input type="submit" name="button" value="Change Route">
         <input type="submit" name="button" value="Delete">
         <br />
-    </form>
+    </form><br /><br />
     <?php
 }
 

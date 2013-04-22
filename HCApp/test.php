@@ -15,7 +15,6 @@
             downList($map,$_POST['stop']);
         }
     }
-    $list=getRouteAddresses($map);
 ?>
 <html>
     <head> 
@@ -25,7 +24,6 @@
         <script src="map.js" type="text/javascript"></script>
     </head> 
     <body onload="initialize()">
-        <?php echo $list[0];?>
         <?php
         $families=getFamiliesWithStop($map);
         pulldownMap($map);
@@ -47,6 +45,8 @@
         }
         
         ?>
+    
+        <!--<div id="route" style="width: 500px; height: 200px;overflow: scroll"></div>-->
         
 
         <form name="home" action="officerhome.php" method="POST">
