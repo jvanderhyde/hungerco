@@ -14,7 +14,7 @@
     
     <body>
         <div id="page-container">
-            <?php mainmenu('Hunger Coalition'); ?>
+            <?php mainmenu(); ?>
             <div id="header">Header</div>
             <div id="content">Content</div>
             <div id="sidebar">

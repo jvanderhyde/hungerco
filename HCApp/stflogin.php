@@ -13,8 +13,7 @@
     </head>
     <body>
         <div id="page-container">
-            <?php mainmenu('Hunger Coalition'); ?>
-            <div id="header">Header</div>
+            <?php mainmenu(); ?>
             <div id="content">Content</div>
             <div id="sidebar">
                 <?php
@@ -32,20 +31,21 @@
                         $message = verifyLogin($formInfo);
                     }
                 ?>
-
-                <h1>Staff login</h1>
-                <p id="message">
-                <?php if(isset($message)) echo $message; ?>
-                </p>
-                <form id="form" name="stlogin" action="stflogin.php" method="POST">
-                    Username<br />
-                        <input type="text" size="40" name="staffName" value=
-                               <?php echo $formInfo['user'];?>
-                        ><br />
-                    Password<br />
-                        <input type="password" size="40" name="staffPass" required><br/><br/>
-                    <input type="submit" name="button" value="Login">
-                </form>
+                <div id="login">
+                    <h1>Staff login</h1>
+                    <p id="message">
+                    <?php if(isset($message)) echo $message; ?>
+                    </p>
+                    <form id="form" name="stlogin" action="stflogin.php" method="POST">
+                        Username<br />
+                            <input type="text" size="40" name="staffName" value=
+                                   <?php echo $formInfo['user'];?>
+                            ><br />
+                        Password<br />
+                            <input type="password" size="40" name="staffPass" required><br/><br/>
+                        <input type="submit" name="button" value="Login">
+                    </form>
+                </div>
             </div>
             <div id="footer">Footer</div>
         </div>
