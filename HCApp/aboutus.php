@@ -12,16 +12,11 @@
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     
-    <body id="home">
+    <body id="about">
         <div id="page-container">
             <?php mainmenu(); ?>         
-            <div id="content">Content</div>
-            <div id="sidebar">
-                    <ul>
-                        <li><a href='stlogin.php'><span>Student Login</span></a></li>
-                        <li><a href='stflogin.php'><span>Staff Login</span></a></li>
-                    </ul>
-            </div>
+            <div id="content">Information about Hunger Coalition</div>
+            <div id="sidebar">Sidebar</div>
             <?php footer(); ?>
         </div>
     </body>

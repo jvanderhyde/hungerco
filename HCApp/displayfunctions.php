@@ -10,7 +10,7 @@ function mainmenu()
         <nav>
             <ul>
                 <li><a class='nav-home' href='index.php'>Home</a></li>
-                <li><a class='nav-about' href='about.php'>About Us</a></li>
+                <li><a class='nav-about' href='aboutus.php'>About Us</a></li>
                 <li><a class='nav-contact' href='contactus.php'>Contact</a></li>
             </ul>
         </nav>
