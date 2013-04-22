@@ -22,16 +22,35 @@ function footer()
     echo"<div id=\"footer\">Copyright &copy; Benedictine College Computer Science Department</div>";
 }
 
-function studmenu($title)
+function studmenu($id)
 {
-    echo "<h1>$title</h1>
-            <div id ='main-nav'>
-                <ul class='nav'>
-                    <li class='hor'><a href='stinfo.php'>Home</a></li>
-                    <li class='hor'><a href='volopp.php'>Volunteer</a></li>
-                    <li class='hor'><a href='logout.php'>Logout</a></li>
+    $name = getStudName($id);
+    echo "<header>
+            <img src='hclogo.jpg'>
+            <div id='welcome'>Welcome $name</div>
+            <nav>
+                <ul>
+                    <li class='nav-home'><a href='stinfo.php'>Home</a></li>
+                    <li class='nav-vol'><a href='volopp.php'>Volunteer</a></li>
+                    <li><a href='logout.php'>Logout</a></li>
                 </ul>
-            </div>";
+            </nav>
+        </header>
+        <br />";
+}
+
+function volmenu()
+{
+    echo "<header>
+            <nav>
+                <ul>
+                    <li class='nav-home'><a href='stinfo.php'>Home</a></li>
+                    <li class='nav-vol'><a href='volopp.php'>Volunteer</a></li>
+                    <li><a href='logout.php'>Logout</a></li>
+                </ul>
+            </nav>
+        </header>
+        <br />";
 }
 
 ?>

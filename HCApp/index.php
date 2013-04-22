@@ -14,13 +14,15 @@
     
     <body id="home">
         <div id="page-container">
-            <?php mainmenu(); ?>         
-            <div id="content">Content</div>
-            <div id="sidebar">
-                    <ul>
-                        <li><a href='stlogin.php'><span>Student Login</span></a></li>
-                        <li><a href='stflogin.php'><span>Staff Login</span></a></li>
-                    </ul>
+            <?php mainmenu(); ?> 
+            <div id="innerwrap">
+                <div id="content">Content</div>
+                <div id="sidebar">
+                        <ul>
+                            <li><a href='stlogin.php'><span>Student Login</span></a></li>
+                            <li><a href='stflogin.php'><span>Staff Login</span></a></li>
+                        </ul>
+                </div>
             </div>
             <?php footer(); ?>
         </div>
