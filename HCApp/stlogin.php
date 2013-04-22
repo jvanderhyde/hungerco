@@ -13,8 +13,7 @@
     </head>
     <body>
         <div id="page-container">
-            <?php mainmenu('Hunger Coalition'); ?>
-            <div id="header">Header</div>
+            <?php mainmenu(); ?>
             <div id="content">Content</div>
             <div id="sidebar">
                 <?php
@@ -33,21 +32,23 @@
                     }
 
                 ?>
-                <h1>Student login</h1>
-                <p id="message">
-                <?php if(isset($message)) echo $message; ?>
-                </p>
-                <form id="form" name="stlogin" action="stlogin.php" method="POST">
-                    Student ID<br />
-                        <input type="text" size="40" name="studentID" value=
-                            <?php echo $formInfo['id'];?>
-                        ><br />
-                    Password<br />
-                        <input type="password" size="40" name="studentPass"><br/>
-                    <input type="submit" name="button" value="Login">            
-                </form>  
+                <div id="login">
+                    <h1>Student login</h1>
+                    <p id="message">
+                    <?php if(isset($message)) echo $message; ?>
+                    </p>
+                    <form id="form" name="stlogin" action="stlogin.php" method="POST">
+                        Student ID<br />
+                            <input type="text" size="40" name="studentID" value=
+                                <?php echo $formInfo['id'];?>
+                            ><br />
+                        Password<br />
+                            <input type="password" size="40" name="studentPass"><br/>
+                        <input type="submit" name="button" value="Login">            
+                    </form>  
+                </div>
             </div>
-            <div id="footer">Footer</div>
+            <?php footer(); ?>
         </div>
     </body>
 </html>

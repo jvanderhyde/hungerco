@@ -1,29 +1,29 @@
 <!DOCTYPE HTML>
-<?php
-    include_once 'functions.php';
-    include_once 'dbfunctions.php';
-    include_once 'displayfunctions.php';
-?>
+
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Hunger Coalition - Home Page</title>
         <meta name="author" content="BCCS">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
+        <?php
+            include_once 'functions.php';
+            include_once 'dbfunctions.php';
+            include_once 'displayfunctions.php';
+        ?>
     </head>
     
-    <body>
+    <body id="home">
         <div id="page-container">
-            <?php mainmenu('Hunger Coalition'); ?>
-            <div id="header">Header</div>
+            <?php mainmenu(); ?>         
             <div id="content">Content</div>
             <div id="sidebar">
-                <ul class="nav">
-                    <li><a class="ver" href='stlogin.php'>Student Login</a></li>
-                    <li><a class="ver" href='stflogin.php'>Staff Login</a></li>
-                </ul>
+                    <ul>
+                        <li><a href='stlogin.php'><span>Student Login</span></a></li>
+                        <li><a href='stflogin.php'><span>Staff Login</span></a></li>
+                    </ul>
             </div>
-            <div id="footer">Footer</div>
+            <?php footer(); ?>
         </div>
     </body>
 </html>
