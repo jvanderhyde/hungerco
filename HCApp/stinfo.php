@@ -13,7 +13,7 @@
         <meta name="author" content="BCCS">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
-    <body>
+    <body id="home">
         <?php
         
         if(isset($_POST['button']))
@@ -34,53 +34,53 @@
         ?>
             
         <div id="page-container">
-            <div id="header">
-                <?php studmenu("Welcome <?php echo getStudName($id); ?>"); ?>
+                <?php studmenu($id); ?>
+            <div id="innerwrap" class="studcontent">
+                <div id="content" >      
+                    <?php
+                        if(isSkipper($id))
+                        {
+                    ?>
+                    <p>
+                        You are currently on Skip-a-Meal!<br/>
+                        Thank you so much for your support!<br/><br/>
+                        Want to help more?
+                        <form name="volopp" action="volopp.php" method="POST">
+                            <input type="hidden" name="year" value=<?php echo date("Y");?>>
+                            <input type="hidden" name="month" value=<?php echo date("m");?>>
+                            <input type="submit" value="Volunteer Opportunities">
+                        </form><br/>
+                        Can't do Skip-a-Meal?
+                        <form name="removeSkipper" action="stinfo.php" method="POST">
+                            <input type="submit" name="button" value="Remove from list">
+                        </form>
+                    </p>
+                    <?php
+                        }
+                        else
+                        {
+                    ?>
+                    <p>
+                        You are currently not on Skip-a-Meal.<br/><br/>
+                        Want to help?
+                        <form name="volopp" action="volopp.php" method="POST">
+                            <input type="submit" value="Volunteer Opportunities">
+                        </form><br/>
+                        Want to sign up for Skip-a-Meal?
+                        <form name="becomeSkipper" action="stinfo.php" method="POST">
+                            <input type="hidden" name="updateSkipper" value="1">
+                            <input type="submit" name="button" value="Add to list">
+                        </form>
+                    </p>
+                    <?php   
+                        }
+                    ?>
+                </div>
+                <div id="sidebar" class="clearbackground"> 
+                    <?php showVolunteerInformation($id); ?>
+                </div>
             </div>
-            <div id="content">      
-                <?php
-                    if(isSkipper($id))
-                    {
-                ?>
-                <p>
-                    You are currently on Skip-a-Meal!<br/>
-                    Thank you so much for your support!<br/><br/>
-                    Want to help more?
-                    <form name="volopp" action="volopp.php" method="POST">
-                        <input type="hidden" name="year" value=<?php echo date("Y");?>>
-                        <input type="hidden" name="month" value=<?php echo date("m");?>>
-                        <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
-                    Can't do Skip-a-Meal?
-                    <form name="removeSkipper" action="stinfo.php" method="POST">
-                        <input type="submit" name="button" value="Remove from list">
-                    </form>
-                </p>
-                <?php
-                    }
-                    else
-                    {
-                ?>
-                <p>
-                    You are currently not on Skip-a-Meal.<br/><br/>
-                    Want to help?
-                    <form name="volopp" action="volopp.php" method="POST">
-                        <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
-                    Want to sign up for Skip-a-Meal?
-                    <form name="becomeSkipper" action="stinfo.php" method="POST">
-                        <input type="hidden" name="updateSkipper" value="1">
-                        <input type="submit" name="button" value="Add to list">
-                    </form>
-                </p>
-                <?php   
-                    }
-                ?>
-            </div>
-            <div id="sidebar"> 
-                <?php showVolunteerInformation($id); ?>
-            </div>
-            <div id="footer">Footer</div> 
+            <?php footer();  ?>
         </div>
     </body>
 </html>
