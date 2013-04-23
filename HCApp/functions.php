@@ -41,6 +41,34 @@ function assignPostData($var)
     return isset($_POST[$var])?$_POST[$var]:"";
 }
 
+function num_to_str( $target ) {
+
+    $alphabet = array(
+        "A", "B", "C", "D", "E", "F", "G", "H", "I",
+        "J", "K", "L", "M", "N", "O", "P", "Q", "R",
+        "S", "T", "U", "V", "W", "X", "Y", "Z", 
+    );
+
+    if( ! is_numeric( $target ) || $target < 0 ) {
+        return FALSE;
+    }
+
+    $one = fmod( $target , 26 );
+    $result = $alphabet[ $one ];
+    
+    $carry = ( $target - $one ) / 26;
+
+    while( $carry != 0 )
+    {
+        $one = fmod( $carry - 1 , 26 );
+        $result = $alphabet[ $one ] . $result;
+        $carry = ( $carry - 1 - $one ) / 26;
+    }
+
+    return $result;
+
+}
+
 
 
 ?>
