@@ -487,6 +487,20 @@ function getFamilyInfo($addresscity)
     return mysql_fetch_assoc($result);
 }
 
+function getFamilyInfoFromStop($route,$stop)
+{
+    $link = connectToDB();
+    $query="SELECT *
+            FROM families 
+            INNER JOIN routes ON Address=Famaddress AND City=Famcity
+            WHERE  ROUTE='$route' AND STOP=$stop";
+    $result=mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+    $n=mysql_num_rows($result);
+    if($n!=1)
+        return false;
+    return mysql_fetch_assoc($result);
+}
+
 function modifyFamily($formInfo,$origInfo)
 {
     $link = connectToDB();

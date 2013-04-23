@@ -3,10 +3,37 @@
     include_once 'functions.php';
     include_once 'dbfunctions.php';
     verifyuser(array("Officer"));
+    
     $map=isset($_POST['routemap'])?$_POST['routemap']:'North';
-    if(isset($_POST['stop']))
+    
+    if(isset($_POST['button']) && $_POST['button']=="Change Route")
     {
-        if($_POST['button']=='UP')
+        $newroute=$_POST['newroute'];
+        $oldroute=$_POST['routemap'];
+        if($newroute!=$oldroute)
+        {
+            $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
+            $addresscity=$movedFamily['Address'].",".$movedFamily['City'];
+            changeRoute($addresscity,$oldroute,$newroute);
+            $map=$newroute;
+        }
+    }
+    
+    if(isset($_POST['stop']) && isset($_POST['button']))
+    {
+        if($_POST['button']=="Change Route")
+        {
+            $newroute=$_POST['newroute'];
+            $oldroute=$_POST['routemap'];
+            if($newroute!=$oldroute)
+            {
+                $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
+                $addresscity=$movedFamily['Address'].",".$movedFamily['Address'];
+                changeRoute($addresscity,$oldroute,$newroute);
+                $map=$newroute;
+            }
+        }
+        elseif($_POST['button']=='UP')
         {
             upList($map,$_POST['stop']);
         }
@@ -111,12 +138,14 @@ function showAddressList($map,$families)
         $size=30;
     ?>
     <form name="<?php echo $map;?>RouteList" action="routes.php" method="POST">
-        <select name="stop" size="<?php echo $size;?>">
+        A: Benedictine College<br />
+        <select name="stop" size="<?php echo $size;?>" style="font-size: 16px;">
             <?php 
             foreach ($families as $family) 
             {
                 $stop = $family["STOP"];
-                $family_info = $family["STOP"]." ".$family["Famname"]." ".$family["Address"].", ".$family["City"];
+                $stopAlphabet = num_to_str($stop);
+                $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"].", ".$family["City"];
                 echo "<option value=\"$stop\">$family_info</option>";
             }
             ?>
@@ -124,6 +153,32 @@ function showAddressList($map,$families)
         <input type="hidden" name="routemap" value=<?php echo $map;?>>
         <input type="submit" name="button" value="UP">
         <input type="submit" name="button" value="DOWN">
+        <select name="newroute">
+            <?php
+            $selectroute=$map;
+            for($i=0;$i<=2;$i++)
+            {
+                $textroute='';
+                switch ($i) {
+                    case 0:
+                        $textroute='North';
+                        break;
+                    case 1:
+                        $textroute='Middle';
+                        break;
+                    case 2:
+                        $textroute='South';
+                        break;
+                }
+
+                if($textroute==$selectroute)
+                    echo "<option value=\"$textroute\" selected>$textroute</option>";
+                else
+                    echo "<option value=\"$textroute\">$textroute</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" name="button" value="Change Route">
     </form><br />
     <?php
 }
