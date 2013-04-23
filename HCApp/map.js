@@ -8,7 +8,12 @@ var directionsDisplay = new google.maps.DirectionsRenderer(rendererOptions);
 var directionsService = new google.maps.DirectionsService();
 var map;
 
-
+var start = "1020 N 2nd Street, Atchison";
+var middlePoints=new Array();
+for(var i=0; i<middleAddresses.length ; i++)
+{
+    middlePoints.push({location: middleAddresses[i],stopover:true });
+}
 
 function initialize()
 {
@@ -30,33 +35,17 @@ function initialize()
 }
 function calcRoute()
 {
-    var start = "1020 N 2nd Street, Atchison";
-    var end = "800 L Street, Atchison";
     var request ={
-        origin: start,
-        destination: end,
-        waypoints:[
-	{
-	location: "1125 L St., Atchison",
-	stopover:true
-	}, 
-	{
-	location: "513 N. 10th, Atchison",
-	stopover:true
-	}, 
-	{
-	location: "1120 Laramie, Atchison",
-	stopover:true
-	}
-	],
-        travelMode: google.maps.DirectionsTravelMode.DRIVING,
-	unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,
-	optimizeWaypoints: true,
-	avoidHighways: false,
-	avoidTolls: false 
-        };
-  
-    
+                origin: start,
+                destination: end,
+                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,
+                optimizeWaypoints: false,
+                avoidHighways: false,
+                avoidTolls: false 
+                };
+                
+    request['waypoints']= middlePoints;
     directionsService.route(request, function(response, status) 
 	{
 		if (status == google.maps.DirectionsStatus.OK) 
@@ -66,5 +55,4 @@ function calcRoute()
 	});
 }
 
-
-
+window.onload=initialize;
