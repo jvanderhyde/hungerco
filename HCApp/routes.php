@@ -20,12 +20,27 @@
 <html>
     <head> 
         <title><?php echo $map;?> Route</title>
+        <?php
+        if($list){
+        ?>
         <script type="text/javascript" 
             src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+        <script type="text/javascript">
+            var end="<?php echo $list[count($list)-1]; ?>";
+            var middleAddresses= new Array(<?php echo count($list)-1; ?>);
+            <?php
+            for($i=0; $i<count($list)-1; $i++)
+            {
+                echo"middleAddresses[$i]=\"$list[$i]\";";
+            }
+            ?>
+        </script>
         <script src="map.js" type="text/javascript"></script>
+        <?php
+        }
+        ?>
     </head> 
-    <body onload="initialize()">
-        <?php echo $list[0];?>
+    <body>
         <?php
         $families=getFamiliesWithStop($map);
         pulldownMap($map);

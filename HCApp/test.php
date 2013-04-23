@@ -113,3 +113,60 @@ function showAddressList($map,$families)
     <?php
 }
 ?>
+
+    
+    
+    
+    <?php
+            /*
+            echo 'var request ={origin: start,destination: end,';
+            
+            if(count($list)>1)
+            {
+                for($i=0; $i<count($list)-1; $i++)
+                {
+                    $middle=$list[$i];
+                    echo "middles[$i]=\"$middle\"";
+                }
+            }
+             
+             
+            echo 'travelMode: google.maps.DirectionsTravelMode.DRIVING,';
+            echo 'unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,';
+            echo 'optimizeWaypoints: true,avoidHighways: false,avoidTolls: false};';
+            */
+            ?>
+            <?php
+            /*
+            var request ={
+                origin: start,
+                destination: end,
+                waypoints:[
+                {
+                location: "1125 L St., Atchison",
+                stopover:true
+                }, 
+                {
+                location: "513 N. 10th, Atchison",
+                stopover:true
+                }, 
+                {
+                location: "1120 Laramie, Atchison",
+                stopover:true
+                }
+                ],
+                travelMode: google.maps.DirectionsTravelMode.DRIVING,
+                unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,
+                optimizeWaypoints: true,
+                avoidHighways: false,
+                avoidTolls: false 
+                };*/
+                ?>
+            <?php
+            /*
+            for($i=0; $i<count($list)-1; $i++)
+            {
+                $middle=$list[$i];
+                echo "middles[$i]=\"$middle\"";
+            }*/
+            ?>
