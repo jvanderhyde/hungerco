@@ -6,19 +6,6 @@
     
     $map=isset($_POST['routemap'])?$_POST['routemap']:'North';
     
-    if(isset($_POST['button']) && $_POST['button']=="Change Route")
-    {
-        $newroute=$_POST['newroute'];
-        $oldroute=$_POST['routemap'];
-        if($newroute!=$oldroute)
-        {
-            $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
-            $addresscity=$movedFamily['Address'].",".$movedFamily['City'];
-            changeRoute($addresscity,$oldroute,$newroute);
-            $map=$newroute;
-        }
-    }
-    
     if(isset($_POST['stop']) && isset($_POST['button']))
     {
         if($_POST['button']=="Change Route")
@@ -28,7 +15,7 @@
             if($newroute!=$oldroute)
             {
                 $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
-                $addresscity=$movedFamily['Address'].",".$movedFamily['Address'];
+                $addresscity=$movedFamily['Address'].",".$movedFamily['City'];
                 changeRoute($addresscity,$oldroute,$newroute);
                 $map=$newroute;
             }
@@ -45,24 +32,23 @@
     $list=getRouteAddresses($map);
 ?>
 <html>
-    <head> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $map;?> Route</title>
         <?php
         if($list){
         ?>
-        <script type="text/javascript" 
-            src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
+        <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
         <script type="text/javascript">
-            var end="<?php echo $list[count($list)-1]; ?>";
-            var middleAddresses= new Array(<?php echo count($list)-1; ?>);
+            var middlePoints= new Array(<?php echo count($list); ?>);
             <?php
-            for($i=0; $i<count($list)-1; $i++)
+            for($i=0; $i<count($list); $i++)
             {
-                echo"middleAddresses[$i]=\"$list[$i]\";";
+                echo"middlePoints[$i]=\"$list[$i]\";";
             }
             ?>
         </script>
-        <script src="map.js" type="text/javascript"></script>
+        <script src="map.js" type="text/javascript" charset="utf-8"></script>
         <?php
         }
         ?>
@@ -81,10 +67,10 @@
             
             <table border="1">
                 <tr>
-                    <td width="800" height="700"><div id="map_canvas" style="width:800px; height:700px"></div></td>
+                    <td width="800" height="700"><div id="map_canvas" style="position: relative; width:800px; height:700px;"></div></td>
                     <td><?php showAddressList($map,$families);?></td>
                 </tr>
-            </table>
+            </table><br/>
             <?php
         }
         
@@ -145,7 +131,7 @@ function showAddressList($map,$families)
             {
                 $stop = $family["STOP"];
                 $stopAlphabet = num_to_str($stop);
-                $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"].", ".$family["City"];
+                $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"]." ".$family["City"];
                 echo "<option value=\"$stop\">$family_info</option>";
             }
             ?>
