@@ -77,7 +77,7 @@ function familiesTable($route)
                     $n=isset($family['Notes'])?$family['Notes']:"&nbsp;";
                     echo "<td>".$family['Famname']."</td>";
                     echo "<td align=\"center\">$l</td>";
-                    echo "<td>".$family['Address'].", ".$family['City']."</td>";
+                    echo "<td>".$family['Address']." ".$family['City']."</td>";
                     echo "<td>$p</td>";
                     echo "<td>$n</td>";
                 echo "</tr>";

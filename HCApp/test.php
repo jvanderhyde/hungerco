@@ -3,10 +3,37 @@
     include_once 'functions.php';
     include_once 'dbfunctions.php';
     verifyuser(array("Officer"));
+    
     $map=isset($_POST['routemap'])?$_POST['routemap']:'North';
-    if(isset($_POST['stop']))
+    
+    if(isset($_POST['button']) && $_POST['button']=="Change Route")
     {
-        if($_POST['button']=='UP')
+        $newroute=$_POST['newroute'];
+        $oldroute=$_POST['routemap'];
+        if($newroute!=$oldroute)
+        {
+            $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
+            $addresscity=$movedFamily['Address'].",".$movedFamily['City'];
+            changeRoute($addresscity,$oldroute,$newroute);
+            $map=$newroute;
+        }
+    }
+    
+    if(isset($_POST['stop']) && isset($_POST['button']))
+    {
+        if($_POST['button']=="Change Route")
+        {
+            $newroute=$_POST['newroute'];
+            $oldroute=$_POST['routemap'];
+            if($newroute!=$oldroute)
+            {
+                $movedFamily=getFamilyInfoFromStop($oldroute,$_POST['stop']);
+                $addresscity=$movedFamily['Address'].",".$movedFamily['Address'];
+                changeRoute($addresscity,$oldroute,$newroute);
+                $map=$newroute;
+            }
+        }
+        elseif($_POST['button']=='UP')
         {
             upList($map,$_POST['stop']);
         }
@@ -15,15 +42,31 @@
             downList($map,$_POST['stop']);
         }
     }
+    $list=getRouteAddresses($map);
 ?>
 <html>
-    <head> 
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $map;?> Route</title>
-        <script type="text/javascript" 
-            src="http://maps.google.com/maps/api/js?v=3&sensor=false&language=en"></script>
-        <script src="map.js" type="text/javascript"></script>
+        <?php
+        if($list){
+        ?>
+        <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
+        <script type="text/javascript">
+            var middlePoints= new Array(<?php echo count($list); ?>);
+            <?php
+            for($i=0; $i<count($list); $i++)
+            {
+                echo"middlePoints[$i]=\"$list[$i]\";";
+            }
+            ?>
+        </script>
+        <script src="testjs.js" type="text/javascript" charset="utf-8"></script>
+        <?php
+        }
+        ?>
     </head> 
-    <body onload="initialize()">
+    <body>
         <?php
         $families=getFamiliesWithStop($map);
         pulldownMap($map);
@@ -37,7 +80,7 @@
             
             <table border="1">
                 <tr>
-                    <td width="800" height="700"><div id="map_canvas" style="width:800px; height:700px"></div></td>
+                    <td width="800" height="700"><div id="map_canvas" style="position: relative; width:800px; height:700px;"></div></td>
                     <td><?php showAddressList($map,$families);?></td>
                 </tr>
             </table>
@@ -45,8 +88,6 @@
         }
         
         ?>
-    
-        <!--<div id="route" style="width: 500px; height: 200px;overflow: scroll"></div>-->
         
 
         <form name="home" action="officerhome.php" method="POST">
@@ -58,7 +99,7 @@
 function pulldownMap($map)
 {
     ?>
-    <form name="<?php echo $map;?>Route" action="routes.php" method="POST">
+    <form name="<?php echo $map;?>Route" action="test.php" method="POST">
         <?php
         echo '<select name="routemap">';
         $selectmap=$map;
@@ -95,13 +136,15 @@ function showAddressList($map,$families)
     if($size>30)
         $size=30;
     ?>
-    <form name="<?php echo $map;?>RouteList" action="routes.php" method="POST">
-        <select name="stop" size="<?php echo $size;?>">
+    <form name="<?php echo $map;?>RouteList" action="test.php" method="POST">
+        A: Benedictine College<br />
+        <select name="stop" size="<?php echo $size;?>" style="font-size: 16px;">
             <?php 
             foreach ($families as $family) 
             {
                 $stop = $family["STOP"];
-                $family_info = $family["STOP"]." ".$family["Famname"]." ".$family["Address"].", ".$family["City"];
+                $stopAlphabet = num_to_str($stop);
+                $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"].", ".$family["City"];
                 echo "<option value=\"$stop\">$family_info</option>";
             }
             ?>
@@ -109,64 +152,33 @@ function showAddressList($map,$families)
         <input type="hidden" name="routemap" value=<?php echo $map;?>>
         <input type="submit" name="button" value="UP">
         <input type="submit" name="button" value="DOWN">
+        <select name="newroute">
+            <?php
+            $selectroute=$map;
+            for($i=0;$i<=2;$i++)
+            {
+                $textroute='';
+                switch ($i) {
+                    case 0:
+                        $textroute='North';
+                        break;
+                    case 1:
+                        $textroute='Middle';
+                        break;
+                    case 2:
+                        $textroute='South';
+                        break;
+                }
+
+                if($textroute==$selectroute)
+                    echo "<option value=\"$textroute\" selected>$textroute</option>";
+                else
+                    echo "<option value=\"$textroute\">$textroute</option>";
+            }
+            ?>
+        </select>
+        <input type="submit" name="button" value="Change Route">
     </form><br />
     <?php
 }
 ?>
-
-    
-    
-    
-    <?php
-            /*
-            echo 'var request ={origin: start,destination: end,';
-            
-            if(count($list)>1)
-            {
-                for($i=0; $i<count($list)-1; $i++)
-                {
-                    $middle=$list[$i];
-                    echo "middles[$i]=\"$middle\"";
-                }
-            }
-             
-             
-            echo 'travelMode: google.maps.DirectionsTravelMode.DRIVING,';
-            echo 'unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,';
-            echo 'optimizeWaypoints: true,avoidHighways: false,avoidTolls: false};';
-            */
-            ?>
-            <?php
-            /*
-            var request ={
-                origin: start,
-                destination: end,
-                waypoints:[
-                {
-                location: "1125 L St., Atchison",
-                stopover:true
-                }, 
-                {
-                location: "513 N. 10th, Atchison",
-                stopover:true
-                }, 
-                {
-                location: "1120 Laramie, Atchison",
-                stopover:true
-                }
-                ],
-                travelMode: google.maps.DirectionsTravelMode.DRIVING,
-                unitSystem: google.maps.DirectionsUnitSystem.IMPERIAL,
-                optimizeWaypoints: true,
-                avoidHighways: false,
-                avoidTolls: false 
-                };*/
-                ?>
-            <?php
-            /*
-            for($i=0; $i<count($list)-1; $i++)
-            {
-                $middle=$list[$i];
-                echo "middles[$i]=\"$middle\"";
-            }*/
-            ?>
