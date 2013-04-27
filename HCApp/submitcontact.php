@@ -11,7 +11,7 @@
         
         //We need mail sending program.
         
-        if (mail("mori1255@ravens.benedictine.edu", "contact mail",$message, "From:mori1255@ravens.benedictine.edu")) {
+        if (mail("mori1255@ravens.benedictine.edu", "contact mail",$message, "From: mori1255@ravens.benedictine.edu")) {
             echo'Thank you for submit';
         }
         else {
