@@ -6,6 +6,11 @@
     
     $map=isset($_POST['routemap'])?$_POST['routemap']:'North';
     
+    if(isset($_POST['button']) && $_POST['button']=='Refresh')
+    {
+        $map=$_POST['currentmap'];
+    }
+    
     if(isset($_POST['stop']) && isset($_POST['button']))
     {
         if($_POST['button']=="Change Route")
@@ -28,6 +33,7 @@
         {
             downList($map,$_POST['stop']);
         }
+        
     }
     $list=getRouteAddresses($map);
 ?>
@@ -59,7 +65,7 @@
         pulldownMap($map);
         if(!$families)
         {
-            echo "<h1>No family is on the $map Route</h1>";
+            echo "<h1>No families are on the $map Route</h1>";
         }
         else
         {
@@ -87,32 +93,46 @@ function pulldownMap($map)
 {
     ?>
     <form name="<?php echo $map;?>Route" action="routes.php" method="POST">
-        <?php
-        echo '<select name="routemap">';
-        $selectmap=$map;
-        for($i=0;$i<=2;$i++)
-        {
-            $textmap='';
-            switch ($i) {
-                case 0:
-                    $textmap='North';
-                    break;
-                case 1:
-                    $textmap='Middle';
-                    break;
-                case 2:
-                    $textmap='South';
-                    break;
-            }
+        <table border="0">
+            <tr>
+                <td>
+                    <?php
+                    echo '<select name="routemap">';
+                    $selectmap=$map;
+                    for($i=0;$i<=2;$i++)
+                    {
+                        $textmap='';
+                        switch ($i) {
+                            case 0:
+                                $textmap='North';
+                                break;
+                            case 1:
+                                $textmap='Middle';
+                                break;
+                            case 2:
+                                $textmap='South';
+                                break;
+                        }
 
-            if($textmap==$selectmap)
-                echo "<option value=\"$textmap\" selected>$textmap Route</option>";
-            else
-                echo "<option value=\"$textmap\">$textmap Route</option>";
-        }
-        echo'</select>';
-        ?>
-        <input type="submit" value="View Route">
+                        if($textmap==$selectmap)
+                            echo "<option value=\"$textmap\" selected>$textmap Route</option>";
+                        else
+                            echo "<option value=\"$textmap\">$textmap Route</option>";
+                    }
+                    echo'</select>';
+                    ?>
+                </td>
+                <td>
+                    <input type="submit" value="View Route">
+                </td>
+                <td width="50"></td>
+                <td>
+                    <input type="hidden" name="currentmap" value=<?php echo $map;?>>
+                    <input type="submit" name="button" value="Refresh">
+                </td>
+            </tr>
+        
+        </table>
     </form>
     <?php
 }
