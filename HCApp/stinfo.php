@@ -37,40 +37,42 @@
         <div id="page-container">
             <?php studmenu($id); ?>
             <div id="content" >      
-                <?php
-                    if(isSkipper($id))
-                    {
-                ?>
-                    You are currently on Skip-a-Meal!<br/>
-                    Thank you so much for your support!<br/><br/>
-                    Want to help more?
-                    <form name="volopp" action="volopp.php" method="POST">
-                        <input type="hidden" name="year" value=<?php echo date("Y");?>>
-                        <input type="hidden" name="month" value=<?php echo date("m");?>>
-                        <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
-                    Can't do Skip-a-Meal?
-                    <form name="removeSkipper" action="stinfo.php" method="POST">
-                        <input type="submit" name="button" value="Remove from list">
-                    </form>
+                <div class="offset">
                     <?php
-                        }
-                        else
+                        if(isSkipper($id))
                         {
                     ?>
-                    You are currently not on Skip-a-Meal.<br/><br/>
-                    Want to help?
-                    <form name="volopp" action="volopp.php" method="POST">
-                        <input type="submit" value="Volunteer Opportunities">
-                    </form><br/>
-                    Want to sign up for Skip-a-Meal?
-                    <form name="becomeSkipper" action="stinfo.php" method="POST">
-                        <input type="hidden" name="updateSkipper" value="1">
-                        <input type="submit" name="button" value="Add to list">
-                    </form>
-                    <?php   
-                        }
-                    ?>
+                        You are currently on Skip-a-Meal!<br/>
+                        Thank you so much for your support!<br/><br/>
+                        Want to help more?
+                        <form name="volopp" action="volopp.php" method="POST">
+                            <input type="hidden" name="year" value=<?php echo date("Y");?>>
+                            <input type="hidden" name="month" value=<?php echo date("m");?>>
+                            <input type="submit" value="Volunteer Opportunities">
+                        </form><br/>
+                        Can't do Skip-a-Meal?
+                        <form name="removeSkipper" action="stinfo.php" method="POST">
+                            <input type="submit" name="button" value="Remove from list">
+                        </form>
+                        <?php
+                            }
+                            else
+                            {
+                        ?>
+                        You are currently not on Skip-a-Meal.<br/><br/>
+                        Want to help?
+                        <form name="volopp" action="volopp.php" method="POST">
+                            <input type="submit" value="Volunteer Opportunities">
+                        </form><br/>
+                        Want to sign up for Skip-a-Meal?
+                        <form name="becomeSkipper" action="stinfo.php" method="POST">
+                            <input type="hidden" name="updateSkipper" value="1">
+                            <input type="submit" name="button" value="Add to list">
+                        </form>
+                        <?php   
+                            }
+                        ?>
+                </div>
             </div>
             <div id="sidebar"> 
                 <?php showVolunteerInformation($id); ?>
@@ -104,7 +106,7 @@ function showVolunteerInformation($id)
                     <td>
                         <form name='unvolunteer' action='stinfo.php' method='POST'>
                             <input type='hidden' name='unvolunteer' value=$num>
-                            <input type='submit' value='Unvolunteer'>
+                            <input type='submit' value='Remove from List'>
                         </form>
                     </td>
                 </tr>";

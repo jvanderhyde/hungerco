@@ -15,7 +15,7 @@
     <body>
         <div id="page-container">
             <?php mainmenu(); ?>
-            <div id="content">Content</div>
+            <div id="content"></div>
             <div id="sidebar">
                 <?php
                     //Stores information from a previous post (if any) to 

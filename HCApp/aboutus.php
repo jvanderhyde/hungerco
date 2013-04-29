@@ -15,8 +15,8 @@
     <body id="about">
         <div id="page-container">
             <?php mainmenu(); ?>         
-            <div id="content">Information about Hunger Coalition</div>
-            <div id="sidebar">Sidebar</div>
+            <div id="content"></div>
+            <div id="sidebar"></div>
             <?php footer(); ?>
         </div>
     </body>
