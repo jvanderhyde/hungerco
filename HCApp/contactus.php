@@ -27,11 +27,13 @@
                     Message<br />
                         <textarea name='descrip' rows='15' cols='40'>Type message here.
                         </textarea>
-                    <br/><br/>
+                    <br/>
                     <input type="submit" value="Submit">
                 </form>
+                
             </div>
             <div id="sidebar">Sidebar</div>
+            <br/>
             <?php footer(); ?>   
         </div>
     </body>
