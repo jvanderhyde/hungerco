@@ -40,9 +40,9 @@
             ?>
             </table>
 
-            <form name="download" action="skiplistdownload.php" method="POST">
+<!--            <form name="download" action="skiplistdownload.php" method="POST">
                 <input type="submit" value="Download Skipper List">
-            </form>
+            </form>-->
 
             <form name="logout" action="logout.php" method="POST">
                 <input type="submit" value="Logout">

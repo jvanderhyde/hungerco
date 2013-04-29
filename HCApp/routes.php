@@ -2,6 +2,7 @@
 <?php
     include_once 'functions.php';
     include_once 'dbfunctions.php';
+    include_once 'displayfunctions.php';
     verifyuser(array("Officer"));
     
     $map=isset($_POST['routemap'])?$_POST['routemap']:'North';
@@ -41,7 +42,10 @@
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
         <title><?php echo $map;?> Route</title>
-        <?php
+        <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
+                <?php
         if($list){
         ?>
         <script type="text/javascript" src="http://ecn.dev.virtualearth.net/mapcontrol/mapcontrol.ashx?v=7.0"></script>
@@ -58,36 +62,37 @@
         <?php
         }
         ?>
-    </head> 
-    <body>
-        <?php
-        $families=getFamiliesWithStop($map);
-        pulldownMap($map);
-        if(!$families)
-        {
-            echo "<h1>No families are on the $map Route</h1>";
-        }
-        else
-        {
-            ?>
-            
-            <table border="1">
-                <tr>
-                    <td width="800" height="700"><div id="map_canvas" style="position: relative; width:800px; height:700px;"></div></td>
-                    <td><?php showAddressList($map,$families);?></td>
-                </tr>
-            </table><br/>
-            <?php
-        }
-        
-        ?>
-        
+    </head>
+    <body id="map">
+        <div id="page-container">
+            <?php officermenu(); ?>
+            <div id="content" >
+                <br/>
+                <?php
+                $families=getFamiliesWithStop($map);
+                pulldownMap($map);
+                echo "<br/>";
+                if(!$families)
+                {
+                    echo "<h1>No families are on the $map Route</h1>";
+                }
+                else
+                {
+                    ?>
 
-        <form name="home" action="officerhome.php" method="POST">
-            <input type="submit" value="Back to Home Page">
-        </form>
-    </body>
-</html>
+                    <table border="1">
+                        <tr>
+                            <td width="800" height="700"><div id="map_canvas" style="position: relative; width:800px; height:700px;"></div></td>
+                            <td><?php showAddressList($map,$families);?></td>
+                        </tr>
+                    </table><br/>
+                    <?php
+                }
+
+                ?>        
+            </div>
+        </div>
+        <?php footer() ?>
 <?php
 function pulldownMap($map)
 {
@@ -135,57 +140,59 @@ function pulldownMap($map)
         </table>
     </form>
     <?php
-}
+        }
 
-function showAddressList($map,$families)
-{
-    $size=count($families);
-    if($size>30)
-        $size=30;
-    ?>
-    <form name="<?php echo $map;?>RouteList" action="routes.php" method="POST">
-        A: Benedictine College<br />
-        <select name="stop" size="<?php echo $size;?>" style="font-size: 16px;">
-            <?php 
-            foreach ($families as $family) 
-            {
-                $stop = $family["STOP"];
-                $stopAlphabet = num_to_str($stop);
-                $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"]." ".$family["City"];
-                echo "<option value=\"$stop\">$family_info</option>";
-            }
+        function showAddressList($map,$families)
+        {
+            $size=count($families);
+            if($size>30)
+                $size=30;
             ?>
-        </select><br />
-        <input type="hidden" name="routemap" value=<?php echo $map;?>>
-        <input type="submit" name="button" value="UP">
-        <input type="submit" name="button" value="DOWN">
-        <select name="newroute">
+            <form name="<?php echo $map;?>RouteList" action="routes.php" method="POST">
+                A: Benedictine College<br />
+                <select name="stop" size="<?php echo $size;?>" style="font-size: 16px;">
+                    <?php 
+                    foreach ($families as $family) 
+                    {
+                        $stop = $family["STOP"];
+                        $stopAlphabet = num_to_str($stop);
+                        $family_info = $stopAlphabet.": ".$family["Famname"].", ".$family["Address"]." ".$family["City"];
+                        echo "<option value=\"$stop\">$family_info</option>";
+                    }
+                    ?>
+                </select><br />
+                <input type="hidden" name="routemap" value=<?php echo $map;?>>
+                <input type="submit" name="button" value="UP">
+                <input type="submit" name="button" value="DOWN">
+                <select name="newroute">
+                    <?php
+                    $selectroute=$map;
+                    for($i=0;$i<=2;$i++)
+                    {
+                        $textroute='';
+                        switch ($i) {
+                            case 0:
+                                $textroute='North';
+                                break;
+                            case 1:
+                                $textroute='Middle';
+                                break;
+                            case 2:
+                                $textroute='South';
+                                break;
+                        }
+
+                        if($textroute==$selectroute)
+                            echo "<option value=\"$textroute\" selected>$textroute</option>";
+                        else
+                            echo "<option value=\"$textroute\">$textroute</option>";
+                    }
+                    ?>
+                </select>
+                <input type="submit" name="button" value="Change Route">
+            </form><br />
             <?php
-            $selectroute=$map;
-            for($i=0;$i<=2;$i++)
-            {
-                $textroute='';
-                switch ($i) {
-                    case 0:
-                        $textroute='North';
-                        break;
-                    case 1:
-                        $textroute='Middle';
-                        break;
-                    case 2:
-                        $textroute='South';
-                        break;
-                }
-
-                if($textroute==$selectroute)
-                    echo "<option value=\"$textroute\" selected>$textroute</option>";
-                else
-                    echo "<option value=\"$textroute\">$textroute</option>";
-            }
-            ?>
-        </select>
-        <input type="submit" name="button" value="Change Route">
-    </form><br />
-    <?php
-}
-?>
+        }
+        ?>
+    </body>
+</html>
