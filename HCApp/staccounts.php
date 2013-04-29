@@ -7,9 +7,9 @@
         {
             unset($_SESSION["stid"]);
         }
-        if(isset($_SESSION["delete"]))
+        if(isset($_SESSION['delete']))
         {
-            unset($_SESSION["delete"]);
+            unset($_SESSION['delete']);
         }
         if(isset($_POST['button']) && $_POST['button']=='Delete')
         {
