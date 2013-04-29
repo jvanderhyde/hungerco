@@ -2,6 +2,8 @@ var m　= null;
 var map;
 var mapCredential = "AlcUmuxDP1RO53A3d6Dkh3RTUIq6PhsUVNs4Tc_O8rR-9nBKIJPx93quglChDaEB";
 var directionsManager;
+var directionsErrorEventObj;
+var directionsUpdatedEventObj;
 var newwaypoint;
 
 
@@ -30,6 +32,8 @@ function createDirectionsManager()
         directionsManager = new Microsoft.Maps.Directions.DirectionsManager(map);
     }
     directionsManager.resetDirections();
+    directionsErrorEventObj = Microsoft.Maps.Events.addHandler(directionsManager, 'directionsError', function(arg) { alert(arg.message) });
+    directionsUpdatedEventObj = Microsoft.Maps.Events.addHandler(directionsManager, 'directionsUpdated', function() { alert('Directions updated') });
 }
 
 function createDrivingRoute()

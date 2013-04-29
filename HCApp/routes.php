@@ -50,7 +50,7 @@
             <?php
             for($i=0; $i<count($list); $i++)
             {
-                echo"middlePoints[$i]=\"$list[$i]\";";
+                echo"middlePoints[$i]=\"$list[$i], KS\";";
             }
             ?>
         </script>
