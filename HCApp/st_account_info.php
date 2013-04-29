@@ -2,17 +2,17 @@
     include_once 'functions.php';
     include_once 'dbfunctions.php';
     verifyuser(array("Officer"));
-    if(isset($_SESSION["stid"]))
+    if(isset($_SESSION['stid']))
     {
-        $id = $_SESSION["stid"];
+        $id = $_SESSION['stid'];
     }
     else
     {
         header("location:staccounts.php");
     }
-    if(isset($_SESSION["delete"]))
+    if(isset($_SESSION['delete']))
     {
-        unset($_SESSION["delete"]);
+        unset($_SESSION['delete']);
     }
     
     if(isset($_POST['button']))
