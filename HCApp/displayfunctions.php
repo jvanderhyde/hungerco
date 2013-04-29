@@ -14,8 +14,7 @@ function mainmenu()
                 <li><a class='nav-contact' href='contactus.php'>Contact</a></li>
             </ul>
         </nav>
-        </header>
-        <br />";
+        </header>";
 }
 function footer()
 {
@@ -35,8 +34,7 @@ function studmenu($id)
                     <li><a href='logout.php'>Logout</a></li>
                 </ul>
             </nav>
-        </header>
-        <br />";
+        </header>";
 }
 
 function volmenu()

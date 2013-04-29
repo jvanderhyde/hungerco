@@ -11,36 +11,35 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Volunteer Opportunities</title>
         <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body id="vol">
         <div id="page-container">
             <?php volmenu(); ?> 
-            <div id="innerwrap">
-                <div id="content">
-                    <?php
-                    $id=$_SESSION["studentid"];
-                    $year=isset($_POST['year'])?$_POST['year']:date("Y");
-                    $month=isset($_POST['month'])?$_POST['month']:date("m");
-                    makeLinks($year, $month);
-                    
-                    if(isset($_POST['oppnum']))
-                    {
-                        addVolunteerValue($id,$_POST['oppnum']);
-                    }
+            <div id="content">
+                <?php
+                $id=$_SESSION["studentid"];
+                $year=isset($_POST['year'])?$_POST['year']:date("Y");
+                $month=isset($_POST['month'])?$_POST['month']:date("m");
+                makeLinks($year, $month);
 
-                    $monthlyAllVolopps = getMonthlyVolOpps($year, $month);
-                    $monthlyJoinVolopps = getMonthlyRegisteredVolOpps($id, $year, $month);
+                if(isset($_POST['oppnum']))
+                {
+                    addVolunteerValue($id,$_POST['oppnum']);
+                }
 
-                    $obj_cdr = &  new CalendarClass();
-                    if($monthlyAllVolopps){
-                        $obj_cdr->setPersonalVolunteerOpportunity($monthlyJoinVolopps, $monthlyAllVolopps,"./volopp_info.php");
-                    }
-             
-                    echo $obj_cdr->getCalendar($year, $month);
-                    
-                    ?>                    
-                </div>
+                $monthlyAllVolopps = getMonthlyVolOpps($year, $month);
+                $monthlyJoinVolopps = getMonthlyRegisteredVolOpps($id, $year, $month);
+
+                $obj_cdr = &  new CalendarClass();
+                if($monthlyAllVolopps){
+                    $obj_cdr->setPersonalVolunteerOpportunity($monthlyJoinVolopps, $monthlyAllVolopps,"./volopp_info.php");
+                }
+
+                echo $obj_cdr->getCalendar($year, $month);
+
+                ?>                    
             </div>
             <?php footer(); ?>
         </div>
