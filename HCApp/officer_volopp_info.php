@@ -16,6 +16,11 @@ else
     header("location:index.php");
 }
 
+if(isset($_SESSION['delete']))
+{
+    unset($_SESSION['delete']);
+}
+
 if(isset($_POST['button']) && $_POST['button']=='Delete')
 {
     $del_info['type']='volopp';
@@ -23,10 +28,8 @@ if(isset($_POST['button']) && $_POST['button']=='Delete')
     $_SESSION['delete']=$del_info;
     header("location:confirm_delete.php");
 }
-if(isset($_SESSION["delete"]))
-{
-    unset($_SESSION["delete"]);
-}
+
+
 $volopp=getVolunteerOppotunityInformation($oppnum);
 
 $date=$volopp["Date"];
