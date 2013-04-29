@@ -159,7 +159,7 @@ function askDeleteFamily($addresscity)
         <tr>
             <td>
                 <form name="delete" action="families.php" method="POST">
-                    <input type="hidden" name="addresscity" value=<?php echo $addresscity;?>>
+                    <input type="hidden" name="addresscity" value="<?php echo $addresscity;?>">
                     <input type="submit" name="button" value="Delete">
                 </form>
             </td>
