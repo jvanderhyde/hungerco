@@ -50,7 +50,7 @@ nav
 nav li
 {
     float:left;
-    width:120px;
+    width:130px;
     height:35px;
     background-color:rgb(14,125,241);
     text-align:center;
@@ -71,7 +71,8 @@ nav ul li a:hover
     background-color:rgb(21,71,138);
 }
 
-body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol .nav-vol
+body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol .nav-vol,
+body#acct .nav-acct,  body#skip .nav-skip, body#route .nav-route, body#map .nav-map
 {
     background-color:rgb(21,71,138);
     display:block;
@@ -159,7 +160,7 @@ body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol
     height: 25px;
 }
 
-#login
+.offset
 {
     padding: 30px 50px 40px 50px;
 }

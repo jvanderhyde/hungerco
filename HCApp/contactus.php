@@ -30,10 +30,9 @@
                     <br/>
                     <input type="submit" value="Submit">
                 </form>
-                
+                <br/>
             </div>
-            <div id="sidebar">Sidebar</div>
-            <br/>
+<!--            <div id="sidebar">Sidebar</div>-->
             <?php footer(); ?>   
         </div>
     </body>

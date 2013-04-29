@@ -2,6 +2,7 @@
 <?php
     include_once 'functions.php';
     include_once 'dbfunctions.php';
+    include_once 'displayfunctions.php';
     verifyuser(array("Officer"));
     if(!isset($_SESSION['delete']))
     {
@@ -10,26 +11,38 @@
 ?>
 <html>
     <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Confirm Delete</title> 
+        <meta name="author" content="BCCS" />
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head> 
     <body>
-        <h1>Are you sure you want to permanently delete this data?</h1>
-        <?php
-        $del_info=$_SESSION['delete'];
-        $type=$del_info['type'];
-        switch ($type) {
-            case 'staccount':
-                askDeleteStaccount($del_info['id']);
-                break;
-            case 'volopp':
-                askDeleteVolopp($del_info['oppnum']);
-                break;
-            case 'family':
-                askDeleteFamily($del_info['addresscity']);
-                break;
-        }
-        ?>
-
+        <div id="page-container">
+            <?php officermenu(); ?>        
+            <div id="content">
+                <br/>
+                <h1>Are you sure you want to permanently delete this data?</h1>
+                <div class="offset">
+                    <?php
+                    $del_info=$_SESSION['delete'];
+                    $type=$del_info['type'];
+                    switch ($type) {
+                        case 'staccount':
+                            askDeleteStaccount($del_info['id']);
+                            break;
+                        case 'volopp':
+                            askDeleteVolopp($del_info['oppnum']);
+                            break;
+                        case 'family':
+                            askDeleteFamily($del_info['addresscity']);
+                            break;
+                    }
+                    ?>
+                </div>
+            </div>
+            <?php footer();  ?>
+        </div>
     </body>
 </html>
 <?php

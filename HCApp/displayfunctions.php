@@ -51,4 +51,23 @@ function volmenu()
         <br />";
 }
 
+function officermenu()
+{
+    echo "
+        <header>
+        <img src='hclogo.jpg'>
+        <nav>
+            <ul>
+                <li><a class='nav-home' href='officerhome.php'>Home</a></li>
+                <li><a class='nav-acct' href='staccounts.php'>Student Accounts</a></li>
+                <li><a class='nav-skip' href='skippers.php'>Skip-a-Meal Info</a></li>
+                <li><a class='nav-vol' href='officer_volopps.php'>Volunteers</a></li>
+                <li><a class='nav-route' href='families.php'>Routes</a></li>
+                <li><a class='nav-map' href='routes.php'>Maps</a></li>
+                <li><a href='logout.php'>Logout</a></li>
+            </ul>
+        </nav>
+        </header>";
+}
+
 ?>

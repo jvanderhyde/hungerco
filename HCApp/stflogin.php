@@ -9,6 +9,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Staff login</title>
         <meta name="author" content="BCCS" />
+        <link rel="stylesheet" type="text/css" href="reset.css">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body>
@@ -31,7 +32,7 @@
                         $message = verifyLogin($formInfo);
                     }
                 ?>
-                <div id="login">
+                <div class="offset">
                     <h1>Staff login</h1>
                     <p id="message">
                     <?php if(isset($message)) echo $message; ?>
