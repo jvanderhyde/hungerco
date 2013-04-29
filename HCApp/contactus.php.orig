@@ -1,0 +1,24 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title></title>
+    </head>
+    <body>
+        <h1>Contact Us</h1>
+        <form name="contactus" action="submitcontact.php" method="POST">
+            Name:<br />
+            <input type="text" size="40" name="name"><br />
+            Address:<br />
+            <input type="text" size="40" name="address"><br />
+            Phone:<br />
+            <input type="text" size="40" name="phone"><br />
+            Description:<br />
+            <textarea name="description" cols="34" rows="5"></textarea><br/><br/>
+            <input type="submit" value="Submit">
+        </form>
+        <form name="cancel" action="index.php" method="POST">
+            <input type="submit" value="Cancel">
+        </form>
+    </body>
+</html>
