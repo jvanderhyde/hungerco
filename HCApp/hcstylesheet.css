@@ -171,6 +171,11 @@ body#acct .nav-acct,  body#skip .nav-skip, body#route .nav-route, body#map .nav-
     margin: 30px 50px 40px 50px;
 }
 
+.maptable
+{
+    vertical-align: middle;
+}
+
 .indentcontent
 {
     padding: 10px 0px 10px 50px;
