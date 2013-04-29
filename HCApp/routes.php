@@ -83,7 +83,7 @@
                     <table border="1">
                         <tr>
                             <td width="800" height="700"><div id="map_canvas" style="position: relative; width:800px; height:700px;"></div></td>
-                            <td><?php showAddressList($map,$families);?></td>
+                            <td valign="middle"><?php showAddressList($map,$families);?></td>
                         </tr>
                     </table><br/>
                     <?php
@@ -149,8 +149,8 @@ function pulldownMap($map)
                 $size=30;
             ?>
             <form name="<?php echo $map;?>RouteList" action="routes.php" method="POST">
-                A: Benedictine College<br />
-                <select name="stop" size="<?php echo $size;?>" style="font-size: 16px;">
+                <b>A: Benedictine College</b><br />
+                <select name="stop" size="<?php echo $size;?>" style="font-size: 18px;">
                     <?php 
                     foreach ($families as $family) 
                     {
