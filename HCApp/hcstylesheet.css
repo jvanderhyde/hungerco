@@ -8,19 +8,16 @@
 
 root 
 { 
-    display: block;
+    /*display: block;*/
 }
 
 html, body 
 {
-    margin: 0;
-    padding: 0;
+    font-family: "DillenialUPC", "Palatino Linotype", "Book Antiqua", Times, serif;
 }
 
-h1
+h1, h2
 {
-    margin: 0;
-    padding: 0;
     text-transform: uppercase;
     vertical-align: text-bottom;
 }
@@ -164,17 +161,18 @@ body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol
 
 #login
 {
-    padding: 40px 50px 40px 50px;
+    padding: 30px 50px 40px 50px;
+}
+
+.voltable
+{
+    background-color: white;
+    margin: 30px 50px 40px 50px;
 }
 
 .indentcontent
 {
     padding: 10px 0px 10px 50px;
-}
-
-.clearbackground
-{
-    background-color: white;
 }
 
 #welcome
@@ -212,5 +210,6 @@ body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol
     text-align:left;
     font-weight:bold;
 }
+
 
 

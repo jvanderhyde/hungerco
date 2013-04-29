@@ -11,6 +11,7 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Student Information</title>
         <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body id="home">
@@ -35,13 +36,11 @@
             
         <div id="page-container">
                 <?php studmenu($id); ?>
-            <div id="innerwrap" class="studcontent">
                 <div id="content" >      
                     <?php
                         if(isSkipper($id))
                         {
                     ?>
-                    <p>
                         You are currently on Skip-a-Meal!<br/>
                         Thank you so much for your support!<br/><br/>
                         Want to help more?
@@ -54,13 +53,11 @@
                         <form name="removeSkipper" action="stinfo.php" method="POST">
                             <input type="submit" name="button" value="Remove from list">
                         </form>
-                    </p>
                     <?php
                         }
                         else
                         {
                     ?>
-                    <p>
                         You are currently not on Skip-a-Meal.<br/><br/>
                         Want to help?
                         <form name="volopp" action="volopp.php" method="POST">
@@ -71,15 +68,13 @@
                             <input type="hidden" name="updateSkipper" value="1">
                             <input type="submit" name="button" value="Add to list">
                         </form>
-                    </p>
                     <?php   
                         }
                     ?>
                 </div>
-                <div id="sidebar" class="clearbackground"> 
+                <div id="sidebar"> 
                     <?php showVolunteerInformation($id); ?>
                 </div>
-            </div>
             <?php footer();  ?>
         </div>
     </body>
@@ -92,7 +87,7 @@ function showVolunteerInformation($id)
     $volopps = getPersonalVolOpps($id,true);
     if($volopps)
     {
-        echo "<table border='1'>
+        echo "<table  class='voltable' border='1'>
             <tr>
                 <th>Date</th>
                 <th>Name</th>
@@ -114,7 +109,7 @@ function showVolunteerInformation($id)
                     </td>
                 </tr>";
         }
-        echo "</table><br/>";
+        echo "</table>";
     }
 }
 ?>   
