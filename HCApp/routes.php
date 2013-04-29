@@ -14,7 +14,7 @@
     
     if(isset($_POST['stop']) && isset($_POST['button']))
     {
-        if($_POST['button']=="Change Route")
+        if($_POST['button']=="Move to Different Route")
         {
             $newroute=$_POST['newroute'];
             $oldroute=$_POST['routemap'];
@@ -164,6 +164,7 @@ function pulldownMap($map)
                 <input type="hidden" name="routemap" value=<?php echo $map;?>>
                 <input type="submit" name="button" value="UP">
                 <input type="submit" name="button" value="DOWN">
+                <br/>
                 <select name="newroute">
                     <?php
                     $selectroute=$map;
@@ -189,7 +190,7 @@ function pulldownMap($map)
                     }
                     ?>
                 </select>
-                <input type="submit" name="button" value="Change Route">
+                <input type="submit" name="button" value="Move to Different Route">
             </form><br />
             <?php
         }

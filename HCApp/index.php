@@ -17,7 +17,7 @@
         <div id="page-container">
             <?php mainmenu(); ?> 
             <div id="innerwrap">
-                <div id="content">Content</div>
+                <div id="content"></div>
                 <div id="sidebar">
                         <ul>
                             <li><a href='stlogin.php'><span>Student Login</span></a></li>

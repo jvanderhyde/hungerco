@@ -18,8 +18,8 @@
     
     if(isset($_POST['button']))
     {
-        //If the previous action was remove skipper
-        if($_POST['button']=="Remove skipper")
+        //If the previous action was Remove from Skip-a-Meal
+        if($_POST['button']=="Remove from Skip-a-Meal")
             changeSkipperValue($id,0);
 
         //If the previous action was become skipper
@@ -108,7 +108,7 @@
                             </tr>
                         </table>
                         <input type="submit" name="button" value=
-                            <?php echo isSkipper($id)?"\"Remove skipper\"":"\"Become skipper\""; ?>>
+                            <?php echo isSkipper($id)?"\"Remove from Skip-a-Meal\"":"\"Become skipper\""; ?>>
                     </form>
                     <br />
                     <form name="delete" action="st_account_info.php" method="POST">
@@ -140,7 +140,7 @@
                         <td>
                             <form name="unvolunteer" action="st_account_info.php" method="POST">
                                 <input type="hidden" name="unvolunteer" value=<?php echo $volopp['Oppnum'];?>>
-                                <input type="submit" value="Unvolunteer">
+                                <input type="submit" value="Remove from List">
                             </form>
                         </td>
                         <?php

@@ -35,7 +35,7 @@ $description=isset($volopp["Description"])?$volopp["Description"]:"No data";
                     <input type="hidden" name="year" value=<?php echo $year;?>>
                     <input type="hidden" name="month" value=<?php echo $month;?>>
                     <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
-                    <input type="submit" value="Join">
+                    <input type="submit" value="Volunteer">
                 </form>
                 <form name="cancel" action="volopp.php" method="POST">
                     <input type="hidden" name="year" value=<?php echo $year;?>>
