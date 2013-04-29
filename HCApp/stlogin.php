@@ -33,7 +33,7 @@
 
                 ?>
                 <div id="login">
-                    <h1>Student login</h1>
+                    <h2>Student login</h2>
                     <p id="message">
                     <?php if(isset($message)) echo $message; ?>
                     </p>
