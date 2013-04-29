@@ -161,15 +161,15 @@
                     <a href="#" onclick="document.thismonth.submit();return false;" > This month</a>
                     <a href="#" onclick="document.nextmonth.submit();return false;" > Next month＞</a>
 
-                    <form name="previousmonth" action="./volopp.php" method="POST">
+                    <form name="previousmonth" action="./officer_volopps.php" method="POST">
                         <input type="hidden" name="year" value=<?php echo $month==1?$year-1:$year;?>>
                         <input type="hidden" name="month" value=<?php echo $month==1?12:$month-1;?>>
                     </form>
-                    <form name="thismonth" action="./volopp.php" method="POST">
+                    <form name="thismonth" action="./officer_volopps.php" method="POST">
                         <input type="hidden" name="year" value=<?php echo date("Y");?>>
                         <input type="hidden" name="month" value=<?php echo date("m");?>>
                     </form>
-                    <form name="nextmonth" action="./volopp.php" method="POST">
+                    <form name="nextmonth" action="./officer_volopps.php" method="POST">
                         <input type="hidden" name="year" value=<?php echo $month==12?$year+1:$year;?>>
                         <input type="hidden" name="month" value=<?php echo $month==12?1:$month+1;?>>
                     </form>
