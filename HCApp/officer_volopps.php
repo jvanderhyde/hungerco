@@ -28,7 +28,7 @@
                 <?php
                 if(isset($_POST['button']) && $_POST['button']=='Delete')
                 {
-                    deleteVolunteerOpportunity($_POST['button']);
+                    deleteVolunteerOpportunity($_POST['oppnum']);
                 }
 
                 if(isset($_POST['year']))
