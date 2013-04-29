@@ -1,6 +1,7 @@
 <?php
     include_once 'functions.php';
     include_once 'dbfunctions.php';
+    include_once 'displayfunctions.php';
     verifyuser(array("Officer"));
     
     if(isset($_POST['button']) && $_POST['button']=='Delete')
@@ -15,25 +16,33 @@
 ?>
 <html>
     <head> 
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Families Information</title> 
+        <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head> 
-    <body>
-        <h1>The Current Families</h1>
-
-        <?php
-        familiesTable('North');
-        familiesTable('Middle');
-        familiesTable('South');
-        familiesTable('Unsigned');
-        ?>
-        <form name="add" action="create_family.php" method="POST">
-            <input type="submit" value="Add Family">
-        </form><br />
-
-        <form name="home" action="officerhome.php" method="POST">
-            <input type="submit" value="Back to Home Page">
-        </form>
-
+    <body id="route">
+        <div id="page-container">
+            <?php officermenu(); ?>
+            <div id="content" >
+                <div class="offset">
+                    <h1>The Current Families</h1>
+                    <br/>
+                    <?php
+                    familiesTable('North');
+                    familiesTable('Middle');
+                    familiesTable('South');
+                    familiesTable('Unsigned');
+                    ?>
+                    <form name="add" action="create_family.php" method="POST">
+                        <input type="submit" value="Add Family">
+                    </form>
+                    <br />
+                </div>
+            </div>
+            <?php footer() ?>
+        </div>
     </body>
 </html>
 <?php
