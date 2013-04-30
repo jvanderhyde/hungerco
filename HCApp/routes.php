@@ -69,7 +69,7 @@
             <div id="content" >
                 <br/>
                 <?php
-                $families=getFamiliesWithStop($map);
+                $families=getFamiliesWithStop($map,'STOP');
                 pulldownMap($map);
                 echo "<br/>";
                 if(!$families)

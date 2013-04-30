@@ -157,6 +157,9 @@ function deleteStaccount($id)
 }
 
 
+
+
+
 //Volunteer Opportunities
 
 function getVolOpps()
@@ -348,6 +351,8 @@ function deleteVolunteerOpportunity($oppnum)
 
 
 
+
+
 //Volunteers
 
 function removeVolunteerValue($id,$oppnum)
@@ -388,6 +393,8 @@ function getVolunteers($oppnum)
         $areVols['flag']=0;
     return $areVols;
 }
+
+
 
 
 
@@ -455,15 +462,17 @@ function getFamilies($route)
     return $families;
 }
 
-function getFamiliesWithStop($route)
+function getFamiliesWithStop($route, $order)
 {
     $link = connectToDB();
     $query="SELECT *
             FROM families 
             INNER JOIN routes ON Address=Famaddress AND City=Famcity
-            WHERE  ROUTE='$route'
-            ORDER BY STOP";
-    $result=mysql_query($query,$link) or die('Query failed: ' . mysql_error());
+            WHERE  ROUTE='$route'";
+    $textOrder="ORDER BY $order";
+    
+    
+    $result=mysql_query($query.' '.$textOrder,$link) or die('Query failed: ' . mysql_error());
     $n=mysql_num_rows($result);
     if($n==0)
         return false;
@@ -538,6 +547,12 @@ function deleteFamily($addresscity)
     if($routestop)
         negativeUpdateStops($routestop['ROUTE'],$routestop['STOP']);
 }
+
+
+
+
+
+
 
 
 //Route
