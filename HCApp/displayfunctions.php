@@ -6,7 +6,7 @@ function mainmenu()
 {
     echo "
         <header>
-        <img src='hclogo.jpg'>
+        <img src='../images/hclogo.jpg'>
         <nav>
             <ul>
                 <li><a class='nav-home' href='index.php'>Home</a></li>
@@ -25,7 +25,7 @@ function studmenu($id)
 {
     $name = getStudName($id);
     echo "<header>
-            <img src='hclogo.jpg'>
+            <img src='../images/hclogo.jpg'>
             <div id='welcome'>Welcome $name</div>
             <nav>
                 <ul>
@@ -55,7 +55,7 @@ function officermenu()
 {
     echo "
         <header>
-        <img src='hclogo.jpg'>
+        <img src='../images/hclogo.jpg'>
         <nav>
             <ul>
                 <li><a class='nav-home' href='officerhome.php'>Home</a></li>
