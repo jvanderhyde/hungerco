@@ -9,9 +9,9 @@
         $message = 'Name：' . $_POST['name'] . "\nAddress：" . $_POST['address']
                 . "\nPhone：" . $_POST['phone'] . "\nDescription：" . $_POST['descrip'];
         
-        //We need mail sending program.
         
-        if (mail("mori1255@ravens.benedictine.edu", "contact mail",$message, "From: mori1255@ravens.benedictine.edu")) {
+        
+        if (mail("hungercoalition@benedictine.edu", "contact mail",$message, "From: hungercoalition@benedictine.edu")) {
             echo'Thank you for submit';
         }
         else {
