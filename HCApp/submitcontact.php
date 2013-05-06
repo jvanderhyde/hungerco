@@ -12,10 +12,10 @@
         
         
         if (mail("hungercoalition@benedictine.edu", "contact mail",$message, "From: hungercoalition@benedictine.edu")) {
-            echo'Thank you for submit';
+            echo'Thank you for submiting';
         }
         else {
-            echo "Error happend.<br />Please retry later.";
+            echo "Unable to deliver message.<br />Please retry later.";
         }
         ?>
         <form name="next" action="index.php" method="POST">
