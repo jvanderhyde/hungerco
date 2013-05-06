@@ -41,27 +41,24 @@
         <form id="form" name="createaccount" action="createAccount.php" method="POST">
             Name<br />
                 <input type="text" size="20" name="fName" 
-                value=
                     <?php if(isset($_POST['fName']))
-                            echo $formInfo['fName'];
+                            echo "value=".$formInfo['fName'];
                         else
-                            echo "First*"
+                            echo "placeholder=\"First*\""
                     ?> 
                 >
                 <input type="text" size="1" maxlength="1" name="minit" 
-                value=
                     <?php if(isset($_POST['minit']))
-                            echo $formInfo['minit'];
+                            echo "value=".$formInfo['minit'];
                         else
-                            echo "M";
+                            echo "placeholder=\"M\"";
                     ?>
                 >
                 <input type="text" size="20" name="lName" 
-                value=
                     <?php if(isset($_POST['lName']))
-                            echo $formInfo['lName'];
+                            echo "value=".$formInfo['lName'];
                         else
-                            echo "Last*";
+                            echo "placeholder=\"Last*\"";
                     ?>
                 ><br /><br />
             Student ID*<br />
@@ -76,7 +73,7 @@
                 <input type="text" size="40" name="email" value=
                     <?php echo $formInfo['email'];?>
                 ><br/><br/>
-            Password*<br />
+            Password* (note this password will be visible to Hunger Coalition Officers)<br />
                 <input type="password" size="40" name="pass1" ><br/><br/>
             Re-enter Password*<br />
                 <input type="password" size="40" name="pass2" >

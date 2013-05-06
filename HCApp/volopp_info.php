@@ -32,14 +32,14 @@ $description=isset($volopp["Description"])?$volopp["Description"]:"No data";
                 <font size="4"><?php echo $date;?></font><br/>
                 <font size="4"><?php echo $description;?></font><br/><br/>
                 <form name="join" action="volopp.php" method="POST">
-                    <input type="hidden" name="year" value=<?php echo $year;?>>
-                    <input type="hidden" name="month" value=<?php echo $month;?>>
-                    <input type="hidden" name="oppnum" value=<?php echo $oppnum;?>>
+                    <input type="hidden" name="year" value="<?php echo $year;?>">
+                    <input type="hidden" name="month" value="<?php echo $month;?>">
+                    <input type="hidden" name="oppnum" value="<?php echo $oppnum;?>">
                     <input type="submit" value="Volunteer">
                 </form>
                 <form name="cancel" action="volopp.php" method="POST">
-                    <input type="hidden" name="year" value=<?php echo $year;?>>
-                    <input type="hidden" name="month" value=<?php echo $month;?>>
+                    <input type="hidden" name="year" value="<?php echo $year;?>">
+                    <input type="hidden" name="month" value="<?php echo $month;?>">
                     <input type="submit" value="Cancel">
                 </form>
             </div>

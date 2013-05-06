@@ -72,7 +72,8 @@ nav ul li a:hover
 }
 
 body#home .nav-home,  body#about .nav-about, body#contact .nav-contact, body#vol .nav-vol,
-body#acct .nav-acct,  body#skip .nav-skip, body#route .nav-route, body#map .nav-map
+body#acct .nav-acct,  body#skip .nav-skip, body#route .nav-route, body#map .nav-map,
+body#family .nav-family
 {
     background-color:rgb(21,71,138);
     display:block;
@@ -160,9 +161,21 @@ body#acct .nav-acct,  body#skip .nav-skip, body#route .nav-route, body#map .nav-
     height: 25px;
 }
 
+#map_canvas
+{
+    margin:0;
+    padding:0;
+}
+
 .offset
 {
     padding: 30px 50px 40px 50px;
+}
+
+.veroffset
+{
+    padding: 50px 0px 50px 10px;
+    margin: 0 -10px 0 0;
 }
 
 .voltable

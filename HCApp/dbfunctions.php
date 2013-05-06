@@ -733,7 +733,7 @@ function getRouteAddresses($route)
     {
         $address=mysql_result($result,$i,"Address");
         $city=mysql_result($result,$i,"City");
-        $addresscity=$address.' '.$city;
+        $addresscity=$address.', '.$city;
         $list[$i] = $addresscity;
     }    
     
