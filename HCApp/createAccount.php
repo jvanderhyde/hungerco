@@ -3,19 +3,18 @@
     include_once 'functions.php';
     include_once 'dbfunctions.php';
     include_once 'displayfunctions.php';
+    verifyuser(array("Officer"));
 ?>
 <html>
     <head>
-        <title>Create an Account</title>
-        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Create an Account</title>
+        <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body>
         <?php
-            include_once 'functions.php';
-            include_once 'dbfunctions.php';
-            verifyuser(array("Officer"));
-            
             //Stores information from a previous post (if any) to 
             //associative array $formInfo
             $formInfo = getPostInfo();

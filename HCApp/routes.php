@@ -30,7 +30,7 @@
 <html>
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Families Information</title> 
+        <title>Route Information</title> 
         <meta name="author" content="BCCS">
         <link rel="stylesheet" type="text/css" href="reset.css">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
@@ -54,6 +54,7 @@
                     familiesTable('North');
                     familiesTable('Middle');
                     familiesTable('South');
+                    familiesTable('Mall Towers');
                     familiesTable('Unsigned');
                     ?>
                     <form name="add" action="create_family.php" method="POST">
@@ -134,7 +135,7 @@
                 <select name="newroute">
                     <?php
                     $selectroute=$route;
-                    for($i=0;$i<=3;$i++)
+                    for($i=0;$i<=4;$i++)
                     {
                         $textroute='';
                         switch ($i) {
@@ -148,7 +149,10 @@
                                 $textroute='South';
                                 break;
                             case 3:
-                                $textroute='Unsigned';
+                                $textroute='Mall Towers';
+                                break;
+                            case 4:
+                                $textroute='Unassigned';
                                 break;
                         }
 

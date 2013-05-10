@@ -49,16 +49,17 @@
                         </p>
                         <input type="submit" name="button" value="Change order">
                     </form>
+                    <form name="add" action="create_family.php" method="POST">
+                        <input type="submit" value="Add Family">
+                    </form>
                     <br/>
                     <?php
                     familiesTable('North');
                     familiesTable('Middle');
                     familiesTable('South');
+                    familiesTable('Mall Towers');
                     familiesTable('Unsigned');
                     ?>
-                    <form name="add" action="create_family.php" method="POST">
-                        <input type="submit" value="Add Family">
-                    </form>
                     <br />
                 </div>
             </div>
@@ -134,7 +135,7 @@
                 <select name="newroute">
                     <?php
                     $selectroute=$route;
-                    for($i=0;$i<=3;$i++)
+                    for($i=0;$i<=4;$i++)
                     {
                         $textroute='';
                         switch ($i) {
@@ -148,7 +149,10 @@
                                 $textroute='South';
                                 break;
                             case 3:
-                                $textroute='Unsigned';
+                                $textroute='Mall Towers';
+                                break;
+                            case 4:
+                                $textroute='Unassigned';
                                 break;
                         }
 
