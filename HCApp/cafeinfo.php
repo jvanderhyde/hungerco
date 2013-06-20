@@ -18,7 +18,7 @@
     <body> 
         <div id="page-container">
             <header>
-                <img src='hclogo.jpg'>    
+                <img src='images/hclogo.jpg'>    
             </header>
             <div id="content">
                 <br/>

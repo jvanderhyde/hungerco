@@ -495,7 +495,7 @@ class CalendarClass {
         }
         else if($registered)
         {
-            $opp="<img border=\"0\" src=\"../images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
+            $opp="<img border=\"0\" src=\"images/1540_16.png\" width=\"16\" height=\"16\" alt=\"check the box\">
                     $oppname<br/>";
         }
         else

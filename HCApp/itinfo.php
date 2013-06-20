@@ -19,7 +19,7 @@
 <body> 
     <div id="page-container">
         <header>
-            <img src='hclogo.jpg'>    
+            <img src='images/hclogo.jpg'>    
         </header>
         <div id="content">
             <h1>The current number of skippers is <?php echo $numskip ?></h1>
