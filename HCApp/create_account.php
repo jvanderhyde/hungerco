@@ -38,7 +38,7 @@
         ?>
         
         <h1>Create an Account</h1>
-        <form id="form" name="createaccount" action="createAccount.php" method="POST">
+        <form id="form" name="createaccount" action="create_account.php" method="POST">
             Name<br />
                 <input type="text" size="20" name="fName" 
                 value=

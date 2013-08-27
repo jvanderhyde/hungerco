@@ -49,7 +49,7 @@
                     <input type="submit" name="button" value="View">
                 </form>
                 <br />
-                <form name="createAccount" action="createaccount.php" method="POST">
+                <form name="createAccount" action="create_account.php" method="POST">
                     <input type="submit" value="Create an Account">
                 </form>
                 <br />

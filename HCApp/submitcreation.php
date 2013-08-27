@@ -114,7 +114,7 @@ if(!isset($_POST['id'])){
             
             function backToEnter(){
                 echo $this->message;
-                echo"<form name=\"failcreation\" action=\"createaccount.php\" method=\"POST\">
+                echo"<form name=\"failcreation\" action=\"create_account.php\" method=\"POST\">
                         <input type=\"hidden\" name=\"enteredNameF\" value=$this->fName>
                         <input type=\"hidden\" name=\"enteredNameM\" value=$this->minit>
                         <input type=\"hidden\" name=\"enteredNameL\" value=$this->lName>
