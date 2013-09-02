@@ -62,8 +62,9 @@ function officermenu()
                 <li><a class='nav-acct' href='staccounts.php'>Student Accounts</a></li>
                 <li><a class='nav-skip' href='skippers.php'>Skip-a-Meal Info</a></li>
                 <li><a class='nav-vol' href='officer_volopps.php'>Volunteers</a></li>
-                <li><a class='nav-route' href='families.php'>Routes</a></li>
-                <li><a class='nav-map' href='routes.php'>Maps</a></li>
+                <li><a class='nav-family' href='families.php'>Families</a></li>
+                <li><a class='nav-route' href='routes.php'>Routes</a></li>
+                <li><a class='nav-map' href='maps.php'>Maps</a></li>
                 <li><a href='logout.php'>Logout</a></li>
             </ul>
         </nav>

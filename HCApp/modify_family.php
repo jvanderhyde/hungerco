@@ -11,6 +11,7 @@ if(isset($_POST['button']))
     {
         $addresscity=$_POST['addresscity'];
         $newroute=$_POST['newroute'];
+        echo $newroute;
         $oldroute=$_POST['oldroute'];
         if($newroute==$oldroute)
             header("location:families.php");
