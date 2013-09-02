@@ -2,6 +2,7 @@
 <?php
 include_once 'functions.php';
 include_once 'dbfunctions.php';
+include_once 'displayfunctions.php';
 verifyuser(array("Officer"));
 if(!isset($_POST['date']))
 {
@@ -15,6 +16,9 @@ $month=date('m',strtotime($date));
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Create Volunteer Opportunity</title>
+        <meta name="author" content="BCCS">
+        <link rel="stylesheet" type="text/css" href="reset.css">
+        <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
     </head>
     <body>
         <h1><?php echo $date;?></h1>
