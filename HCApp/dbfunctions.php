@@ -26,7 +26,7 @@ function isSkipper($id)
         FROM students
         WHERE id = $id";
     $result=mysql_query($query, $link);
-    return mysql_result($result,0,"isskipper");
+    return mysql_result($result,0,"isskipper")==chr(1);
 }
 
 function changeSkipperValue($id,$value)
