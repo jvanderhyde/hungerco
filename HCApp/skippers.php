@@ -34,7 +34,6 @@
                         echo "<tr>";
                         echo "<td>".$student['fname']." ".$student['lname']."</td>";
                         echo "<td>".$student['id']."</td>";
-                        echo "<td>".  isSkipper($student['id'])."</td>";
                         echo "</tr>";
                     }
                     ?>
