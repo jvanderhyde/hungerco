@@ -11,7 +11,7 @@
 <html>
     <head> 
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>"Cafeteria Hunger Coalition Information</title> 
+        <title>Cafeteria Hunger Coalition Information</title> 
         <meta name="author" content="BCCS">
         <link rel="stylesheet" type="text/css" href="reset.css">
         <link rel="stylesheet" type="text/css" href="hcstylesheet.css">
@@ -34,6 +34,7 @@
                         echo "<tr>";
                         echo "<td>".$student['fname']." ".$student['lname']."</td>";
                         echo "<td>".$student['id']."</td>";
+                        echo "<td>".  isSkipper($student['id'])."</td>";
                         echo "</tr>";
                     }
                     ?>
