@@ -1,0 +1,1 @@
+This project is to assist Benedictine Hunger Coalition's operations.  Current goals include keeping track of Meal Skippers, volunteers, and routes while providing current data to appropriate users.
